@@ -1,0 +1,25 @@
+To do:
+
+1- Edit the help page
+
+2- Tabs active status: 
+    a) make only ONE active tab at a time: right now, you can click on non-active tabs (in grey) and still view its contents
+    b) edit the conditions that enable moving through tabs. In particular:
+        b1) when moving from "Data Check" to "Dry Run": conditions should be that the formula is correct AND the data frame has at least one valid row.
+        b2) when moving from "Dry Run" to "Output": condition should be that the model runs successfuly (what about cases when the run is successful but the result is NA?)
+        
+3- Replace function "createNewName" (that suggests new names by erasing the numbers/punctuation) with a new function that suggests new names based on camel case (this is almost done; just a few tests remaining).
+
+4- Modify the "offerNewNames" function such that it prints a question and radio buttons next to it, such that:
+    - 'would you like to replace var.1 with var1?  Yes No
+    - 'would you like to replace var.2 with var2?  Yes No
+    The user's answers (and new names) should be recorded and printed in the 'project.RDS' file
+    
+5- Avoid printing NULL when the app starts        
+
+6- Add support for other data file types (not necessarily CSV)
+
+7- Implement the length restrictions on the Project name and description
+
+
+    

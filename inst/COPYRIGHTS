@@ -1,0 +1,16 @@
+Parts of this package are directly lifted from the 'survival' package on
+CRAN. The original copyright, copied below verbatim from the package,
+hold and apply for the following files:
+
+R/dccoxph.R
+R/dccoxph.fit.R
+R/firstlib.R
+src/*.c
+
+It is our hope to avoid this copying in later versions of the package.
+
+Original Copyright from survival package:
+
+Copyright 2000 Mayo Foundation for Medical Education and Research.  This
+software is accepted by users "as is" and without warranties or guarantees
+of any kind.

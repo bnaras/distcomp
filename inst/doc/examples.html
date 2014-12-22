@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Distributed Statistical Modeling</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Distributed Statistical Modeling</h1>
+
+<p>author: Balasubramanian Narasimhan, Stanford University</p>
+
+<h2>Introduction</h2>
+
+<p>We demonstrate the possibility of fitting statistical models
+stratified by sites in a manner that brings computation to the data
+that may be distributed across sites or more generally, partitioned in
+some manner. (For simplicity, we will call these partitions, sites.)
+The infrastructure consists of a single master process that issues
+queries to slave processes running at each of the sites. A query is
+merely a function call, more specifically a request to each site to
+evaluate a pre-defined function \(f(\beta)\) on the data at that site,
+for a given value of parameters \(\beta\).  The master process uses
+these queries to aggregate and execute an optimization algorithm
+resulting in a model fit, the results of which should be
+<em>indistinguishable from</em> those that might be obtained if all the data
+had been in a single place.  Of course, this assumes a lossless
+serialization format, like Google Protocol Buffers for example, but we
+make do with JSON for now.  Also, in comparisons below, we don&#39;t use
+exactly the same iterations as the survival package and so minor
+differences will be seen.</p>
+
+<p>The advantages are many, chief among them the fact that no raw data
+needs to be shared between sites. The modeling entity, however, can
+make an unlimited number of queries of the sites, where each query is
+a request to compute a model-specific function for a specified value
+of parameters. This may pose a security concern that we ignore for
+now. However, it leads to some further interesting questions regarding
+what may be learned such computation.</p>
+
+<p>We focus specifically on Cox regression models in this exercise.</p>
+
+<blockquote>
+<p><a href="#setup">Setup</a></p>
+
+<p><a href="#simple-example">A simple example</a></p>
+
+<blockquote>
+<p><a href="#simple-example-agg">A Cox fit on the aggregated data</a></p>
+
+<p><a href="#simple-model">The model definition</a></p>
+
+<p><a href="#simple-data">The data for each site</a></p>
+
+<p><a href="#simple-site-setup">Setting up the sites</a></p>
+
+<p><a href="#reproduce">Reproducing original aggregated analysis in a distributed fashion</a></p>
+</blockquote>
+
+<p><a href="#larger-example">A larger example</a></p>
+
+<blockquote>
+<p><a href="#larger-example-full">The aggregated fit</a></p>
+
+<p><a href="#larger-example-distributed">The distributed fit</a></p>
+</blockquote>
+
+<p><a href="#bmt">Bone Marrow Transplant Example</a></p>
+
+<blockquote>
+<p><a href="#bmt-full">The aggregated fit</a></p>
+
+<p><a href="#bmt-distributed">The distributed fit</a></p>
+</blockquote>
+
+<p><a href="#prostate">Byar and Greene Prostate Cancer Data Example (4 strata)</a></p>
+</blockquote>
+
+<p><a id="setup"></a></p>
+
+<h3>Setup</h3>
+
+<p>It must be noted that for users to be able to <code>knit</code> this document, or
+to run these examples in an R session, an <code>opencpu</code> server must be
+running with appropriate settings. On MacOS and Unix, this is done by
+designating an empty directory as workspace and adding the following
+lines to the <code>${HOME}/.Rprofile</code>.</p>
+
+<pre><code class="r">library(distcomp)
+distcompSetup(workspace=&quot;full_path_to_workspace_directory&quot;,
+              ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+</code></pre>
+
+<p>On windows, the same should be done in the <code>RHOME\etc\Rprofile.site</code>
+file. Then, an R session must be started with these settings in
+effect.  Then, this document can be knit/rendered in that session.</p>
+
+<p><a id="simple-example"></a></p>
+
+<h2>A simple example</h2>
+
+<p>We take a simple example from the <code>survival</code> package, the <code>ovarian</code>
+dataset.</p>
+
+<pre><code class="r">library(knitr)
+library(survival)
+data(ovarian)
+str(ovarian)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    26 obs. of  6 variables:
+##  $ futime  : num  59 115 156 421 431 448 464 475 477 563 ...
+##  $ fustat  : num  1 1 1 0 1 0 1 1 0 1 ...
+##  $ age     : num  72.3 74.5 66.5 53.4 50.3 ...
+##  $ resid.ds: num  2 2 2 2 2 1 2 2 2 1 ...
+##  $ rx      : num  1 1 1 2 1 1 2 2 1 2 ...
+##  $ ecog.ps : num  1 1 2 1 1 2 2 2 1 2 ...
+</code></pre>
+
+<pre><code class="r">kable(ovarian)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="right">futime</th>
+<th align="right">fustat</th>
+<th align="right">age</th>
+<th align="right">resid.ds</th>
+<th align="right">rx</th>
+<th align="right">ecog.ps</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">59</td>
+<td align="right">1</td>
+<td align="right">72.3315</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">115</td>
+<td align="right">1</td>
+<td align="right">74.4932</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">156</td>
+<td align="right">1</td>
+<td align="right">66.4658</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">421</td>
+<td align="right">0</td>
+<td align="right">53.3644</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">431</td>
+<td align="right">1</td>
+<td align="right">50.3397</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">448</td>
+<td align="right">0</td>
+<td align="right">56.4301</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">464</td>
+<td align="right">1</td>
+<td align="right">56.9370</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">475</td>
+<td align="right">1</td>
+<td align="right">59.8548</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">477</td>
+<td align="right">0</td>
+<td align="right">64.1753</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">563</td>
+<td align="right">1</td>
+<td align="right">55.1781</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">638</td>
+<td align="right">1</td>
+<td align="right">56.7562</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">744</td>
+<td align="right">0</td>
+<td align="right">50.1096</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">769</td>
+<td align="right">0</td>
+<td align="right">59.6301</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">770</td>
+<td align="right">0</td>
+<td align="right">57.0521</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">803</td>
+<td align="right">0</td>
+<td align="right">39.2712</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">855</td>
+<td align="right">0</td>
+<td align="right">43.1233</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">1040</td>
+<td align="right">0</td>
+<td align="right">38.8932</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">1106</td>
+<td align="right">0</td>
+<td align="right">44.6000</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">1129</td>
+<td align="right">0</td>
+<td align="right">53.9068</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">1206</td>
+<td align="right">0</td>
+<td align="right">44.2055</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">1227</td>
+<td align="right">0</td>
+<td align="right">59.5890</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">268</td>
+<td align="right">1</td>
+<td align="right">74.5041</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">329</td>
+<td align="right">1</td>
+<td align="right">43.1370</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">353</td>
+<td align="right">1</td>
+<td align="right">63.2192</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">365</td>
+<td align="right">1</td>
+<td align="right">64.4247</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">377</td>
+<td align="right">0</td>
+<td align="right">58.3096</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+
+<p><a id="simple-example-agg"></a></p>
+
+<h3>A Cox fit on the aggregated data</h3>
+
+<p>A simple Cox model fit estimates the effect of age on survival,
+stratified by drug.</p>
+
+<pre><code class="r">cp &lt;- coxph(Surv(futime, fustat) ~ age + strata(rx), data=ovarian, ties=&quot;breslow&quot;)
+print(cp)
+</code></pre>
+
+<pre><code>## Call:
+## coxph(formula = Surv(futime, fustat) ~ age + strata(rx), data = ovarian, 
+##     ties = &quot;breslow&quot;)
+## 
+## 
+##      coef exp(coef) se(coef)   z      p
+## age 0.137      1.15   0.0474 2.9 0.0038
+## 
+## Likelihood ratio test=12.7  on 1 df, p=0.000368  n= 26, number of events= 12
+</code></pre>
+
+<p>The above shows the intial and final log likelihood values at 0 and
+the estimated coefficient respectively and the actual estimated
+coefficient in the last line.</p>
+
+<p>For our setting, we can pretend that this data set is actually from
+two sites, one containing the control or placebo group (<code>rx = 1</code>)and
+the other containing the drug group (<code>rx = 2</code>).</p>
+
+<p><a id="simple-model"></a></p>
+
+<h3>The model definition</h3>
+
+<p>We first need to define the computation. The available computations
+can be listed:</p>
+
+<pre><code class="r">print(availableComputations())
+</code></pre>
+
+<pre><code>## $StratifiedCoxModel
+## [1] &quot;Stratified Cox Model&quot;
+## 
+## $RankKSVD
+## [1] &quot;Rank K SVD&quot;
+</code></pre>
+
+<p>So, we can define the ovarian data computation as follows.</p>
+
+<pre><code class="r">ovarianDef &lt;- list(compType = names(availableComputations())[1],
+               formula = &quot;Surv(futime, fustat) ~ age&quot;,
+               defnId = &quot;Ovarian&quot;)
+</code></pre>
+
+<p><a id="simple-data"></a></p>
+
+<h3>The data for each site</h3>
+
+<p>We split the <code>ovarian</code> data into two sites as indicated earlier.</p>
+
+<pre><code class="r">siteData &lt;- with(ovarian, split(x=ovarian, f=rx))
+</code></pre>
+
+<p><a id="simple-site-setup"></a></p>
+
+<h3>Setting up the sites</h3>
+
+<p>We can now set up each site with its own data.</p>
+
+<pre><code class="r">nSites &lt;- length(siteData)
+siteNames &lt;- sapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, sep=&quot;&quot;))
+siteURLs &lt;- lapply(seq.int(nSites), function(i) opencpu$url())
+names(siteData) &lt;- names(siteURLs) &lt;- siteNames
+</code></pre>
+
+<p>By default, on each site, data for a computation is stored under the
+name <code>data.rds</code> and the definition itself is stored under the name
+<code>defn.rds</code>.  If the sites are physically separate, then everything
+proceeds smoothly. However, here, in our case, we are using the same
+<code>opencpu</code> server for simulating both sites. We therefore have to save
+the files under different names, just for this experiment, say
+<code>site1.rds</code> and <code>site2.rds</code> for this example. We do that below, by
+providing the <code>siteDataFiles</code> as an argument to the <code>Map</code> call.</p>
+
+<pre><code class="r">siteDataFiles &lt;- lapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, &quot;.rds&quot;, sep=&quot;&quot;))
+
+ok &lt;- Map(uploadNewComputation, siteURLs,
+          lapply(seq.int(nSites), function(i) ovarianDef),
+          siteData,
+          siteDataFiles)
+
+stopifnot(all(ok))
+</code></pre>
+
+<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
+</code></pre>
+
+<p><a id="reproduce"></a></p>
+
+<h3>Reproducing original aggregated analysis in a distributed fashion</h3>
+
+<p>We are now ready to reproduce the original aggregated analysis. We
+first create a master object, taking care to specify that we are using
+a local server to simulate several sites.</p>
+
+<pre><code>master &lt;- coxMaster$new(defnId = ovarianDef$defnId, formula=ovarianDef$formula,
+    localServer=TRUE)
+</code></pre>
+
+<p>We then add the slave sites, once again specifying the site data file
+names.</p>
+
+<pre><code class="r">for (i in seq.int(nSites)) {
+    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+}
+</code></pre>
+
+<pre><code>## Error: object &#39;master&#39; not found
+</code></pre>
+
+<p>And we now maximize the partial likelihood, by calling the <code>run</code>
+method of the master.</p>
+
+<pre><code class="r">result &lt;- master$run()
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;master&#39; not found
+</code></pre>
+
+<p>We then print the summary.</p>
+
+<pre><code class="r">master$summary()
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;master&#39; not found
+</code></pre>
+
+<p>As we can see, the results we get from the distributed analysis are
+the same as we got for the original aggregated analysis. We print them
+separately here for comparison.</p>
+
+<p><a id="larger-example"></a></p>
+
+<h2>A larger example</h2>
+
+<p>We turn to a larger the example from Therneau and Grambsch using the
+<code>pbc</code> data where the stratifying variable is <code>ascites</code>.</p>
+
+<p><a id="larger-example-full"></a></p>
+
+<h3>The aggregated fit</h3>
+
+<pre><code class="r">data(pbc)
+pbcCox &lt;- coxph(Surv(time, status==2) ~ age + edema + log(bili) +
+                log(protime) + log(albumin) + strata(ascites), data=pbc, ties=&quot;breslow&quot;)
+print(pbcCox)
+</code></pre>
+
+<pre><code>## Call:
+## coxph(formula = Surv(time, status == 2) ~ age + edema + log(bili) + 
+##     log(protime) + log(albumin) + strata(ascites), data = pbc, 
+##     ties = &quot;breslow&quot;)
+## 
+## 
+##                 coef exp(coef) se(coef)     z       p
+## age           0.0314    1.0318  0.00907  3.45 0.00055
+## edema         0.5993    1.8209  0.32127  1.87 0.06200
+## log(bili)     0.8663    2.3780  0.10066  8.61 0.00000
+## log(protime)  3.0341   20.7815  1.03884  2.92 0.00350
+## log(albumin) -2.9662    0.0515  0.78177 -3.79 0.00015
+## 
+## Likelihood ratio test=146  on 5 df, p=0  n= 312, number of events= 125 
+##    (106 observations deleted due to missingness)
+</code></pre>
+
+<p><a id="larger-example-distributed"></a></p>
+
+<h3>The distributed fit</h3>
+
+<p>We split the data using <code>ascites</code> and proceed the usual way as shown above</p>
+
+<pre><code class="r">pbcDef &lt;- list(compType = names(availableComputations())[1],
+               formula = paste(&quot;Surv(time, status==2) ~ age + edema +&quot;,
+                   &quot;log(bili) + log(protime) + log(albumin)&quot;),
+               defnId = &quot;pbc&quot;)
+siteData &lt;- with(pbc, split(x=pbc, f=ascites))
+nSites &lt;- length(siteData)
+siteNames &lt;- sapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, sep=&quot;&quot;))
+siteURLs &lt;- lapply(seq.int(nSites), function(i) opencpu$url())
+names(siteData) &lt;- names(siteURLs) &lt;- siteNames
+siteDataFiles &lt;- lapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, &quot;.rds&quot;, sep=&quot;&quot;))
+ok &lt;- Map(uploadNewComputation, siteURLs,
+          lapply(seq.int(nSites), function(i) pbcDef),
+          siteData,
+          siteDataFiles)
+
+stopifnot(all(ok))
+</code></pre>
+
+<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
+</code></pre>
+
+<pre><code class="r">master &lt;- coxMaster$new(defnId = pbcDef$defnId, formula=pbcDef$formula,
+    localServer=TRUE)
+for (i in seq.int(nSites)) {
+    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+}
+</code></pre>
+
+<pre><code class="r">result &lt;- master$run()
+</code></pre>
+
+<p>We then print the summary.</p>
+
+<pre><code class="r">kable(master$summary())
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="right">coef</th>
+<th align="right">exp(coef)</th>
+<th align="right">se(coef)</th>
+<th align="right">z</th>
+<th align="right">p</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">0.0310247</td>
+<td align="right">1.0315110</td>
+<td align="right">0.0090692</td>
+<td align="right">3.420887</td>
+<td align="right">0.0006242</td>
+</tr>
+<tr>
+<td align="right">0.6019922</td>
+<td align="right">1.8257525</td>
+<td align="right">0.3205949</td>
+<td align="right">1.877735</td>
+<td align="right">0.0604174</td>
+</tr>
+<tr>
+<td align="right">0.8682667</td>
+<td align="right">2.3827773</td>
+<td align="right">0.1006068</td>
+<td align="right">8.630302</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="right">3.0276949</td>
+<td align="right">20.6495786</td>
+<td align="right">1.0393738</td>
+<td align="right">2.912999</td>
+<td align="right">0.0035798</td>
+</tr>
+<tr>
+<td align="right">-2.9765945</td>
+<td align="right">0.0509661</td>
+<td align="right">0.7809580</td>
+<td align="right">-3.811465</td>
+<td align="right">0.0001381</td>
+</tr>
+</tbody></table>
+
+<p>The results should be comparable to the aggregated fit above.</p>
+
+<p><a id="bmt"></a></p>
+
+<h2>Bone Marrow Transplant Example</h2>
+
+<p>This uses the <code>bmt</code> data from Klein and Moschberger. Some variable
+renaming, first.</p>
+
+<pre><code class="r">##
+## BMT data
+##
+
+library(KMsurv)
+data(bmt)
+bmt$tnodis &lt;- bmt$t2 ## time to disease relapse/death
+bmt$inodis &lt;- bmt$d3 ## disease relapse/death indicator
+bmt$tplate &lt;- bmt$tp ## time to platelet recovery
+bmt$iplate &lt;- bmt$dp ## platelet recovery
+bmt$agep &lt;- bmt$z1 ## age of patient in years
+bmt$aged &lt;- bmt$z2 ## age of donor in years
+bmt$fab &lt;- bmt$z8 ## fab grade 4 or 5 + AML
+bmt$imtx &lt;- bmt$z10 ## MTX used
+bmt &lt;- bmt[order(bmt$tnodis), ] ## order by time to disease relapse/death
+bmt &lt;- cbind(1:nrow(bmt)[1], bmt)
+names(bmt)[1] &lt;- &quot;id&quot;
+
+##
+#####
+##
+bmt$agep.c = bmt$agep - 28
+bmt$aged.c = bmt$aged - 28
+
+bmt$imtx &lt;- factor(bmt$imtx)
+</code></pre>
+
+<p><a id="bmt-full"></a></p>
+
+<h3>The aggregated fit</h3>
+
+<pre><code class="r">bmt.cph &lt;- coxph(formula = Surv(tnodis, inodis) ~ fab + agep.c * aged.c +
+                 factor(group) + strata(imtx), data = bmt, ties=&quot;breslow&quot;)
+
+print(bmt.cph)
+</code></pre>
+
+<pre><code>## Call:
+## coxph(formula = Surv(tnodis, inodis) ~ fab + agep.c * aged.c + 
+##     factor(group) + strata(imtx), data = bmt, ties = &quot;breslow&quot;)
+## 
+## 
+##                    coef exp(coef) se(coef)       z      p
+## fab             0.90780     2.479  0.27899  3.2539 0.0011
+## agep.c          0.00551     1.006  0.01997  0.2759 0.7800
+## aged.c         -0.00164     0.998  0.01816 -0.0901 0.9300
+## factor(group)2 -1.03389     0.356  0.36472 -2.8348 0.0046
+## factor(group)3 -0.33909     0.712  0.36784 -0.9218 0.3600
+## agep.c:aged.c   0.00285     1.003  0.00095  2.9950 0.0027
+## 
+## Likelihood ratio test=31  on 6 df, p=2.5e-05  n= 137, number of events= 83
+</code></pre>
+
+<p><a id="bmt-distributed"></a></p>
+
+<h3>The distributed fit</h3>
+
+<p>We&#39;ll use <code>imtx</code> for splitting data into sites.</p>
+
+<pre><code class="r">bmtDef &lt;- list(compType = names(availableComputations())[1],
+               formula = paste(&quot;Surv(tnodis, inodis) ~ fab + agep.c * aged.c + factor(group)&quot;),
+               defnId = &quot;bmt&quot;)
+siteData &lt;- with(bmt, split(x=bmt, f=imtx))
+nSites &lt;- length(siteData)
+siteNames &lt;- sapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, sep=&quot;&quot;))
+siteURLs &lt;- lapply(seq.int(nSites), function(i) opencpu$url())
+names(siteData) &lt;- names(siteURLs) &lt;- siteNames
+siteDataFiles &lt;- lapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, &quot;.rds&quot;, sep=&quot;&quot;))
+ok &lt;- Map(uploadNewComputation, siteURLs,
+          lapply(seq.int(nSites), function(i) bmtDef),
+          siteData,
+          siteDataFiles)
+
+stopifnot(all(ok))
+</code></pre>
+
+<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
+</code></pre>
+
+<pre><code class="r">master &lt;- coxMaster$new(defnId = bmtDef$defnId, formula=bmtDef$formula,
+                        localServer=TRUE)
+for (i in seq.int(nSites)) {
+    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+}
+</code></pre>
+
+<pre><code class="r">result &lt;- master$run()
+</code></pre>
+
+<p>We then print the summary.</p>
+
+<pre><code class="r">kable(master$summary())
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="right">coef</th>
+<th align="right">exp(coef)</th>
+<th align="right">se(coef)</th>
+<th align="right">z</th>
+<th align="right">p</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">0.9083860</td>
+<td align="right">2.4803160</td>
+<td align="right">0.2789473</td>
+<td align="right">3.2564784</td>
+<td align="right">0.0011280</td>
+</tr>
+<tr>
+<td align="right">0.0054343</td>
+<td align="right">1.0054490</td>
+<td align="right">0.0199716</td>
+<td align="right">0.2720993</td>
+<td align="right">0.7855457</td>
+</tr>
+<tr>
+<td align="right">-0.0017046</td>
+<td align="right">0.9982969</td>
+<td align="right">0.0181680</td>
+<td align="right">-0.0938216</td>
+<td align="right">0.9252508</td>
+</tr>
+<tr>
+<td align="right">-1.0338625</td>
+<td align="right">0.3556307</td>
+<td align="right">0.3648730</td>
+<td align="right">-2.8334862</td>
+<td align="right">0.0046043</td>
+</tr>
+<tr>
+<td align="right">-0.3375983</td>
+<td align="right">0.7134818</td>
+<td align="right">0.3680206</td>
+<td align="right">-0.9173355</td>
+<td align="right">0.3589669</td>
+</tr>
+<tr>
+<td align="right">0.0028547</td>
+<td align="right">1.0028588</td>
+<td align="right">0.0009480</td>
+<td align="right">3.0111928</td>
+<td align="right">0.0026022</td>
+</tr>
+</tbody></table>
+
+<p><a id="prostate"></a></p>
+
+<h2>Byar and Greene Prostate Cancer Data Example</h2>
+
+<p>This example is the largest of them all and also has four strata
+rather than 2.</p>
+
+<pre><code class="r">prostate &lt;- readRDS(&quot;prostate.RDS&quot;)
+</code></pre>
+
+<p><a id="prostate-full"></a></p>
+
+<h3>The aggregated fit</h3>
+
+<pre><code class="r">pcph &lt;- coxph(Surv(dtime, status) ~ stage + strata(rx) + age + wt + pf + hx +
+                  sbp + dbp + ekg + hg + sz + sg + ap + bm, data=prostate)
+print(pcph)
+</code></pre>
+
+<pre><code>## Call:
+## coxph(formula = Surv(dtime, status) ~ stage + strata(rx) + age + 
+##     wt + pf + hx + sbp + dbp + ekg + hg + sz + sg + ap + bm, 
+##     data = prostate)
+## 
+## 
+##                         coef exp(coef) se(coef)       z       p
+## stageIV             -0.17759     0.837 0.175923 -1.0095 3.1e-01
+## age                  0.02421     1.025 0.009157  2.6436 8.2e-03
+## wt                  -0.01026     0.990 0.004755 -2.1568 3.1e-02
+## pfBedridden(&lt;50%)   -1.37275     0.253 0.851150 -1.6128 1.1e-01
+## pfBedridden(&gt;50%)   -1.17494     0.309 0.850354 -1.3817 1.7e-01
+## pfnormal            -1.58867     0.204 0.825542 -1.9244 5.4e-02
+## hx                   0.51042     1.666 0.120371  4.2404 2.2e-05
+## sbp                 -0.03309     0.967 0.029279 -1.1300 2.6e-01
+## dbp                  0.04943     1.051 0.047790  1.0344 3.0e-01
+## ekgblock/conduction -0.14590     0.864 0.382387 -0.3816 7.0e-01
+## ekgheart strain      0.39317     1.482 0.282538  1.3916 1.6e-01
+## ekgnormal           -0.05796     0.944 0.281828 -0.2057 8.4e-01
+## ekgold MI            0.00744     1.007 0.301073  0.0247 9.8e-01
+## ekgrecent MI         0.81895     2.268 1.055545  0.7759 4.4e-01
+## ekgrhythmic disturb  0.28031     1.324 0.307714  0.9110 3.6e-01
+## hg                  -0.06893     0.933 0.031996 -2.1543 3.1e-02
+## sz                   0.01780     1.018 0.004608  3.8640 1.1e-04
+## sg                   0.10020     1.105 0.041607  2.4083 1.6e-02
+## ap                  -0.00138     0.999 0.000997 -1.3881 1.7e-01
+## bm                   0.31964     1.377 0.181333  1.7627 7.8e-02
+## 
+## Likelihood ratio test=99.4  on 20 df, p=1.59e-12  n= 475, number of events= 338 
+##    (27 observations deleted due to missingness)
+</code></pre>
+
+<p><a id="prostate-distributed"></a></p>
+
+<h3>The distributed fit</h3>
+
+<p>The distributed fit for this particular example doesn&#39;t work in the
+current implementation. This is because the \(X\) matrix for each site
+is singular. The math holds, obviously, but the current implementation
+is based on re-using as much of the <code>survival</code> package as possible. We
+have to work harder to implement the distributed computation in the
+situation where \(X\) is singular at at least one site. This affects the
+computation of the variance (or equivalently, the information
+matrix). Some work needs to be done to work around this and figure out
+how best to reuse what&#39;s already in the <code>survival</code> package.</p>
+
+<p>However, in order to demonstrate that the distributed fit really
+works, we show below an alternative implementation that yields the
+same result as the aggregated one.</p>
+
+<p><a id="site-object"></a></p>
+
+<h4>An object representing the sites</h4>
+
+<p>Here&#39;s a reference object for each site. It has several fields: a
+<code>data</code> field containing the data, a <code>formula</code> field (as used in the
+well-known <code>survival</code> R package) describing the model being fit. These
+two are the only ones needed for initializing a site. Other fields
+that are generated based on these two fields are <code>modelDataFrame</code>
+containing the actual model data used for fitting the model and a
+<code>modelMatrix</code>.</p>
+
+<pre><code class="r">site &lt;- setRefClass(&quot;siteObject&quot;,
+                    fields = list(
+                        data = &quot;data.frame&quot;,
+                        formula = &quot;formula&quot;,
+                        modelDataFrame = &quot;data.frame&quot;,
+                        coxControl = &quot;list&quot;,
+                        modelMatrix = &quot;matrix&quot;),
+                    methods = list(
+                        initialize = function(formula, data) {
+                            &#39;Initialize the object with a formula and dataset&#39;
+                            formula &lt;&lt;- formula
+                            data &lt;&lt;- data
+                            temp &lt;- coxph.control()
+                            temp$iter.max &lt;- 0
+                            coxControl &lt;&lt;- temp
+                            stopifnot(kosher())
+                        },
+                        kosher = function() {
+                            &#39;Check that the class data passes sanity checks&#39;
+                            modelDataFrame &lt;&lt;- model.frame(formula, data=data)
+                            lhs &lt;- modelDataFrame[, 1]
+                            ordering &lt;- order(lhs[, 1])
+                            modelDataFrame &lt;&lt;- modelDataFrame[ordering, ]
+                            data &lt;&lt;- data[ordering, ]
+                            modelMatrix &lt;&lt;- model.matrix(formula, data=modelDataFrame)
+                            TRUE
+                        },
+                        dimP = function() {
+                            &#39;Return the number of covariates&#39;
+                            ncol(modelMatrix) - 1
+                        })
+                    )
+site$accessors(c(&quot;data&quot;, &quot;formula&quot;, &quot;modelDataFrame&quot;, &quot;modelMatrix&quot;))
+</code></pre>
+
+<p>The <code>initialize</code> method above mostly sets the fields, generates values
+for other fields, and does a mild sanity check. It will not proceed
+further if the function <code>kosher</code> returns false.  For now the <code>kosher</code>
+function merely orders the data frame by follow-up time, but in a
+production system a number of other checks might be performed, such as
+ensuring all named variables are available at the site.</p>
+
+<p>The method <code>dimP</code> merely returns the number of columns of the model
+matrix.</p>
+
+<p><a id="site-loglik"></a></p>
+
+<h3>The (partial) log likelihood function for each site</h3>
+
+<p>For our example, the (partial) log likelihood (named <code>localLogLik</code>) is simple
+and can be computed directly. Assuming failure times \(t_i\) and
+event indicators \(\delta_i\), it is
+precisely:
+\[
+l(\beta) = \sum_{i=1}^n\delta_i\biggl[z_i\beta -\log\bigl(\sum_{j\in R(t_i)} \exp(z_j\beta)\bigr)\biggr]
+\]
+where \(\beta\) is the vector of parameters, \(z_i\) is row \(i\) of the
+model matrix (covariates for subject \(i\)) and \(R(t_i)\) is the risk set
+at time \(t_i\).</p>
+
+<p>The first derivative with respect to \(\beta\) is:
+\[
+l'(\beta) = Z^T\delta - \sum_{i=1}^n\delta_i\frac{\sum_{j\in R(t_i)} \exp(z_j\beta)z_j^T}{\sum_{j\in R(t_i)} \exp(z_j\beta)}.
+\]</p>
+
+<pre><code class="r">localLogLik &lt;- function(beta) {
+    beta &lt;- c(0, beta) ## model matrix has intercept in model
+    z &lt;- modelMatrix
+    delta &lt;- modelDataFrame[, 1][, 2] ## event indicators
+    zBeta &lt;- z %*% beta
+    sum.exp.zBeta &lt;- rev(cumsum(rev(exp(zBeta))))
+    ld &lt;- delta %*% (z  - apply(diag(as.numeric(zBeta)) %*% z, 2, function(x) rev(cumsum(rev(x)))) / sum.exp.zBeta)
+    result &lt;- sum(delta * (zBeta - log(sum.exp.zBeta))) # assuming Breslow
+    attr(result, &quot;gradient&quot;) &lt;- ld
+    result
+}
+site$methods(logLik = localLogLik)
+</code></pre>
+
+<h4>The alternative distributed fit.</h4>
+
+<p>We are now ready to do the alternative distributed fit. We split the
+<code>prostate</code> data into two sites as indicated earlier.</p>
+
+<pre><code class="r">siteData &lt;- with(prostate, split(x=prostate, f=rx))
+sites &lt;- lapply(siteData,
+                function(x) {
+                    site$new(data = x,
+                             formula = Surv(dtime, status) ~ stage + age + wt + pf + hx + sbp + dbp + ekg + hg + sz + sg + ap + bm)
+                })
+</code></pre>
+
+<p>Ok, now we can reproduce the original aggregated analysis by writing a
+full likelihood routine.</p>
+
+<pre><code class="r">logLik &lt;- function(beta, sites) {
+    sum(sapply(sites, function(x) x$logLik(beta)))
+}
+</code></pre>
+
+<p>All that remains is to maximize this log likelihood.</p>
+
+<pre><code class="r">mleResults &lt;- nlm(f=function(x) -logLik(x, sites),
+                  p=rep(0, sites[[1]]$dimP()),
+                  gradtol=1e-10, iterlim=1000)
+</code></pre>
+
+<pre><code>## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
+## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+</code></pre>
+
+<pre><code>## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
+## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+</code></pre>
+
+<pre><code>## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
+## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+</code></pre>
+
+<p>We print the coefficient estimates side-by-side for comparison.</p>
+
+<pre><code class="r">d &lt;- data.frame(distCoef=mleResults$estimate, aggCoef=pcph$coefficients)
+rownames(d) &lt;- names(pcph$coefficients)
+kable(d)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="right">distCoef</th>
+<th align="right">aggCoef</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">stageIV</td>
+<td align="right">-0.1740491</td>
+<td align="right">-0.1775897</td>
+</tr>
+<tr>
+<td align="left">age</td>
+<td align="right">0.0245191</td>
+<td align="right">0.0242084</td>
+</tr>
+<tr>
+<td align="left">wt</td>
+<td align="right">-0.0105003</td>
+<td align="right">-0.0102559</td>
+</tr>
+<tr>
+<td align="left">pfBedridden(&lt;50%)</td>
+<td align="right">-1.3893181</td>
+<td align="right">-1.3727528</td>
+</tr>
+<tr>
+<td align="left">pfBedridden(&gt;50%)</td>
+<td align="right">-1.1506821</td>
+<td align="right">-1.1749372</td>
+</tr>
+<tr>
+<td align="left">pfnormal</td>
+<td align="right">-1.5842335</td>
+<td align="right">-1.5886734</td>
+</tr>
+<tr>
+<td align="left">hx</td>
+<td align="right">0.5206160</td>
+<td align="right">0.5104190</td>
+</tr>
+<tr>
+<td align="left">sbp</td>
+<td align="right">-0.0329601</td>
+<td align="right">-0.0330859</td>
+</tr>
+<tr>
+<td align="left">dbp</td>
+<td align="right">0.0526530</td>
+<td align="right">0.0494337</td>
+</tr>
+<tr>
+<td align="left">ekgblock/conduction</td>
+<td align="right">-0.1505854</td>
+<td align="right">-0.1459025</td>
+</tr>
+<tr>
+<td align="left">ekgheart strain</td>
+<td align="right">0.3980165</td>
+<td align="right">0.3931730</td>
+</tr>
+<tr>
+<td align="left">ekgnormal</td>
+<td align="right">-0.0557321</td>
+<td align="right">-0.0579591</td>
+</tr>
+<tr>
+<td align="left">ekgold MI</td>
+<td align="right">0.0064296</td>
+<td align="right">0.0074423</td>
+</tr>
+<tr>
+<td align="left">ekgrecent MI</td>
+<td align="right">0.8560625</td>
+<td align="right">0.8189465</td>
+</tr>
+<tr>
+<td align="left">ekgrhythmic disturb</td>
+<td align="right">0.2816923</td>
+<td align="right">0.2803126</td>
+</tr>
+<tr>
+<td align="left">hg</td>
+<td align="right">-0.0707047</td>
+<td align="right">-0.0689290</td>
+</tr>
+<tr>
+<td align="left">sz</td>
+<td align="right">0.0180493</td>
+<td align="right">0.0178037</td>
+</tr>
+<tr>
+<td align="left">sg</td>
+<td align="right">0.1016070</td>
+<td align="right">0.1002007</td>
+</tr>
+<tr>
+<td align="left">ap</td>
+<td align="right">-0.0013375</td>
+<td align="right">-0.0013841</td>
+</tr>
+<tr>
+<td align="left">bm</td>
+<td align="right">0.3180923</td>
+<td align="right">0.3196404</td>
+</tr>
+</tbody></table>
+
+</body>
+
+</html>

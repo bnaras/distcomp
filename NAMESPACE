@@ -1,0 +1,22 @@
+import(survival)
+import(shiny)
+import(utils)
+importFrom(R6, R6Class)
+importFrom(digest, digest)
+importFrom(httr, POST, headers, add_headers)
+importFrom(jsonlite, fromJSON, toJSON)
+useDynLib(distcomp, .registration = TRUE)
+
+export("dccoxph.fit",
+       "dccoxph",
+       "coxSlave", "coxMaster",
+       "svdSlave", "svdMaster",
+       "availableComputations",
+       "makeSlave", "makeMaster",
+       "executeMethod",
+       "defineNewComputation",
+       "setupMaster", "setupSlave",
+       "distcompSetup",
+       "getConfig",
+       "createInstanceObject", "destroyInstanceObject",
+       "saveNewComputation", "uploadNewComputation")
