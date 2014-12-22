@@ -1,6 +1,6 @@
 # Distributed Statistical Modeling
 
-author: Balasubramanian Narasimhan, Stanford University
+author: BN, DLR, SMG, MB, PWL, Stanford University
 
 ## Introduction
 
