@@ -1,5 +1,6 @@
 distcomp
- ========
+========
+
 Install this package in R via:
 
 ```{r}
