@@ -5,7 +5,7 @@ Install this package in R via:
 
 ```{r}
 library(devtools)
-install_github("distcomp/hrpcisd")
+install_github("hrpcisd/distcomp")
 ```
 
 Then, you will find a document that describes several examples installed under the R library tree. For example:
