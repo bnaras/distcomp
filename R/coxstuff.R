@@ -109,7 +109,7 @@ coxMaster <- R6Class("CoxMaster",
                          run = function() {
                              'Run estimation'
                              ## Create an instance Id
-                             instanceId <<- digest(object=list(Sys.time(), self), algo="sha256")
+                             instanceId <<- generateId(object=list(Sys.time(), self))
                              if (debug) {
                                  print("run(): checking slave object creation")
                              }

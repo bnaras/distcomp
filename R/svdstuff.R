@@ -144,7 +144,7 @@ svdMaster <- R6Class("SVDMaster",
                          run = function(k = 1, thr = 1e-8, max.iter = 100) {
                              result <<- list()
                              'Run Calculation'
-                             instanceId <<- digest(object=list(Sys.time(), self), algo="sha256")
+                             instanceId <<- generateId(object=list(Sys.time(), self))
                              if (debug) {
                                  print("run(): checking slave object creation")
                              }

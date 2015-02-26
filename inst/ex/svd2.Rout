@@ -1,0 +1,315 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Loading required package: survival
+Loading required package: stats
+Loading required package: utils
+Loading required package: graphics
+Loading required package: splines
+[1] TRUE
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+>
+> defineNewComputation()
+Loading required package: shiny
+
+Listening on http://127.0.0.1:6263
+
+Listening on http://127.0.0.1:6263
+[1] TRUE
+> setupSlave()
+
+Listening on http://127.0.0.1:6263
+
+Listening on http://127.0.0.1:6263
+[1] TRUE
+> setupSlave()
+
+Listening on http://127.0.0.1:6263
+
+Listening on http://127.0.0.1:6263
+[1] TRUE
+> setupSlave()
+
+Listening on http://127.0.0.1:6263
+
+Listening on http://127.0.0.1:6263
+[1] TRUE
+> setupMaster()
+
+Listening on http://127.0.0.1:6263
+> library(distcomp)
+> defn <-
++ structure(list(id = structure(1L, .Label = "db19ec158c9d5218", class = "factor"),
++     compType = structure(1L, .Label = "RankKSVD", class = "factor"),
++     projectName = structure(1L, .Label = "SVDTest", class = "factor"),
++     projectDesc = structure(1L, .Label = "SVD Test Example", class = "factor"),
++     rank = 2L, ncol = 5L), .Names = c("id", "compType", "projectName",
++ "projectDesc", "rank", "ncol"), row.names = c(NA, -1L), class = "data.frame")
+> sites <-
++ structure(c("http://127.0.0.1:3978/ocpu", "http://127.0.0.1:3978/ocpu",
++ "http://127.0.0.1:3978/ocpu"), .Names = c("site1", "site2", "site3"
++ ))
+> siteDataFiles <-
++ c("site1.rds", "site2.rds", "site3.rds")
+> siteNames <-
++ c("site1", "site2", "site3")
+> master <- svdMaster$new(defnId = defn$id, localServer=TRUE)
+> for (i in seq.int(length(sites))) {
++    master$addSite(siteNames[i], sites[i], dataFileName=siteDataFiles[i])
++ }
+> result <- master$run(k=defn$rank)
+[1] "done with iter 1"
+[1] 0.5981971
+[1] "done with iter 2"
+[1] 0.1501856
+[1] "done with iter 3"
+[1] 0.1390619
+[1] "done with iter 4"
+[1] 0.1270418
+[1] "done with iter 5"
+[1] 0.1144909
+[1] "done with iter 6"
+[1] 0.1291805
+[1] "done with iter 7"
+[1] 0.1333627
+[1] "done with iter 8"
+[1] 0.118453
+[1] "done with iter 9"
+[1] 0.09529498
+[1] "done with iter 10"
+[1] 0.07222581
+[1] "done with iter 11"
+[1] 0.05296085
+[1] "done with iter 12"
+[1] 0.03824327
+[1] "done with iter 13"
+[1] 0.02735327
+[1] "done with iter 14"
+[1] 0.01955806
+[1] "done with iter 15"
+[1] 0.01388704
+[1] "done with iter 16"
+[1] 0.00990829
+[1] "done with iter 17"
+[1] 0.007055843
+[1] "done with iter 18"
+[1] 0.005040677
+[1] "done with iter 19"
+[1] 0.003570151
+[1] "done with iter 20"
+[1] 0.002576108
+[1] "done with iter 21"
+[1] 0.001861716
+[1] "done with iter 22"
+[1] 0.001268132
+[1] "done with iter 23"
+[1] 0.0009374201
+[1] "done with iter 24"
+[1] 0.0006347864
+[1] "done with iter 25"
+[1] 0.0004976319
+[1] "done with iter 26"
+[1] 0.0003477549
+[1] "done with iter 27"
+[1] 0.000228002
+[1] "done with iter 28"
+[1] 0.0001442904
+[1] "done with iter 29"
+[1] 0.0001332276
+[1] "done with iter 30"
+[1] 7.178985e-05
+[1] "done with iter 31"
+[1] 7.393605e-05
+[1] "done with iter 32"
+[1] 0
+[1] "done with iter 1"
+[1] 0.6508458
+[1] "done with iter 2"
+[1] 0.1178029
+[1] "done with iter 3"
+[1] 0.07715285
+[1] "done with iter 4"
+[1] 0.04956077
+[1] "done with iter 5"
+[1] 0.04149887
+[1] "done with iter 6"
+[1] 0.03397784
+[1] "done with iter 7"
+[1] 0.02728243
+[1] "done with iter 8"
+[1] 0.02163589
+[1] "done with iter 9"
+[1] 0.01713627
+[1] "done with iter 10"
+[1] 0.01346859
+[1] "done with iter 11"
+[1] 0.01063147
+[1] "done with iter 12"
+[1] 0.008329521
+[1] "done with iter 13"
+[1] 0.006593027
+[1] "done with iter 14"
+[1] 0.005101234
+[1] "done with iter 15"
+[1] 0.003991199
+[1] "done with iter 16"
+[1] 0.003160111
+[1] "done with iter 17"
+[1] 0.002513203
+[1] "done with iter 18"
+[1] 0.001953555
+[1] "done with iter 19"
+[1] 0.001583606
+[1] "done with iter 20"
+[1] 0.00117078
+[1] "done with iter 21"
+[1] 0.001048799
+[1] "done with iter 22"
+[1] 0.001036549
+[1] "done with iter 23"
+[1] 0.0009512224
+[1] "done with iter 24"
+[1] 0.0008778746
+[1] "done with iter 25"
+[1] 0.0008414305
+[1] "done with iter 26"
+[1] 0.0008417542
+[1] "done with iter 27"
+[1] 0.0007680775
+[1] "done with iter 28"
+[1] 0.0007562814
+[1] "done with iter 29"
+[1] 0.0006582836
+[1] "done with iter 30"
+[1] 0.0006586851
+[1] "done with iter 31"
+[1] 0.0005731981
+[1] "done with iter 32"
+[1] 0.0005851027
+[1] "done with iter 33"
+[1] 0.0005736154
+[1] "done with iter 34"
+[1] 0.0005727427
+[1] "done with iter 35"
+[1] 0.0004637005
+[1] "done with iter 36"
+[1] 0.0004630351
+[1] "done with iter 37"
+[1] 0.0004757677
+[1] "done with iter 38"
+[1] 0.000475834
+[1] "done with iter 39"
+[1] 0.0003658481
+[1] "done with iter 40"
+[1] 0.0003900893
+[1] "done with iter 41"
+[1] 0.0003781717
+[1] "done with iter 42"
+[1] 0.000365542
+[1] "done with iter 43"
+[1] 0.0002931334
+[1] "done with iter 44"
+[1] 0.0002801446
+[1] "done with iter 45"
+[1] 0.0002807075
+[1] "done with iter 46"
+[1] 0.0002928425
+[1] "done with iter 47"
+[1] 0.0002923873
+[1] "done with iter 48"
+[1] 0.0002681958
+[1] "done with iter 49"
+[1] 0.000207533
+[1] "done with iter 50"
+[1] 0.0001953201
+[1] "done with iter 51"
+[1] 0.0001947984
+[1] "done with iter 52"
+[1] 0.000182798
+[1] "done with iter 53"
+[1] 0.000195462
+[1] "done with iter 54"
+[1] 0.0001831356
+[1] "done with iter 55"
+[1] 0.0001945229
+[1] "done with iter 56"
+[1] 0.0001831872
+[1] "done with iter 57"
+[1] 0.0001706138
+[1] "done with iter 58"
+[1] 0.0001100612
+[1] "done with iter 59"
+[1] 0.0001831977
+[1] "done with iter 60"
+[1] 0.0001096721
+[1] "done with iter 61"
+[1] 9.7061e-05
+[1] "done with iter 62"
+[1] 0.0001103065
+[1] "done with iter 63"
+[1] 8.578284e-05
+[1] "done with iter 64"
+[1] 9.684228e-05
+[1] "done with iter 65"
+[1] 0.0001101831
+[1] "done with iter 66"
+[1] 8.534172e-05
+[1] "done with iter 67"
+[1] 9.764196e-05
+[1] "done with iter 68"
+[1] 8.534033e-05
+[1] "done with iter 69"
+[1] 8.491862e-05
+[1] "done with iter 70"
+[1] 8.585265e-05
+[1] "done with iter 71"
+[1] 9.764514e-05
+[1] "done with iter 72"
+[1] 0.0001096429
+[1] "done with iter 73"
+[1] 8.505844e-05
+[1] "done with iter 74"
+[1] 8.574486e-05
+[1] "done with iter 75"
+[1] 5.878622e-05
+[1] "done with iter 76"
+[1] 7.36222e-05
+[1] "done with iter 77"
+[1] 2.399064e-05
+[1] "done with iter 78"
+[1] 9.766962e-05
+[1] "done with iter 79"
+[1] 7.288321e-05
+[1] "done with iter 80"
+[1] 0
+> print(result)
+$v
+            [,1]        [,2]
+[1,]  0.17947030  0.08275684
+[2,]  0.78969198  0.34634459
+[3,] -0.21294972  0.91875219
+[4,] -0.54501407  0.16784298
+[5,]  0.04229739 -0.03032954
+
+$d
+[1] 9.707451 8.200043
+
+> q()
+
+Process R finished at Wed Feb 25 21:52:40 2015

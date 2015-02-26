@@ -1,6 +1,7 @@
 import(survival)
 import(shiny)
 import(utils)
+importFrom(stringr, str_trim)
 importFrom(R6, R6Class)
 importFrom(digest, digest)
 importFrom(httr, POST, headers, add_headers)
@@ -19,4 +20,7 @@ export("dccoxph.fit",
        "distcompSetup",
        "getConfig",
        "createInstanceObject", "destroyInstanceObject",
-       "saveNewComputation", "uploadNewComputation")
+       "saveNewComputation", "uploadNewComputation",
+       "setComputationInfo", "getComputationInfo", "resetComputationInfo",
+       "makeDefinition",
+       "generateId", "runDistcompApp", "writeCode")
