@@ -290,8 +290,20 @@ distcompSetup(workspace=&quot;full_path_to_workspace_directory&quot;,
 </code></pre>
 
 <p>On windows, the same should be done in the <code>RHOME\etc\Rprofile.site</code>
-file. Then, an R session must be started with these settings in
-effect.  Then, this document can be knit/rendered in that session.</p>
+file.</p>
+
+<p>In what follows, we assume that such initialization profile has been
+done. Furthermore, we assume that the <code>opencpu</code> server has been
+started in the <em>same session</em> as the one where this markdown document
+is being knitted or executed via <code>library(opencpu)</code>. This is merely a
+convenience that allows us to refer to the <code>opencpu</code> server url via
+<code>opencpu$url()</code>; otherwise other means (surely possible, but less
+elegant) would have to be found to refer to the <code>opencpu</code> URL in a
+permanent manner.</p>
+
+<p>To summarize: assuming that an <code>opencpu</code> server has been started via
+<code>library(opencpu)</code> with a proper R profile, one can proceed to knit
+this document in that R session.</p>
 
 <p><a id="simple-example"></a></p>
 
@@ -579,17 +591,56 @@ can be listed:</p>
 </code></pre>
 
 <pre><code>## $StratifiedCoxModel
+## $StratifiedCoxModel$desc
 ## [1] &quot;Stratified Cox Model&quot;
 ## 
+## $StratifiedCoxModel$definitionApp
+## [1] &quot;defineNewCoxModel&quot;
+## 
+## $StratifiedCoxModel$setupSlaveApp
+## [1] &quot;setupCoxSlave&quot;
+## 
+## $StratifiedCoxModel$setupMasterApp
+## [1] &quot;setupCoxMaster&quot;
+## 
+## $StratifiedCoxModel$makeDefinition
+## function () 
+## {
+##     data.frame(id = getComputationInfo(&quot;id&quot;), compType = getComputationInfo(&quot;compType&quot;), 
+##         projectName = getComputationInfo(&quot;projectName&quot;), projectDesc = getComputationInfo(&quot;projectDesc&quot;), 
+##         formula = getComputationInfo(&quot;formula&quot;), stringsAsFactors = FALSE)
+## }
+## &lt;environment: 0x7f9c1993d2e0&gt;
+## 
+## 
 ## $RankKSVD
+## $RankKSVD$desc
 ## [1] &quot;Rank K SVD&quot;
+## 
+## $RankKSVD$definitionApp
+## [1] &quot;defineNewSVDModel&quot;
+## 
+## $RankKSVD$setupSlaveApp
+## [1] &quot;setupSVDSlave&quot;
+## 
+## $RankKSVD$setupMasterApp
+## [1] &quot;setupSVDMaster&quot;
+## 
+## $RankKSVD$makeDefinition
+## function () 
+## {
+##     data.frame(id = getComputationInfo(&quot;id&quot;), compType = getComputationInfo(&quot;compType&quot;), 
+##         projectName = getComputationInfo(&quot;projectName&quot;), projectDesc = getComputationInfo(&quot;projectDesc&quot;), 
+##         rank = getComputationInfo(&quot;rank&quot;), ncol = getComputationInfo(&quot;ncol&quot;))
+## }
+## &lt;environment: 0x7f9c1993d2e0&gt;
 </code></pre>
 
 <p>So, we can define the ovarian data computation as follows.</p>
 
-<pre><code class="r">ovarianDef &lt;- list(compType = names(availableComputations())[1],
-               formula = &quot;Surv(futime, fustat) ~ age&quot;,
-               defnId = &quot;Ovarian&quot;)
+<pre><code class="r">ovarianDef &lt;- data.frame(compType = names(availableComputations())[1],
+                         formula = &quot;Surv(futime, fustat) ~ age&quot;,
+                         id = &quot;Ovarian&quot;, stringsAsFactors=FALSE)
 </code></pre>
 
 <p><a id="simple-data"></a></p>
@@ -629,10 +680,7 @@ ok &lt;- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-</code></pre>
-
-<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
+stopifnot(all(as.logical(ok)))
 </code></pre>
 
 <p><a id="reproduce"></a></p>
@@ -643,7 +691,7 @@ stopifnot(all(ok))
 first create a master object, taking care to specify that we are using
 a local server to simulate several sites.</p>
 
-<pre><code>master &lt;- coxMaster$new(defnId = ovarianDef$defnId, formula=ovarianDef$formula,
+<pre><code class="r">master &lt;- coxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula,
     localServer=TRUE)
 </code></pre>
 
@@ -655,16 +703,10 @@ names.</p>
 }
 </code></pre>
 
-<pre><code>## Error: object &#39;master&#39; not found
-</code></pre>
-
 <p>And we now maximize the partial likelihood, by calling the <code>run</code>
 method of the master.</p>
 
 <pre><code class="r">result &lt;- master$run()
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;master&#39; not found
 </code></pre>
 
 <p>We then print the summary.</p>
@@ -672,7 +714,8 @@ method of the master.</p>
 <pre><code class="r">master$summary()
 </code></pre>
 
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;master&#39; not found
+<pre><code>##        coef exp(coef)  se(coef)       z           p
+## 1 0.1373399  1.147218 0.0473947 2.89779 0.003758017
 </code></pre>
 
 <p>As we can see, the results we get from the distributed analysis are
@@ -719,10 +762,10 @@ print(pbcCox)
 
 <p>We split the data using <code>ascites</code> and proceed the usual way as shown above</p>
 
-<pre><code class="r">pbcDef &lt;- list(compType = names(availableComputations())[1],
-               formula = paste(&quot;Surv(time, status==2) ~ age + edema +&quot;,
-                   &quot;log(bili) + log(protime) + log(albumin)&quot;),
-               defnId = &quot;pbc&quot;)
+<pre><code class="r">pbcDef &lt;- data.frame(compType = names(availableComputations())[1],
+                     formula = paste(&quot;Surv(time, status==2) ~ age + edema +&quot;,
+                       &quot;log(bili) + log(protime) + log(albumin)&quot;),
+                     id = &quot;pbc&quot;, stringsAsFactors=FALSE)
 siteData &lt;- with(pbc, split(x=pbc, f=ascites))
 nSites &lt;- length(siteData)
 siteNames &lt;- sapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, sep=&quot;&quot;))
@@ -734,13 +777,8 @@ ok &lt;- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-</code></pre>
-
-<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
-</code></pre>
-
-<pre><code class="r">master &lt;- coxMaster$new(defnId = pbcDef$defnId, formula=pbcDef$formula,
+stopifnot(all(as.logical(ok)))
+master &lt;- coxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula,
     localServer=TRUE)
 for (i in seq.int(nSites)) {
     master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
@@ -869,9 +907,10 @@ print(bmt.cph)
 
 <p>We&#39;ll use <code>imtx</code> for splitting data into sites.</p>
 
-<pre><code class="r">bmtDef &lt;- list(compType = names(availableComputations())[1],
-               formula = paste(&quot;Surv(tnodis, inodis) ~ fab + agep.c * aged.c + factor(group)&quot;),
-               defnId = &quot;bmt&quot;)
+<pre><code class="r">bmtDef &lt;- data.frame(compType = names(availableComputations())[1],
+                     formula = paste(&quot;Surv(tnodis, inodis) ~ fab +&quot;,
+                       &quot;agep.c * aged.c + factor(group)&quot;),
+                     id = &quot;bmt&quot;, stringsAsFactors=FALSE)
 siteData &lt;- with(bmt, split(x=bmt, f=imtx))
 nSites &lt;- length(siteData)
 siteNames &lt;- sapply(seq.int(nSites), function(i) paste(&quot;site&quot;, i, sep=&quot;&quot;))
@@ -883,13 +922,8 @@ ok &lt;- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-</code></pre>
-
-<pre><code>## Warning in all(ok): coercing argument of type &#39;list&#39; to logical
-</code></pre>
-
-<pre><code class="r">master &lt;- coxMaster$new(defnId = bmtDef$defnId, formula=bmtDef$formula,
+stopifnot(all(as.logical(ok)))
+master &lt;- coxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula,
                         localServer=TRUE)
 for (i in seq.int(nSites)) {
     master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])

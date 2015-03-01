@@ -78,8 +78,21 @@ distcompSetup(workspace="full_path_to_workspace_directory",
 ```
 
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
-file. Then, an R session must be started with these settings in
-effect.  Then, this document can be knit/rendered in that session.
+file.
+
+In what follows, we assume that such initialization profile has been
+done. Furthermore, we assume that the `opencpu` server has been
+started in the _same session_ as the one where this markdown document
+is being knitted or executed via `library(opencpu)`. This is merely a
+convenience that allows us to refer to the `opencpu` server url via
+`opencpu$url()`; otherwise other means (surely possible, but less
+elegant) would have to be found to refer to the `opencpu` URL in a
+permanent manner.
+
+To summarize: assuming that an `opencpu` server has been started via
+`library(opencpu)` with a proper R profile, one can proceed to knit
+this document in that R session.
+
 
 <a id="simple-example"></a>
 ## A simple example
@@ -184,19 +197,58 @@ print(availableComputations())
 
 ```
 ## $StratifiedCoxModel
+## $StratifiedCoxModel$desc
 ## [1] "Stratified Cox Model"
 ## 
+## $StratifiedCoxModel$definitionApp
+## [1] "defineNewCoxModel"
+## 
+## $StratifiedCoxModel$setupSlaveApp
+## [1] "setupCoxSlave"
+## 
+## $StratifiedCoxModel$setupMasterApp
+## [1] "setupCoxMaster"
+## 
+## $StratifiedCoxModel$makeDefinition
+## function () 
+## {
+##     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
+##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
+##         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
+## }
+## <environment: 0x7f9c1993d2e0>
+## 
+## 
 ## $RankKSVD
+## $RankKSVD$desc
 ## [1] "Rank K SVD"
+## 
+## $RankKSVD$definitionApp
+## [1] "defineNewSVDModel"
+## 
+## $RankKSVD$setupSlaveApp
+## [1] "setupSVDSlave"
+## 
+## $RankKSVD$setupMasterApp
+## [1] "setupSVDMaster"
+## 
+## $RankKSVD$makeDefinition
+## function () 
+## {
+##     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
+##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
+##         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"))
+## }
+## <environment: 0x7f9c1993d2e0>
 ```
 
 So, we can define the ovarian data computation as follows.
 
 
 ```r
-ovarianDef <- list(compType = names(availableComputations())[1],
-               formula = "Surv(futime, fustat) ~ age",
-               defnId = "Ovarian")
+ovarianDef <- data.frame(compType = names(availableComputations())[1],
+                         formula = "Surv(futime, fustat) ~ age",
+                         id = "Ovarian", stringsAsFactors=FALSE)
 ```
 
 <a id="simple-data"></a>
@@ -240,11 +292,7 @@ ok <- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-```
-
-```
-## Warning in all(ok): coercing argument of type 'list' to logical
+stopifnot(all(as.logical(ok)))
 ```
 <a id="reproduce"></a>
 ### Reproducing original aggregated analysis in a distributed fashion
@@ -253,8 +301,9 @@ We are now ready to reproduce the original aggregated analysis. We
 first create a master object, taking care to specify that we are using
 a local server to simulate several sites.
 
-```
-master <- coxMaster$new(defnId = ovarianDef$defnId, formula=ovarianDef$formula,
+
+```r
+master <- coxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula,
 	localServer=TRUE)
 ```
 We then add the slave sites, once again specifying the site data file
@@ -266,20 +315,12 @@ for (i in seq.int(nSites)) {
     master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
 }
 ```
-
-```
-## Error: object 'master' not found
-```
 And we now maximize the partial likelihood, by calling the `run`
 method of the master.
 
 
 ```r
 result <- master$run()
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'master' not found
 ```
 
 We then print the summary.
@@ -290,7 +331,8 @@ master$summary()
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'master' not found
+##        coef exp(coef)  se(coef)       z           p
+## 1 0.1373399  1.147218 0.0473947 2.89779 0.003758017
 ```
 As we can see, the results we get from the distributed analysis are
 the same as we got for the original aggregated analysis. We print them
@@ -337,10 +379,10 @@ We split the data using `ascites` and proceed the usual way as shown above
 
 
 ```r
-pbcDef <- list(compType = names(availableComputations())[1],
-               formula = paste("Surv(time, status==2) ~ age + edema +",
-                   "log(bili) + log(protime) + log(albumin)"),
-               defnId = "pbc")
+pbcDef <- data.frame(compType = names(availableComputations())[1],
+                     formula = paste("Surv(time, status==2) ~ age + edema +",
+                       "log(bili) + log(protime) + log(albumin)"),
+                     id = "pbc", stringsAsFactors=FALSE)
 siteData <- with(pbc, split(x=pbc, f=ascites))
 nSites <- length(siteData)
 siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
@@ -352,15 +394,8 @@ ok <- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-```
-
-```
-## Warning in all(ok): coercing argument of type 'list' to logical
-```
-
-```r
-master <- coxMaster$new(defnId = pbcDef$defnId, formula=pbcDef$formula,
+stopifnot(all(as.logical(ok)))
+master <- coxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula,
 	localServer=TRUE)
 for (i in seq.int(nSites)) {
     master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
@@ -388,6 +423,7 @@ kable(master$summary())
 |  0.8682667|  2.3827773| 0.1006068|  8.630302| 0.0000000|
 |  3.0276949| 20.6495786| 1.0393738|  2.912999| 0.0035798|
 | -2.9765945|  0.0509661| 0.7809580| -3.811465| 0.0001381|
+
 The results should be comparable to the aggregated fit above.
 
 <a id="bmt"></a>
@@ -460,9 +496,10 @@ We'll use `imtx` for splitting data into sites.
 
 
 ```r
-bmtDef <- list(compType = names(availableComputations())[1],
-               formula = paste("Surv(tnodis, inodis) ~ fab + agep.c * aged.c + factor(group)"),
-               defnId = "bmt")
+bmtDef <- data.frame(compType = names(availableComputations())[1],
+                     formula = paste("Surv(tnodis, inodis) ~ fab +",
+                       "agep.c * aged.c + factor(group)"),
+                     id = "bmt", stringsAsFactors=FALSE)
 siteData <- with(bmt, split(x=bmt, f=imtx))
 nSites <- length(siteData)
 siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
@@ -474,15 +511,8 @@ ok <- Map(uploadNewComputation, siteURLs,
           siteData,
           siteDataFiles)
 
-stopifnot(all(ok))
-```
-
-```
-## Warning in all(ok): coercing argument of type 'list' to logical
-```
-
-```r
-master <- coxMaster$new(defnId = bmtDef$defnId, formula=bmtDef$formula,
+stopifnot(all(as.logical(ok)))
+master <- coxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula,
                         localServer=TRUE)
 for (i in seq.int(nSites)) {
     master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
