@@ -1,7 +1,7 @@
 distcomp
 ========
 
-Install this package in R via:
+Install this package the usual way in R or via:
 
 ```{r}
 library(devtools)
@@ -16,7 +16,7 @@ list.files(system.file("doc", package="distcomp"))
 list.files(system.file("doc_src", package="distcomp"))
 ```
 
-The examples described in the paper are available as follows:
+The examples described in the arxiv paper are available as follows:
 
 ```{r}
 list.files(system.file("ex", package="distcomp"))

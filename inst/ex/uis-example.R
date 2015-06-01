@@ -1,5 +1,4 @@
 library(distcomp)
-library(opencpu)
 
 ## First we do the conventional thing.
 
@@ -10,31 +9,29 @@ summary(coxOrig)
 
 ## We define the computation
 
-coxDef <- list(compType = names(availableComputations())[1],
-               formula = "Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat",
-               defnId = "UIS")
+coxDef <- data.frame(compType = names(availableComputations())[1],
+                     formula = "Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat",
+                     id = "UIS",
+                     stringsAsFactors=FALSE)
 
+library(opencpu)
 ## We split the data by site
 siteData <- with(uis, split(x=uis, f=site))
 nSites <- length(siteData)
-siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
-siteURLs <- lapply(seq.int(nSites), function(i) opencpu$url())
-names(siteData) <- names(siteURLs) <- siteNames
+sites <- lapply(seq.int(nSites),
+                function(x) list(name = paste0("site", x),
+                                 url = opencpu$url()))
 
-## Fix needed for local server in order not to clobber data sets
-siteDataFiles <- lapply(seq.int(nSites), function(i) paste("site", i, ".rds", sep=""))
-
-ok <- Map(uploadNewComputation, siteURLs,
+ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) coxDef),
-          siteData,
-          siteDataFiles)
+          siteData)
 
-stopifnot(all(ok))
+stopifnot(all(as.logical(ok)))
 
-master <- coxMaster$new(defnId = coxDef$defnId, formula=coxDef$formula, localServer=TRUE)
+master <- CoxMaster$new(defnId = coxDef$id, formula=coxDef$formula)
 
-for (i in seq.int(nSites)) {
-    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+for (site in sites) {
+  master$addSite(name = site$name, url = site$url)
 }
 
 result <- master$run()

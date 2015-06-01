@@ -1,0 +1,35 @@
+
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+>
+> library(distcomp)
+Loading required package: survival
+> distcompSetup(workspace="~/client/client-workspace",ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+[1] TRUE
+> setupSlave()
+Loading required package: shiny
+
+Listening on http://127.0.0.1:5407
+
+Listening on http://127.0.0.1:5407
+[1] TRUE
+> q()
+
+Process R finished at Sun May 31 21:06:01 2015

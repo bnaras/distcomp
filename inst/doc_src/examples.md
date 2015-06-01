@@ -62,6 +62,7 @@ We focus specifically on Cox regression models in this exercise.
 
 
 <a id="setup"></a>
+
 ### Setup
 
 It must be noted that for users to be able to `knit` this document, or
@@ -80,21 +81,36 @@ distcompSetup(workspace="full_path_to_workspace_directory",
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
 file.
 
+__Note__: On Yosemite (MacOS 10.10.x), we have found that references to
+`localhost` fail in the opencpu URL; rather the explicit IP address
+`127.0.0.1` is needed.
+
 In what follows, we assume that such initialization profile has been
 done. Furthermore, we assume that the `opencpu` server has been
 started in the _same session_ as the one where this markdown document
 is being knitted or executed via `library(opencpu)`. This is merely a
-convenience that allows us to refer to the `opencpu` server url via
-`opencpu$url()`; otherwise other means (surely possible, but less
-elegant) would have to be found to refer to the `opencpu` URL in a
-permanent manner.
+convenience that allows us to refer to the `opencpu` server URL
+programmatically via `opencpu$url()`; otherwise, alternative means
+would have to be found to refer to the `opencpu` URL in a permanent
+manner. For example, if `opencpu` is started in another terminal using
+`library(opencpu)`, one could note down the URL that it displays after
+starting, and define
+
+
+```r
+opencpu <- list(url = function() "your opencpu URL here")
+```
+
+to ensure that the expression `opencpu$url()` returns the
+appropriate URL.
 
 To summarize: assuming that an `opencpu` server has been started via
-`library(opencpu)` with a proper R profile, one can proceed to knit
+`library(opencpu)` with a proper R profile and the expression
+`opencpu$url()` has been set up appropriately, one can proceed to knit
 this document in that R session.
 
-
 <a id="simple-example"></a>
+
 ## A simple example
 
 We take a simple example from the `survival` package, the `ovarian`
@@ -154,6 +170,7 @@ kable(ovarian)
 |    377|      0| 58.3096|        1|  2|       1|
 
 <a id="simple-example-agg"></a>
+
 ### A Cox fit on the aggregated data
 
 A simple Cox model fit estimates the effect of age on survival,
@@ -186,6 +203,7 @@ two sites, one containing the control or placebo group (`rx = 1`)and
 the other containing the drug group (`rx = 2`).
 
 <a id="simple-model"></a>
+
 ### The model definition
 
 We first need to define the computation. The available computations
@@ -216,7 +234,17 @@ print(availableComputations())
 ##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
 ##         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7f9c1993d2e0>
+## <environment: 0x7fa374bafc08>
+## 
+## $StratifiedCoxModel$makeMaster
+## function (defn, debug = FALSE) 
+## CoxMaster$new(defnId = defn$id, formula = defn$formula, debug = debug)
+## <environment: 0x7fa374bafc08>
+## 
+## $StratifiedCoxModel$makeSlave
+## function (defn, data) 
+## CoxSlave$new(data = data, formula = defn$formula)
+## <environment: 0x7fa374bafc08>
 ## 
 ## 
 ## $RankKSVD
@@ -237,9 +265,20 @@ print(availableComputations())
 ## {
 ##     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
 ##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
-##         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"))
+##         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"), 
+##         stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7f9c1993d2e0>
+## <environment: 0x7fa374bafc08>
+## 
+## $RankKSVD$makeMaster
+## function (defn, debug = FALSE) 
+## SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug)
+## <environment: 0x7fa374bafc08>
+## 
+## $RankKSVD$makeSlave
+## function (defn, data) 
+## SVDSlave$new(x = data)
+## <environment: 0x7fa374bafc08>
 ```
 
 So, we can define the ovarian data computation as follows.
@@ -252,6 +291,7 @@ ovarianDef <- data.frame(compType = names(availableComputations())[1],
 ```
 
 <a id="simple-data"></a>
+
 ### The data for each site
 
 We split the `ovarian` data into two sites as indicated earlier.
@@ -262,16 +302,17 @@ siteData <- with(ovarian, split(x=ovarian, f=rx))
 ```
 
 <a id="simple-site-setup"></a>
+
 ### Setting up the sites
 
-We can now set up each site with its own data.
+We can now set up each site with its own data. A site is merely a list
+of two items, a (unique) `name` and an `opencpu` URL.
 
 
 ```r
 nSites <- length(siteData)
-siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
-siteURLs <- lapply(seq.int(nSites), function(i) opencpu$url())
-names(siteData) <- names(siteURLs) <- siteNames
+sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+                                                  url = opencpu$url()))
 ```
 
 By default, on each site, data for a computation is stored under the
@@ -280,39 +321,40 @@ name `data.rds` and the definition itself is stored under the name
 proceeds smoothly. However, here, in our case, we are using the same
 `opencpu` server for simulating both sites. We therefore have to save
 the files under different names, just for this experiment, say
-`site1.rds` and `site2.rds` for this example. We do that below, by
-providing the `siteDataFiles` as an argument to the `Map` call.
+`site1.rds` and `site2.rds` for this example. This is all taken care
+of by the code which checks to see if the `opencpu` URLs refer to
+local hosts or not. (In fact, as this code is executing, one can
+examine the contents of the workspace to see what is happening)
+We now `Map` the upload function to each site so that the computation
+becomes well-defined.
 
 
 ```r
-siteDataFiles <- lapply(seq.int(nSites), function(i) paste("site", i, ".rds", sep=""))
-
-ok <- Map(uploadNewComputation, siteURLs,
+ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) ovarianDef),
-          siteData,
-          siteDataFiles)
+          siteData)
 
 stopifnot(all(as.logical(ok)))
 ```
+
 <a id="reproduce"></a>
+
 ### Reproducing original aggregated analysis in a distributed fashion
 
 We are now ready to reproduce the original aggregated analysis. We
-first create a master object, taking care to specify that we are using
-a local server to simulate several sites.
+first create a master object using the same definition.
 
 
 ```r
-master <- coxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula,
-	localServer=TRUE)
+master <- CoxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula)
 ```
-We then add the slave sites, once again specifying the site data file
+We then add the slave sites specifying a name and a URL for each.
 names.
 
 
 ```r
 for (i in seq.int(nSites)) {
-    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+    master$addSite(name=sites[[i]]$name, url=sites[[i]]$url)
 }
 ```
 And we now maximize the partial likelihood, by calling the `run`
@@ -339,12 +381,14 @@ the same as we got for the original aggregated analysis. We print them
 separately here for comparison.
 
 <a id="larger-example"></a>
+
 ## A larger example
 
 We turn to a larger the example from Therneau and Grambsch using the
 `pbc` data where the stratifying variable is `ascites`.
 
 <a id="larger-example-full"></a>
+
 ### The aggregated fit
 
 
@@ -372,7 +416,9 @@ print(pbcCox)
 ## Likelihood ratio test=146  on 5 df, p=0  n= 312, number of events= 125 
 ##    (106 observations deleted due to missingness)
 ```
+
 <a id="larger-example-distributed"></a>
+
 ### The distributed fit
 
 We split the data using `ascites` and proceed the usual way as shown above
@@ -385,20 +431,15 @@ pbcDef <- data.frame(compType = names(availableComputations())[1],
                      id = "pbc", stringsAsFactors=FALSE)
 siteData <- with(pbc, split(x=pbc, f=ascites))
 nSites <- length(siteData)
-siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
-siteURLs <- lapply(seq.int(nSites), function(i) opencpu$url())
-names(siteData) <- names(siteURLs) <- siteNames
-siteDataFiles <- lapply(seq.int(nSites), function(i) paste("site", i, ".rds", sep=""))
-ok <- Map(uploadNewComputation, siteURLs,
+sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+                                                  url = opencpu$url()))
+ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) pbcDef),
-          siteData,
-          siteDataFiles)
-
+          siteData)
 stopifnot(all(as.logical(ok)))
-master <- coxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula,
-	localServer=TRUE)
-for (i in seq.int(nSites)) {
-    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+master <- CoxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula)
+for (site in sites) {
+    master$addSite(site$name, site$url)
 }
 ```
 
@@ -427,10 +468,22 @@ kable(master$summary())
 The results should be comparable to the aggregated fit above.
 
 <a id="bmt"></a>
+
 ## Bone Marrow Transplant Example
 
 This uses the `bmt` data from Klein and Moschberger. Some variable
 renaming, first.
+
+
+```r
+if (!require("KMsurv")) {
+  stop("Please install the KMsurv package before proceeding")
+}
+```
+
+```
+## Loading required package: KMsurv
+```
 
 
 ```r
@@ -462,6 +515,7 @@ bmt$imtx <- factor(bmt$imtx)
 ```
 
 <a id="bmt-full"></a>
+
 ### The aggregated fit
 
 
@@ -488,6 +542,7 @@ print(bmt.cph)
 ## 
 ## Likelihood ratio test=31  on 6 df, p=2.5e-05  n= 137, number of events= 83
 ```
+
 <a id="bmt-distributed"></a>
 
 ### The distributed fit
@@ -502,20 +557,16 @@ bmtDef <- data.frame(compType = names(availableComputations())[1],
                      id = "bmt", stringsAsFactors=FALSE)
 siteData <- with(bmt, split(x=bmt, f=imtx))
 nSites <- length(siteData)
-siteNames <- sapply(seq.int(nSites), function(i) paste("site", i, sep=""))
-siteURLs <- lapply(seq.int(nSites), function(i) opencpu$url())
-names(siteData) <- names(siteURLs) <- siteNames
-siteDataFiles <- lapply(seq.int(nSites), function(i) paste("site", i, ".rds", sep=""))
-ok <- Map(uploadNewComputation, siteURLs,
+sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+                                                  url = opencpu$url()))
+ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) bmtDef),
-          siteData,
-          siteDataFiles)
+          siteData)
 
 stopifnot(all(as.logical(ok)))
-master <- coxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula,
-                        localServer=TRUE)
-for (i in seq.int(nSites)) {
-    master$addSite(siteNames[i], siteURLs[[i]], dataFileName=siteDataFiles[[i]])
+master <- CoxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula)
+for (site in sites) {
+    master$addSite(site$name, site$url)
 }
 ```
 
@@ -543,6 +594,7 @@ kable(master$summary())
 |  0.0028547| 1.0028588| 0.0009480|  3.0111928| 0.0026022|
 
 <a id="prostate"></a>
+
 ## Byar and Greene Prostate Cancer Data Example
 
 This example is the largest of them all and also has four strata
@@ -554,6 +606,7 @@ prostate <- readRDS("prostate.RDS")
 ```
 
 <a id="prostate-full"></a>
+
 ### The aggregated fit
 
 
@@ -674,6 +727,7 @@ The method `dimP` merely returns the number of columns of the model
 matrix.
 
 <a id="site-loglik"></a>
+
 ### The (partial) log likelihood function for each site
 
 For our example, the (partial) log likelihood (named `localLogLik`) is simple
@@ -742,18 +796,18 @@ mleResults <- nlm(f=function(x) -logLik(x, sites),
 ```
 
 ```
-## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
-## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0, sites[[1]]
+## $dimP()), : NA/Inf replaced by maximum positive value
 ```
 
 ```
-## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
-## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0, sites[[1]]
+## $dimP()), : NA/Inf replaced by maximum positive value
 ```
 
 ```
-## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0,
-## sites[[1]]$dimP()), : NA/Inf replaced by maximum positive value
+## Warning in nlm(f = function(x) -logLik(x, sites), p = rep(0, sites[[1]]
+## $dimP()), : NA/Inf replaced by maximum positive value
 ```
 
 We print the coefficient estimates side-by-side for comparison.

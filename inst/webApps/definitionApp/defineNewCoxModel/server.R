@@ -9,22 +9,6 @@ shinyServer(function(input, output, session) {
                stringsAsFactors=FALSE)
   }
 
-  ## -- Begin: functions to make tabs active sequentially --
-  ## First time make sure Data Upload is selected
-  session$sendCustomMessage('activeNavs', 'Data Upload')
-  updateTabsetPanel(session, inputId="navigationList", selected="Data Upload")
-  observe({
-    if (input$uploadData > 0 && is.data.frame(getComputationInfo("data"))) {
-      session$sendCustomMessage('activeNavs', 'Formula Check')
-      updateTabsetPanel(session, inputId="navigationList", selected="Formula Check")
-    }
-  })
-  observe({
-    if (input$checkFormula > 0 && !is.null(getComputationInfo("formula"))) {
-      ##session$sendCustomMessage('activeNavs', 'Output Result')
-      updateTabsetPanel(session, inputId="navigationList", selected="Output Result")
-    }
-  })
   observe({
     if (input$exitApp > 0) stopApp(TRUE)
   })
@@ -40,26 +24,66 @@ shinyServer(function(input, output, session) {
   ## output$formulaChecked
   ## output$definitionSaved
 
-  ## When the user chooses a file and clicks on the "Upload Data" button
-  ## this function is triggered
+  ## When the user chooses a file or Redcap source or Database source
+  ## and clicks on the "Load Data" button this function is triggered
   output$dataFileContentSummary <- renderPrint({
-    if (input$uploadData == 0) return("")
-    ## Create data frame from file
-    isolate({
-      inputFile <- input$dataFile
-      shiny::validate(
-        need(inputFile != "", "Please select a data set")
-      )
+    if (input$loadData == 0) return("")
 
-      ## Parse missing value strings
-      missingValueIndicators <- stringr::str_trim(scan(textConnection(input$missingIndicators),
-                                                       what = character(0), sep=",", quiet=TRUE))
-      ## Return data frame or error as the case may be
-      dataResult <- tryCatch(
-        { read.csv(file = inputFile$datapath, na.strings = missingValueIndicators) } ,
-        warning = function(x) x,
-        error = function(x) x
-      )
+    ## Create data frame from source
+    isolate({
+      if (input$input_type == 'CSV File') {
+        inputFile <- input$dataFile
+        shiny::validate(
+          need(inputFile != "", "Please select a data set")
+        )
+        ## Parse missing value strings
+        missingValueIndicators <- stringr::str_trim(scan(textConnection(input$missingIndicators),
+                                                         what = character(0), sep=",", quiet=TRUE))
+        ## Return data frame or error as the case may be
+        dataResult <- tryCatch(
+          { read.csv(file = inputFile$datapath, na.strings = missingValueIndicators) } ,
+          warning = function(x) x,
+          error = function(x) x
+        )
+      } else if (input$input_type == 'Redcap API') {
+        shiny::validate(
+          need(requireNamespace("redcapAPI", quietly = TRUE), "Please install the redcapAPI package"),
+          need(input$redcapURL != "", "Please enter your Redcap URL"),
+          need(input$redcapToken != "", "Please enter your Redcap Token")
+        )
+
+        dataResult <-tryCatch(
+          { redcapAPI::exportRecords(redcapAPI::redcapConnection(url = input$redcapURL, token = input$redcapToken)) },
+          warning = function(x) x,
+          error = function(x) x
+        )
+      } else if (input$input_type == 'Postgres') {
+        shiny::validate(
+          need(requireNamespace("RPostgreSQL", quietly = TRUE), "Please install the RPostgreSQL package"),
+          need(requireNamespace("dplyr", quietly = TRUE), "Please install the dplyr package"),
+          need(input$dbName != "", "Please enter your Postgres database name"),
+          need(input$dbHost != "", "Please enter your Postgres host"),
+          need(!is.na(as.integer(input$dbPort)), "Please enter your Postgres port number"),
+          need(input$dbUser != "", "Please enter your Postgres database user name"),
+          need(input$dbPassword != "", "Please enter your Postgres database user password"),
+          need(input$dbTable != "", "Please enter your Postgres database table name")
+        )
+        dataResult <-  tryCatch(
+          {
+            db <- dplyr::src_postgres(dbname = input$dbName, host = input$dbHost, port = input$dbPort,
+                                      user = input$dbUser, password = input$dbPassword)
+            ## CAUTION: Need to do better to prevent SQL injection...
+            dplyr::tbl(db, paste("SELECT * from ", input$dbTable))
+          },
+          warning = function(x) x,
+          error = function(x) x
+        )
+      } else {
+        shiny::validate(
+          need(FALSE, "Report bug to Package owner: unexpected Data source!")
+        )
+        dataResult <- NULL
+      }
 
       if (is.data.frame(dataResult)){
         setComputationInfo("data", dataResult) ## Store data object
@@ -71,9 +95,9 @@ shinyServer(function(input, output, session) {
     })
   })
 
-  output$dataUploaded <- reactive({
-    if (input$uploadData == 0) return()
-    ifelse(is.data.frame(getComputationInfo("data")), "Data Uploaded; Proceed to Formula Check", "")
+  output$dataLoaded <- reactive({
+    if (input$loadData == 0) return()
+    ifelse(is.data.frame(getComputationInfo("data")), "Data loaded; Proceed to Formula Check", "")
   })
 
   ## When the user clicks on the "Check Formula" button
@@ -82,7 +106,7 @@ shinyServer(function(input, output, session) {
     if (input$checkFormula == 0) return()
     isolate({
       result <- tryCatch(
-        { coxSlave$new(formula = as.formula(input$formula), data=getComputationInfo("data")) },
+        { CoxSlave$new(formula = as.formula(input$formula), data=getComputationInfo("data")) },
         warning = function(x) x,
         error = function(x) x)
       if ("CoxSlave" %in% class(result)) { ## Success
@@ -116,19 +140,20 @@ shinyServer(function(input, output, session) {
   output$definitionSaved <- reactive({
     if (input$saveDefinition == 0) return()
     defn <- createProjectDefinition()
-    defnPath <- getConfig()$defnPath
-    dirName <- paste(defnPath, defn$id, sep=.Platform$file.sep)
+    ##defnPath <- getConfig()$defnPath
+    ##dirName <- paste(defnPath, defn$id, sep=.Platform$file.sep)
+    dirName <- getComputationInfo("workingDir")
     fileName <- paste(dirName, input$outputFile, sep=.Platform$file.sep)
     result <- tryCatch(
       {
-        dir.create(dirName)
+        ##dir.create(dirName)
         saveRDS(object = defn, file=fileName)
       },
       error = function(x) x)
     if (inherits(result, "error")) {
       paste("Error!", result$message)
     } else {
-      paste0("Definition saved to ", fileName)
+      paste0("Definition saved to ", input$outputFile)
     }
   })
 })

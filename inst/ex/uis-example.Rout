@@ -1,0 +1,173 @@
+
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+>
+> library(distcomp)
+Loading required package: survival
+> distcompSetup(workspace="~/client/client-workspace",ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+[1] TRUE
+> library(distcomp)
+> uis <- readRDS("uis.RDS")
+> coxOrig <- coxph(formula=Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 +
++                      ivhx3 + race + treat + strata(site), data=uis)
+> summary(coxOrig)
+Call:
+coxph(formula = Surv(time, censor) ~ age + becktota + ndrugfp1 +
+    ndrugfp2 + ivhx3 + race + treat + strata(site), data = uis)
+
+  n= 575, number of events= 464
+   (53 observations deleted due to missingness)
+
+               coef exp(coef)  se(coef)      z Pr(>|z|)
+age       -0.028076  0.972315  0.008131 -3.453 0.000554 ***
+becktota   0.009146  1.009187  0.004991  1.832 0.066914 .
+ndrugfp1  -0.521973  0.593349  0.124424 -4.195 2.73e-05 ***
+ndrugfp2  -0.194178  0.823512  0.048252 -4.024 5.72e-05 ***
+ivhx3TRUE  0.263634  1.301652  0.108243  2.436 0.014868 *
+race      -0.240021  0.786611  0.115632 -2.076 0.037920 *
+treat     -0.212616  0.808466  0.093747 -2.268 0.023331 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+          exp(coef) exp(-coef) lower .95 upper .95
+age          0.9723     1.0285    0.9569    0.9879
+becktota     1.0092     0.9909    0.9994    1.0191
+ndrugfp1     0.5933     1.6853    0.4649    0.7572
+ndrugfp2     0.8235     1.2143    0.7492    0.9052
+ivhx3TRUE    1.3017     0.7683    1.0528    1.6093
+race         0.7866     1.2713    0.6271    0.9867
+treat        0.8085     1.2369    0.6728    0.9715
+
+Concordance= 0.613  (se = 0.019 )
+Rsquare= 0.084   (max possible= 1 )
+Likelihood ratio test= 50.62  on 7 df,   p=1.092e-08
+Wald test            = 50.78  on 7 df,   p=1.017e-08
+Score (logrank) test = 51.31  on 7 df,   p=7.992e-09
+
+> coxDef <- data.frame(compType = names(availableComputations())[1],
++                      formula = "Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat",
++                      id = "UIS",
++                      stringsAsFactors=FALSE)
+> library(opencpu)
+Initiating OpenCPU server...
+Using config: /Users/naras/.opencpu.conf
+OpenCPU started.
+[httpuv] http://localhost:3952/ocpu
+OpenCPU single-user server ready.
+> siteData <- with(uis, split(x=uis, f=site))
+> nSites <- length(siteData)
+> sites <- lapply(seq.int(nSites),
++                 function(x) list(name = paste0("site", x),
++                                  url = opencpu$url()))
+> ok <- Map(uploadNewComputation, sites,
++           lapply(seq.int(nSites), function(i) coxDef),
++           siteData)
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+> stopifnot(all(as.logical(ok)))
+> master <- CoxMaster$new(defnId = coxDef$id, formula=coxDef$formula)
+> for (site in sites) {
++   master$addSite(name = site$name, url = site$url)
++ }
+> result <- master$run()
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+> master$summary()
+          coef exp(coef)    se(coef)         z            p
+1 -0.028049470 0.9723403 0.008130079 -3.450086 5.604085e-04
+2  0.009144073 1.0091860 0.004991809  1.831815 6.697892e-02
+3 -0.521929613 0.5933745 0.124424010 -4.194766 2.731534e-05
+4 -0.194170852 0.8235172 0.048250722 -4.024206 5.716782e-05
+5  0.263637628 1.3016564 0.108244755  2.435570 1.486837e-02
+6 -0.240060918 0.7865799 0.115631911 -2.076078 3.788670e-02
+7 -0.212571963 0.8085021 0.093746552 -2.267518 2.335862e-02
+> print(master$summary(), digits=5)
+        coef exp(coef)  se(coef)       z          p
+1 -0.0280495   0.97234 0.0081301 -3.4501 5.6041e-04
+2  0.0091441   1.00919 0.0049918  1.8318 6.6979e-02
+3 -0.5219296   0.59337 0.1244240 -4.1948 2.7315e-05
+4 -0.1941709   0.82352 0.0482507 -4.0242 5.7168e-05
+5  0.2636376   1.30166 0.1082448  2.4356 1.4868e-02
+6 -0.2400609   0.78658 0.1156319 -2.0761 3.7887e-02
+7 -0.2125720   0.80850 0.0937466 -2.2675 2.3359e-02
+> q()
+
+Process R finished at Mon Jun  1 12:13:04 2015
+OpenCPU stopped.

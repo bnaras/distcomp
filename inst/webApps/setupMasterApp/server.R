@@ -45,16 +45,12 @@ shinyServer(function(input, output, session) {
     if (input$addSite == 0) return()
     isolate({
       name <- stringr::str_trim(input$siteName)
-      url <- stringr::str_trim(input$ocpuURL)
+      url <- stringr::str_to_lower(stringr::str_trim(input$ocpuURL))
       shiny::validate(
         need(name != "", "Please enter a non-empty name")
       )
       shiny::validate(
-        need(url != "", "Please enter a URL")
-      )
-
-      shiny::validate(
-        need((grepl("^http://localhost", url) || grepl("^http://127.0.0.1", url)), "This app is currently for localhosts only!")
+        need(url != "" && grepl("^http", url), "Please enter a URL")
       )
 
       siteList <- getComputationInfo("siteList")
@@ -63,9 +59,10 @@ shinyServer(function(input, output, session) {
         need(!(name %in% names(siteList)), paste("Bad site: duplicate name", name))
       )
 
-      siteList[[name]] <- url
+      n <- length(siteList)
+      siteList[[n + 1]] <- list(name = name, url = url)
       setComputationInfo("siteList", siteList)
-      str(as.list(siteList))
+      str(siteList)
     })
   })
 
