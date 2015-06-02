@@ -1,7 +1,7 @@
 Title: Computations over distributed data without aggregation
 Maintainer: Balasubramanian Narasimhan <naras@stat.Stanford.EDU>
 Package: distcomp
-Version: 0.25
+Version: 0.25.1
 URL: http://arxiv.org/abs/1412.6890
 Depends: survival, stats, R (>= 3.1.0)
 Imports: utils, shiny, httr, digest, jsonlite, stringr, R6 (>= 2.0)
