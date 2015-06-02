@@ -1,4 +1,4 @@
-Title: Distributed Computations
+Title: Computations over distributed data without aggregation
 Maintainer: Balasubramanian Narasimhan <naras@stat.Stanford.EDU>
 Package: distcomp
 Version: 0.25
@@ -12,14 +12,17 @@ Authors@R: c(person("Balasubramanian", "Narasimhan", role=c("aut", "cre"),
            person("Sam", "Gross", role=c("aut")),
 	   person(c("Terry", "M."), "Therneau", role=c("ctb")),
            person("Thomas", "Lumley", role=c("ctb")))
-Description: Current implementations include a stratified Cox model and
-  singular value decomposition. The former makes direct use of code
-  from the R survival package. (That is, the underlying Cox model code
-  is derived from that in the R survival package.) Users may either
-  use CSV data files or Redcap data sources for computations. An
-  extensible design allows for new methods to be added. Web
-  applications are provided (via shiny) for the implemented methods
-  to help in designing and deploying the computations.
+Description: Implementing algorithms and fitting models when sites
+  share computation summaries rather than actual data, using
+  'opencpu'. A stratified Cox model and a singular value
+  decomposition algorithm are provided. The former makes direct use
+  of code from the R 'survival' package. (That is, the underlying
+  Cox model code is derived from that in the R 'survival' package.)
+  Users may either use CSV data files or Redcap data sources for
+  computations. An extensible design allows for new methods to be
+  added. Web applications are provided (via 'shiny') for
+  the implemented methods to help in designing and deploying the
+  computations.
 Copyright: inst/COPYRIGHTS
 License: LGPL (>= 2)
 Author: Balasubramanian Narasimhan [aut, cre], Marina Bendersky [aut],
