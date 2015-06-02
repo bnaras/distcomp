@@ -13,8 +13,8 @@ Authors@R: c(person("Balasubramanian", "Narasimhan", role=c("aut", "cre"),
 	   person(c("Terry", "M."), "Therneau", role=c("ctb")),
            person("Thomas", "Lumley", role=c("ctb")))
 Description: Implementing algorithms and fitting models when sites (possibly remote) share
-  computation summaries rather than actual data over HTTP (using 'opencpu', for example)
-  with a master R process. A stratified Cox model and a singular value decomposition are
+  computation summaries rather than actual data over HTTP with a master R process (using
+  'opencpu', for example). A stratified Cox model and a singular value decomposition are
   provided. The former makes direct use of code from the R 'survival' package. (That is,
   the underlying Cox model code is derived from that in the R 'survival' package.)
   Sites may provide data via several means: CSV files, Redcap API, etc. An extensible
