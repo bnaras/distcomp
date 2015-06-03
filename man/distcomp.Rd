@@ -41,7 +41,7 @@ not meant to be recomputed often. These and other details are discussed in the
 paper mentioned above.
 
 The current implementation, particularly the Stratified Cox Model, makes direct use of
-code from \code{link{survival:coxph}}. That is, the underlying Cox model code is
+code from \code{\link[survival]{coxph}}. That is, the underlying Cox model code is
 derived from that in the R \code{survival} survival package.
 
 For an understanding of how this package is meant to be used, please see the documented
