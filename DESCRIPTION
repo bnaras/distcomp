@@ -1,4 +1,4 @@
-Title: Computations over distributed data without aggregation
+Title: Computations over Distributed Data without Aggregation
 Maintainer: Balasubramanian Narasimhan <naras@stat.Stanford.EDU>
 Package: distcomp
 Version: 0.25.1
