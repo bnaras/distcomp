@@ -169,6 +169,21 @@ hr {
 with the data and transcripts of R sessions. They are provided for
 reference.</p>
 
+<h3>Update on version 0.25.2</h3>
+
+<p>Version 0.25.1 of <code>distcomp</code> relied on imports from <code>httr</code> version
+below 0.6.x. Since then, package <code>httr</code> has been updated to version
+1.x using a new <code>curl</code> library and <code>distcomp</code> has now been updated to
+account for them. The changes are pretty minor but the parameters for
+the <code>httr::POST</code> requests that <code>distcomp</code> makes are different: the SSL
+options are now named with underscores and the parameter values are
+now not <code>logical</code> but <code>integer</code>, with <code>0L</code> for <code>FALSE</code> and <code>1L</code> for
+<code>TRUE</code>. All our examples work as before (see the examples in the <code>doc</code>
+directory), but the transcripts here are still from version 0.25.1 of
+<code>distcomp</code>. In version 0.26.x of <code>distcomp</code>, we will provide updated
+transcripts (with session information) along with some new
+improvements.</p>
+
 <h2>Table of Contents</h2>
 
 <table><thead>

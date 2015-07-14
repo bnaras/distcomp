@@ -74,21 +74,21 @@ lines to the `${HOME}/.Rprofile`.
 
 ```r
 library(distcomp)
-distcompSetup(workspace="full_path_to_workspace_directory",
-              ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+distcompSetup(workspace = "full_path_to_workspace_directory",
+              ssl_verifyhost = 0L, ssl_verifypeer = 0L)
 ```
 
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
 file.
 
-__Note__: On Yosemite (MacOS 10.10.x), we have found that references to
-`localhost` fail in the opencpu URL; rather the explicit IP address
-`127.0.0.1` is needed.
+__Note__: On Yosemite (MacOS 10.10.x), we have found that references
+to `localhost` sometimes fail in the opencpu URL; rather the explicit
+IP address `127.0.0.1` is needed.
 
 In what follows, we assume that such initialization profile has been
 done. Furthermore, we assume that the `opencpu` server has been
 started in the _same session_ as the one where this markdown document
-is being knitted or executed via `library(opencpu)`. This is merely a
+is being knitted via `library(opencpu)`. This is merely a
 convenience that allows us to refer to the `opencpu` server URL
 programmatically via `opencpu$url()`; otherwise, alternative means
 would have to be found to refer to the `opencpu` URL in a permanent
@@ -178,7 +178,7 @@ stratified by drug.
 
 
 ```r
-cp <- coxph(Surv(futime, fustat) ~ age + strata(rx), data=ovarian, ties="breslow")
+cp <- coxph(Surv(futime, fustat) ~ age + strata(rx), data = ovarian, ties = "breslow")
 print(cp)
 ```
 
@@ -188,10 +188,11 @@ print(cp)
 ##     ties = "breslow")
 ## 
 ## 
-##      coef exp(coef) se(coef)   z      p
-## age 0.137      1.15   0.0474 2.9 0.0038
+##       coef exp(coef) se(coef)   z      p
+## age 0.1374    1.1472   0.0474 2.9 0.0038
 ## 
-## Likelihood ratio test=12.7  on 1 df, p=0.000368  n= 26, number of events= 12
+## Likelihood ratio test=12.7  on 1 df, p=0.000368
+## n= 26, number of events= 12
 ```
 
 The above shows the intial and final log likelihood values at 0 and
@@ -234,17 +235,17 @@ print(availableComputations())
 ##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
 ##         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ## 
 ## $StratifiedCoxModel$makeMaster
 ## function (defn, debug = FALSE) 
 ## CoxMaster$new(defnId = defn$id, formula = defn$formula, debug = debug)
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ## 
 ## $StratifiedCoxModel$makeSlave
 ## function (defn, data) 
 ## CoxSlave$new(data = data, formula = defn$formula)
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ## 
 ## 
 ## $RankKSVD
@@ -268,17 +269,17 @@ print(availableComputations())
 ##         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"), 
 ##         stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ## 
 ## $RankKSVD$makeMaster
 ## function (defn, debug = FALSE) 
 ## SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug)
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ## 
 ## $RankKSVD$makeSlave
 ## function (defn, data) 
 ## SVDSlave$new(x = data)
-## <environment: 0x7fa374bafc08>
+## <environment: 0x7fd15364aa28>
 ```
 
 So, we can define the ovarian data computation as follows.
@@ -298,7 +299,7 @@ We split the `ovarian` data into two sites as indicated earlier.
 
 
 ```r
-siteData <- with(ovarian, split(x=ovarian, f=rx))
+siteData <- with(ovarian, split(x = ovarian, f = rx))
 ```
 
 <a id="simple-site-setup"></a>
@@ -311,7 +312,7 @@ of two items, a (unique) `name` and an `opencpu` URL.
 
 ```r
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ```
 
@@ -346,7 +347,7 @@ first create a master object using the same definition.
 
 
 ```r
-master <- CoxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula)
+master <- CoxMaster$new(defnId = ovarianDef$id, formula = ovarianDef$formula)
 ```
 We then add the slave sites specifying a name and a URL for each.
 names.
@@ -354,7 +355,7 @@ names.
 
 ```r
 for (i in seq.int(nSites)) {
-    master$addSite(name=sites[[i]]$name, url=sites[[i]]$url)
+    master$addSite(name = sites[[i]]$name, url = sites[[i]]$url)
 }
 ```
 And we now maximize the partial likelihood, by calling the `run`
@@ -395,7 +396,8 @@ We turn to a larger the example from Therneau and Grambsch using the
 ```r
 data(pbc)
 pbcCox <- coxph(Surv(time, status==2) ~ age + edema + log(bili) +
-                log(protime) + log(albumin) + strata(ascites), data=pbc, ties="breslow")
+                  log(protime) + log(albumin) + strata(ascites), data = pbc,
+                ties = "breslow")
 print(pbcCox)
 ```
 
@@ -406,14 +408,15 @@ print(pbcCox)
 ##     ties = "breslow")
 ## 
 ## 
-##                 coef exp(coef) se(coef)     z       p
-## age           0.0314    1.0318  0.00907  3.45 0.00055
-## edema         0.5993    1.8209  0.32127  1.87 0.06200
-## log(bili)     0.8663    2.3780  0.10066  8.61 0.00000
-## log(protime)  3.0341   20.7815  1.03884  2.92 0.00350
-## log(albumin) -2.9662    0.0515  0.78177 -3.79 0.00015
+##                  coef exp(coef) se(coef)     z       p
+## age           0.03135   1.03185  0.00907  3.45 0.00055
+## edema         0.59935   1.82093  0.32127  1.87 0.06210
+## log(bili)     0.86626   2.37800  0.10066  8.61 < 2e-16
+## log(protime)  3.03406  20.78146  1.03884  2.92 0.00349
+## log(albumin) -2.96618   0.05150  0.78177 -3.79 0.00015
 ## 
-## Likelihood ratio test=146  on 5 df, p=0  n= 312, number of events= 125 
+## Likelihood ratio test=146  on 5 df, p=0
+## n= 312, number of events= 125 
 ##    (106 observations deleted due to missingness)
 ```
 
@@ -428,16 +431,16 @@ We split the data using `ascites` and proceed the usual way as shown above
 pbcDef <- data.frame(compType = names(availableComputations())[1],
                      formula = paste("Surv(time, status==2) ~ age + edema +",
                        "log(bili) + log(protime) + log(albumin)"),
-                     id = "pbc", stringsAsFactors=FALSE)
-siteData <- with(pbc, split(x=pbc, f=ascites))
+                     id = "pbc", stringsAsFactors = FALSE)
+siteData <- with(pbc, split(x = pbc, f = ascites))
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) pbcDef),
           siteData)
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula)
+master <- CoxMaster$new(defnId = pbcDef$id, formula = pbcDef$formula)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -508,8 +511,8 @@ names(bmt)[1] <- "id"
 ##
 #####
 ##
-bmt$agep.c = bmt$agep - 28
-bmt$aged.c = bmt$aged - 28
+bmt$agep.c <- bmt$agep - 28
+bmt$aged.c <- bmt$aged - 28
 
 bmt$imtx <- factor(bmt$imtx)
 ```
@@ -521,7 +524,7 @@ bmt$imtx <- factor(bmt$imtx)
 
 ```r
 bmt.cph <- coxph(formula = Surv(tnodis, inodis) ~ fab + agep.c * aged.c +
-                 factor(group) + strata(imtx), data = bmt, ties="breslow")
+                 factor(group) + strata(imtx), data = bmt, ties = "breslow")
 
 print(bmt.cph)
 ```
@@ -532,15 +535,16 @@ print(bmt.cph)
 ##     factor(group) + strata(imtx), data = bmt, ties = "breslow")
 ## 
 ## 
-##                    coef exp(coef) se(coef)       z      p
-## fab             0.90780     2.479  0.27899  3.2539 0.0011
-## agep.c          0.00551     1.006  0.01997  0.2759 0.7800
-## aged.c         -0.00164     0.998  0.01816 -0.0901 0.9300
-## factor(group)2 -1.03389     0.356  0.36472 -2.8348 0.0046
-## factor(group)3 -0.33909     0.712  0.36784 -0.9218 0.3600
-## agep.c:aged.c   0.00285     1.003  0.00095  2.9950 0.0027
+##                    coef exp(coef) se(coef)     z      p
+## fab             0.90780   2.47886  0.27899  3.25 0.0011
+## agep.c          0.00551   1.00553  0.01997  0.28 0.7826
+## aged.c         -0.00164   0.99836  0.01816 -0.09 0.9282
+## factor(group)2 -1.03389   0.35562  0.36472 -2.83 0.0046
+## factor(group)3 -0.33909   0.71242  0.36784 -0.92 0.3566
+## agep.c:aged.c   0.00284   1.00285  0.00095  3.00 0.0027
 ## 
-## Likelihood ratio test=31  on 6 df, p=2.5e-05  n= 137, number of events= 83
+## Likelihood ratio test=31  on 6 df, p=2.5e-05
+## n= 137, number of events= 83
 ```
 
 <a id="bmt-distributed"></a>
@@ -554,17 +558,17 @@ We'll use `imtx` for splitting data into sites.
 bmtDef <- data.frame(compType = names(availableComputations())[1],
                      formula = paste("Surv(tnodis, inodis) ~ fab +",
                        "agep.c * aged.c + factor(group)"),
-                     id = "bmt", stringsAsFactors=FALSE)
-siteData <- with(bmt, split(x=bmt, f=imtx))
+                     id = "bmt", stringsAsFactors = FALSE)
+siteData <- with(bmt, split(x = bmt, f = imtx))
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) bmtDef),
           siteData)
 
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula)
+master <- CoxMaster$new(defnId = bmtDef$id, formula = bmtDef$formula)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -612,7 +616,7 @@ prostate <- readRDS("prostate.RDS")
 
 ```r
 pcph <- coxph(Surv(dtime, status) ~ stage + strata(rx) + age + wt + pf + hx +
-                  sbp + dbp + ekg + hg + sz + sg + ap + bm, data=prostate)
+                  sbp + dbp + ekg + hg + sz + sg + ap + bm, data = prostate)
 print(pcph)
 ```
 
@@ -623,29 +627,30 @@ print(pcph)
 ##     data = prostate)
 ## 
 ## 
-##                         coef exp(coef) se(coef)       z       p
-## stageIV             -0.17759     0.837 0.175923 -1.0095 3.1e-01
-## age                  0.02421     1.025 0.009157  2.6436 8.2e-03
-## wt                  -0.01026     0.990 0.004755 -2.1568 3.1e-02
-## pfBedridden(<50%)   -1.37275     0.253 0.851150 -1.6128 1.1e-01
-## pfBedridden(>50%)   -1.17494     0.309 0.850354 -1.3817 1.7e-01
-## pfnormal            -1.58867     0.204 0.825542 -1.9244 5.4e-02
-## hx                   0.51042     1.666 0.120371  4.2404 2.2e-05
-## sbp                 -0.03309     0.967 0.029279 -1.1300 2.6e-01
-## dbp                  0.04943     1.051 0.047790  1.0344 3.0e-01
-## ekgblock/conduction -0.14590     0.864 0.382387 -0.3816 7.0e-01
-## ekgheart strain      0.39317     1.482 0.282538  1.3916 1.6e-01
-## ekgnormal           -0.05796     0.944 0.281828 -0.2057 8.4e-01
-## ekgold MI            0.00744     1.007 0.301073  0.0247 9.8e-01
-## ekgrecent MI         0.81895     2.268 1.055545  0.7759 4.4e-01
-## ekgrhythmic disturb  0.28031     1.324 0.307714  0.9110 3.6e-01
-## hg                  -0.06893     0.933 0.031996 -2.1543 3.1e-02
-## sz                   0.01780     1.018 0.004608  3.8640 1.1e-04
-## sg                   0.10020     1.105 0.041607  2.4083 1.6e-02
-## ap                  -0.00138     0.999 0.000997 -1.3881 1.7e-01
-## bm                   0.31964     1.377 0.181333  1.7627 7.8e-02
+##                          coef exp(coef)  se(coef)     z       p
+## stageIV             -0.177590  0.837286  0.175923 -1.01 0.31275
+## age                  0.024208  1.024504  0.009157  2.64 0.00820
+## wt                  -0.010256  0.989797  0.004755 -2.16 0.03102
+## pfBedridden(<50%)   -1.372753  0.253408  0.851150 -1.61 0.10678
+## pfBedridden(>50%)   -1.174937  0.308838  0.850354 -1.38 0.16706
+## pfnormal            -1.588673  0.204196  0.825542 -1.92 0.05430
+## hx                   0.510419  1.665989  0.120371  4.24 2.2e-05
+## sbp                 -0.033086  0.967455  0.029279 -1.13 0.25846
+## dbp                  0.049434  1.050676  0.047790  1.03 0.30096
+## ekgblock/conduction -0.145903  0.864242  0.382387 -0.38 0.70279
+## ekgheart strain      0.393173  1.481675  0.282538  1.39 0.16405
+## ekgnormal           -0.057959  0.943689  0.281828 -0.21 0.83706
+## ekgold MI            0.007442  1.007470  0.301073  0.02 0.98028
+## ekgrecent MI         0.818946  2.268109  1.055545  0.78 0.43784
+## ekgrhythmic disturb  0.280313  1.323544  0.307714  0.91 0.36232
+## hg                  -0.068929  0.933393  0.031996 -2.15 0.03122
+## sz                   0.017804  1.017963  0.004608  3.86 0.00011
+## sg                   0.100201  1.105393  0.041607  2.41 0.01603
+## ap                  -0.001384  0.998617  0.000997 -1.39 0.16510
+## bm                   0.319640  1.376633  0.181333  1.76 0.07795
 ## 
-## Likelihood ratio test=99.4  on 20 df, p=1.59e-12  n= 475, number of events= 338 
+## Likelihood ratio test=99.4  on 20 df, p=1.59e-12
+## n= 475, number of events= 338 
 ##    (27 observations deleted due to missingness)
 ```
 <a id="prostate-distributed"></a>
@@ -700,12 +705,12 @@ site <- setRefClass("siteObject",
                         },
                         kosher = function() {
                             'Check that the class data passes sanity checks'
-                            modelDataFrame <<- model.frame(formula, data=data)
+                            modelDataFrame <<- model.frame(formula, data = data)
                             lhs <- modelDataFrame[, 1]
                             ordering <- order(lhs[, 1])
                             modelDataFrame <<- modelDataFrame[ordering, ]
                             data <<- data[ordering, ]
-                            modelMatrix <<- model.matrix(formula, data=modelDataFrame)
+                            modelMatrix <<- model.matrix(formula, data = modelDataFrame)
                             TRUE
                         },
                         dimP = function() {
@@ -769,7 +774,7 @@ We are now ready to do the alternative distributed fit. We split the
 
 
 ```r
-siteData <- with(prostate, split(x=prostate, f=rx))
+siteData <- with(prostate, split(x = prostate, f = rx))
 sites <- lapply(siteData,
                 function(x) {
                     site$new(data = x,
@@ -791,8 +796,8 @@ All that remains is to maximize this log likelihood.
 
 ```r
 mleResults <- nlm(f=function(x) -logLik(x, sites),
-                  p=rep(0, sites[[1]]$dimP()),
-                  gradtol=1e-10, iterlim=1000)
+                  p = rep(0, sites[[1]]$dimP()),
+                  gradtol = 1e-10, iterlim = 1000)
 ```
 
 ```
@@ -814,7 +819,7 @@ We print the coefficient estimates side-by-side for comparison.
 
 
 ```r
-d <- data.frame(distCoef=mleResults$estimate, aggCoef=pcph$coefficients)
+d <- data.frame(distCoef = mleResults$estimate, aggCoef = pcph$coefficients)
 rownames(d) <- names(pcph$coefficients)
 kable(d)
 ```
@@ -843,4 +848,35 @@ kable(d)
 |sg                  |  0.1016070|  0.1002007|
 |ap                  | -0.0013375| -0.0013841|
 |bm                  |  0.3180923|  0.3196404|
+
+## Session Information
+
+```r
+sessionInfo()
+```
+
+```
+## R version 3.2.1 (2015-06-18)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.10.3 (Yosemite)
+## 
+## locale:
+## [1] C
+## 
+## attached base packages:
+## [1] grDevices utils     datasets  stats     graphics  methods   base     
+## 
+## other attached packages:
+## [1] KMsurv_0.1-5    opencpu_1.4.6   distcomp_0.25.2 survival_2.38-2
+## [5] knitr_1.10.5    devtools_1.8.0 
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.11.6      xml2_0.1.1       magrittr_1.5     splines_3.2.1   
+##  [5] xtable_1.7-4     R6_2.0.1         brew_1.0-6       highr_0.5       
+##  [9] stringr_1.0.0    httr_1.0.0       tools_3.2.1      parallel_3.2.1  
+## [13] git2r_0.10.1     htmltools_0.2.6  rversions_1.0.1  openssl_0.4     
+## [17] digest_0.6.8     shiny_0.12.1     formatR_1.2      codetools_0.2-11
+## [21] curl_0.8         evaluate_0.7     memoise_0.2.1    mime_0.3        
+## [25] stringi_0.5-2    compiler_3.2.1   jsonlite_0.9.16  httpuv_1.3.2
+```
 

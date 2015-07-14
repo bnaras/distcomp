@@ -8,7 +8,7 @@ distcompSetup(workspacePath = "", defnPath = paste(workspacePath, "defn",
   sep = .Platform$file.sep), instancePath = paste(workspacePath, "instances",
   sep = .Platform$file.sep), defnFileName = "defn.rds",
   dataFileName = "data.rds", instanceFileName = "instance.rds",
-  ssl.verifyhost = TRUE, ssl.verifypeer = TRUE)
+  ssl_verifyhost = 1L, ssl_verifypeer = 1L)
 }
 \arguments{
 \item{workspacePath}{a folder specifying the workspace path. This has to be
@@ -27,11 +27,11 @@ computation identifiers}
 
 \item{instanceFileName}{the name for the instance files}
 
-\item{ssl.verifyhost}{logical value, usually \code{TRUE}, but for testing with
-snake-oil certs, one might set this to \code{FALSE}}
+\item{ssl_verifyhost}{integer value, usually \code{1L}, but for testing with
+snake-oil certs, one might set this to \code{0L}}
 
-\item{ssl.verifypeer}{logical value, usually \code{TRUE}, but for testing with
-snake-oil certs, one might set this to \code{FALSE}}
+\item{ssl_verifypeer}{integer value, usually \code{1L}, but for testing with
+snake-oil certs, one might set this to \code{0L}}
 }
 \value{
 TRUE if all is well

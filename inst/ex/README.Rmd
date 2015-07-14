@@ -4,6 +4,20 @@ This directory contains the two examples discussed in the paper, along
 with the data and transcripts of R sessions. They are provided for
 reference.
 
+### Update on version 0.25.2
+
+Version 0.25.1 of `distcomp` relied on imports from `httr` version
+below 0.6.x. Since then, package `httr` has been updated to version
+1.x using a new `curl` library and `distcomp` has now been updated to
+account for them. The changes are pretty minor but the parameters for
+the `httr::POST` requests that `distcomp` makes are different: the SSL
+options are now named with underscores and the parameter values are
+now not `logical` but `integer`, with `0L` for `FALSE` and `1L` for
+`TRUE`. All our examples work as before (see the examples in the `doc`
+directory), but the transcripts here are still from version 0.25.1 of
+`distcomp`. In version 0.26.x of `distcomp`, we will provide updated
+transcripts (with session information) along with some new
+improvements.
 
 ## Table of Contents
 

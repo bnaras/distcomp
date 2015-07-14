@@ -8,6 +8,12 @@
 #' been modified to include a prefix "dc".
 #'
 #' @import survival
+#' @importFrom stats terms
+#' @importFrom stats model.extract
+#' @importFrom stats model.matrix
+#' @importFrom stats model.offset
+#' @importFrom stats model.weights
+#' @importFrom stats .getXlevels
 #' @useDynLib distcomp, .registration = TRUE
 #' @keywords internal
 #tt <- function(x) x

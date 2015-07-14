@@ -73,21 +73,21 @@ lines to the `${HOME}/.Rprofile`.
 
 ```{r, eval=FALSE}
 library(distcomp)
-distcompSetup(workspace="full_path_to_workspace_directory",
-              ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+distcompSetup(workspace = "full_path_to_workspace_directory",
+              ssl_verifyhost = 0L, ssl_verifypeer = 0L)
 ```
 
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
 file.
 
-__Note__: On Yosemite (MacOS 10.10.x), we have found that references to
-`localhost` fail in the opencpu URL; rather the explicit IP address
-`127.0.0.1` is needed.
+__Note__: On Yosemite (MacOS 10.10.x), we have found that references
+to `localhost` sometimes fail in the opencpu URL; rather the explicit
+IP address `127.0.0.1` is needed.
 
 In what follows, we assume that such initialization profile has been
 done. Furthermore, we assume that the `opencpu` server has been
 started in the _same session_ as the one where this markdown document
-is being knitted or executed via `library(opencpu)`. This is merely a
+is being knitted via `library(opencpu)`. This is merely a
 convenience that allows us to refer to the `opencpu` server URL
 programmatically via `opencpu$url()`; otherwise, alternative means
 would have to be found to refer to the `opencpu` URL in a permanent
@@ -130,7 +130,7 @@ A simple Cox model fit estimates the effect of age on survival,
 stratified by drug.
 
 ```{r}
-cp <- coxph(Surv(futime, fustat) ~ age + strata(rx), data=ovarian, ties="breslow")
+cp <- coxph(Surv(futime, fustat) ~ age + strata(rx), data = ovarian, ties = "breslow")
 print(cp)
 ```
 
@@ -167,7 +167,7 @@ ovarianDef <- data.frame(compType = names(availableComputations())[1],
 We split the `ovarian` data into two sites as indicated earlier.
 
 ```{r}
-siteData <- with(ovarian, split(x=ovarian, f=rx))
+siteData <- with(ovarian, split(x = ovarian, f = rx))
 ```
 
 <a id="simple-site-setup"></a>
@@ -179,7 +179,7 @@ of two items, a (unique) `name` and an `opencpu` URL.
 
 ```{r}
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ```
 
@@ -212,14 +212,14 @@ We are now ready to reproduce the original aggregated analysis. We
 first create a master object using the same definition.
 
 ```{r}
-master <- CoxMaster$new(defnId = ovarianDef$id, formula=ovarianDef$formula)
+master <- CoxMaster$new(defnId = ovarianDef$id, formula = ovarianDef$formula)
 ```
 We then add the slave sites specifying a name and a URL for each.
 names.
 
 ```{r}
 for (i in seq.int(nSites)) {
-    master$addSite(name=sites[[i]]$name, url=sites[[i]]$url)
+    master$addSite(name = sites[[i]]$name, url = sites[[i]]$url)
 }
 ```
 And we now maximize the partial likelihood, by calling the `run`
@@ -252,7 +252,8 @@ We turn to a larger the example from Therneau and Grambsch using the
 ```{r}
 data(pbc)
 pbcCox <- coxph(Surv(time, status==2) ~ age + edema + log(bili) +
-                log(protime) + log(albumin) + strata(ascites), data=pbc, ties="breslow")
+                  log(protime) + log(albumin) + strata(ascites), data = pbc,
+                ties = "breslow")
 print(pbcCox)
 
 ```
@@ -267,16 +268,16 @@ We split the data using `ascites` and proceed the usual way as shown above
 pbcDef <- data.frame(compType = names(availableComputations())[1],
                      formula = paste("Surv(time, status==2) ~ age + edema +",
                        "log(bili) + log(protime) + log(albumin)"),
-                     id = "pbc", stringsAsFactors=FALSE)
-siteData <- with(pbc, split(x=pbc, f=ascites))
+                     id = "pbc", stringsAsFactors = FALSE)
+siteData <- with(pbc, split(x = pbc, f = ascites))
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) pbcDef),
           siteData)
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = pbcDef$id, formula=pbcDef$formula)
+master <- CoxMaster$new(defnId = pbcDef$id, formula = pbcDef$formula)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -329,8 +330,8 @@ names(bmt)[1] <- "id"
 ##
 #####
 ##
-bmt$agep.c = bmt$agep - 28
-bmt$aged.c = bmt$aged - 28
+bmt$agep.c <- bmt$agep - 28
+bmt$aged.c <- bmt$aged - 28
 
 bmt$imtx <- factor(bmt$imtx)
 ```
@@ -341,7 +342,7 @@ bmt$imtx <- factor(bmt$imtx)
 
 ```{r}
 bmt.cph <- coxph(formula = Surv(tnodis, inodis) ~ fab + agep.c * aged.c +
-                 factor(group) + strata(imtx), data = bmt, ties="breslow")
+                 factor(group) + strata(imtx), data = bmt, ties = "breslow")
 
 print(bmt.cph)
 ```
@@ -356,17 +357,17 @@ We'll use `imtx` for splitting data into sites.
 bmtDef <- data.frame(compType = names(availableComputations())[1],
                      formula = paste("Surv(tnodis, inodis) ~ fab +",
                        "agep.c * aged.c + factor(group)"),
-                     id = "bmt", stringsAsFactors=FALSE)
-siteData <- with(bmt, split(x=bmt, f=imtx))
+                     id = "bmt", stringsAsFactors = FALSE)
+siteData <- with(bmt, split(x = bmt, f = imtx))
 nSites <- length(siteData)
-sites <- lapply(seq.int(nSites), function(i) list(name=paste0("site", i),
+sites <- lapply(seq.int(nSites), function(i) list(name = paste0("site", i),
                                                   url = opencpu$url()))
 ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) bmtDef),
           siteData)
 
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = bmtDef$id, formula=bmtDef$formula)
+master <- CoxMaster$new(defnId = bmtDef$id, formula = bmtDef$formula)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -399,7 +400,7 @@ prostate <- readRDS("prostate.RDS")
 
 ```{r}
 pcph <- coxph(Surv(dtime, status) ~ stage + strata(rx) + age + wt + pf + hx +
-                  sbp + dbp + ekg + hg + sz + sg + ap + bm, data=prostate)
+                  sbp + dbp + ekg + hg + sz + sg + ap + bm, data = prostate)
 print(pcph)
 ```
 <a id="prostate-distributed"></a>
@@ -453,12 +454,12 @@ site <- setRefClass("siteObject",
                         },
                         kosher = function() {
                             'Check that the class data passes sanity checks'
-                            modelDataFrame <<- model.frame(formula, data=data)
+                            modelDataFrame <<- model.frame(formula, data = data)
                             lhs <- modelDataFrame[, 1]
                             ordering <- order(lhs[, 1])
                             modelDataFrame <<- modelDataFrame[ordering, ]
                             data <<- data[ordering, ]
-                            modelMatrix <<- model.matrix(formula, data=modelDataFrame)
+                            modelMatrix <<- model.matrix(formula, data = modelDataFrame)
                             TRUE
                         },
                         dimP = function() {
@@ -520,7 +521,7 @@ We are now ready to do the alternative distributed fit. We split the
 `prostate` data into two sites as indicated earlier.
 
 ```{r}
-siteData <- with(prostate, split(x=prostate, f=rx))
+siteData <- with(prostate, split(x = prostate, f = rx))
 sites <- lapply(siteData,
                 function(x) {
                     site$new(data = x,
@@ -540,15 +541,20 @@ All that remains is to maximize this log likelihood.
 
 ```{r}
 mleResults <- nlm(f=function(x) -logLik(x, sites),
-                  p=rep(0, sites[[1]]$dimP()),
-                  gradtol=1e-10, iterlim=1000)
+                  p = rep(0, sites[[1]]$dimP()),
+                  gradtol = 1e-10, iterlim = 1000)
 ```
 
 We print the coefficient estimates side-by-side for comparison.
 
 ```{r}
-d <- data.frame(distCoef=mleResults$estimate, aggCoef=pcph$coefficients)
+d <- data.frame(distCoef = mleResults$estimate, aggCoef = pcph$coefficients)
 rownames(d) <- names(pcph$coefficients)
 kable(d)
+```
+
+## Session Information
+```{r}
+sessionInfo()
 ```
 

@@ -1,10 +1,10 @@
 Title: Computations over Distributed Data without Aggregation
 Maintainer: Balasubramanian Narasimhan <naras@stat.Stanford.EDU>
 Package: distcomp
-Version: 0.25.1
+Version: 0.25.2
 URL: http://arxiv.org/abs/1412.6890
 Depends: survival, stats, R (>= 3.1.0)
-Imports: utils, shiny, httr, digest, jsonlite, stringr, R6 (>= 2.0)
+Imports: utils, shiny, httr (>= 1.0.0), digest, jsonlite, stringr, R6 (>= 2.0)
 Suggests: opencpu
 Authors@R: c(person("Balasubramanian", "Narasimhan", role=c("aut", "cre"),
 	   	   email = "naras@stat.Stanford.EDU"),
@@ -23,5 +23,3 @@ Description: Implementing algorithms and fitting models when sites (possibly rem
   computations.
 Copyright: inst/COPYRIGHTS
 License: LGPL (>= 2)
-Author: Balasubramanian Narasimhan [aut, cre], Marina Bendersky [aut],
-        Sam Gross [aut], Terry M. Therneau [ctb], Thomas Lumley [ctb]

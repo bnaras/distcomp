@@ -12,14 +12,14 @@ Then, you will find a document that describes several examples
 installed under the R library tree. For example:
 
 ```{r}
-list.files(system.file("doc", package="distcomp"))
-list.files(system.file("doc_src", package="distcomp"))
+list.files(system.file("doc", package = "distcomp"))
+list.files(system.file("doc_src", package = "distcomp"))
 ```
 
 The examples described in the arxiv paper are available as follows:
 
 ```{r}
-list.files(system.file("ex", package="distcomp"))
+list.files(system.file("ex", package = "distcomp"))
 ```
 
 Use of this package requires some configuration. In particular, to run
@@ -29,10 +29,9 @@ up. That profile will be something along the lines of
 
 ```{r, eval=FALSE}
 library(distcomp)
-distcompSetup(workspace="full_path_to_workspace_directory",
-              ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+distcompSetup(workspace = "full_path_to_workspace_directory",
+              ssl.verifyhost = 0L, ssl.verifypeer = 0L)
 ```
-
 where the workspace is a directory that the `opencpu` server can
 serialize objects to. On Unix or Mac, the above can be inserted into
 an `.Rprofile` file, but on Windows, we find that the `Rprofile.site`
@@ -53,5 +52,3 @@ google search.
 Furthermore, even if `opencpu` comes up, which it does sometimes after
 many tries, you are better off using the ip address `127.0.0.1` in the
 url in place of `localhost` due to those DNS problems.
-
-

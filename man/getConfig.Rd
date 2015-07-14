@@ -21,10 +21,10 @@ computation identifiers}
 \item{defnFileName}{the name for the compdef definition files}
 \item{dataFileName}{the name for the data files}
 \item{instanceFileName}{the name for the instance files}
-\item{ssl.verifyhost}{logical value, usually \code{TRUE}, but for testing with
-snake-oil certs, one might set this to \code{FALSE}}
-\item{ssl.verifypeer}{logical value, usually \code{TRUE}, but for testing with
-snake-oil certs, one might set this to \code{FALSE}}
+\item{ssl_verifyhost}{integer value, usually \code{1L}, but for testing with
+snake-oil certs, one might set this to \code{0L}}
+\item{ssl_verifypeer}{integer value, usually \code{1L}, but for testing with
+snake-oil certs, one might set this to \code{0L}}
 }
 \description{
 The function \code{getConfig} returns the values of the

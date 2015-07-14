@@ -2,11 +2,11 @@ library(distcomp)
 
 print(availableComputations())
 
-svdDef <- list(compType = names(availableComputations())[2],
-               rank = 2L,
-               ncol = 5L,
-               defnId = "SVD",
-               stringsAsFactors = FALSE)
+svdDef <- data.frame(compType = names(availableComputations())[2],
+                     rank = 2L,
+                     ncol = 5L,
+                     defnId = "SVD",
+                     stringsAsFactors = FALSE)
 
 library(opencpu)
 
@@ -46,3 +46,13 @@ print(svd(x)$d)
 
 print(result$v)
 print(svd(x)$v[, 1:2])
+
+## All  singular values (takes much longer!)
+result <- master$run(k=5)
+print(result$d)
+print(svd(x)$d)
+
+print(result$v)
+print(svd(x)$v)
+
+

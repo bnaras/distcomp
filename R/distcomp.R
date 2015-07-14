@@ -94,11 +94,13 @@ NULL
 #' @param defnFileName the name for the compdef definition files
 #' @param dataFileName the name for the data files
 #' @param instanceFileName the name for the instance files
-#' @param ssl.verifyhost logical value, usually \code{TRUE}, but for testing with
-#' snake-oil certs, one might set this to \code{FALSE}
-#' @param ssl.verifypeer logical value, usually \code{TRUE}, but for testing with
-#' snake-oil certs, one might set this to \code{FALSE}
+#' @param ssl_verifyhost integer value, usually \code{1L}, but for testing with
+#' snake-oil certs, one might set this to \code{0L}
+#' @param ssl_verifypeer integer value, usually \code{1L}, but for testing with
+#' snake-oil certs, one might set this to \code{0L}
 #' @return TRUE if all is well
+#'
+#' @importFrom httr config
 #'
 #' @examples
 #' \dontrun{
@@ -111,8 +113,8 @@ distcompSetup <- function(workspacePath = "",
                           defnFileName = "defn.rds",
                           dataFileName = "data.rds",
                           instanceFileName = "instance.rds",
-                          ssl.verifyhost = TRUE,
-                          ssl.verifypeer = TRUE) {
+                          ssl_verifyhost = 1L,
+                          ssl_verifypeer = 1L) {
   ## TODO: In the next version, this should be stuffed in an R6 class
   testFileName <- paste(sample(letters, 15), collapse="")
   if (!file.exists(defnPath)) {
@@ -152,8 +154,8 @@ distcompSetup <- function(workspacePath = "",
                                   defnFileName = defnFileName,
                                   dataFileName = dataFileName,
                                   instanceFileName = instanceFileName,
-                                  sslConfig = list(ssl.verifyhost=ssl.verifyhost,
-                                    ssl.verifypeer=ssl.verifypeer))
+                                  sslConfig = config(ssl_verifyhost = ssl_verifyhost,
+                                    ssl_verifypeer = ssl_verifypeer))
   distcompEnv[["computationInfo"]] <- list()
   TRUE
 }
@@ -175,10 +177,10 @@ distcompSetup <- function(workspacePath = "",
 #' \item{defnFileName}{the name for the compdef definition files}
 #' \item{dataFileName}{the name for the data files}
 #' \item{instanceFileName}{the name for the instance files}
-#' \item{ssl.verifyhost}{logical value, usually \code{TRUE}, but for testing with
-#' snake-oil certs, one might set this to \code{FALSE}}
-#' \item{ssl.verifypeer}{logical value, usually \code{TRUE}, but for testing with
-#' snake-oil certs, one might set this to \code{FALSE}}
+#' \item{ssl_verifyhost}{integer value, usually \code{1L}, but for testing with
+#' snake-oil certs, one might set this to \code{0L}}
+#' \item{ssl_verifypeer}{integer value, usually \code{1L}, but for testing with
+#' snake-oil certs, one might set this to \code{0L}}
 #'
 #' @examples
 #' \dontrun{
