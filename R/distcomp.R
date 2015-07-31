@@ -509,9 +509,11 @@ saveNewComputation <- function(defn, data, dataFileName=NULL) {
 #' @export
 uploadNewComputation <- function(site, defn, data) {
   localhost <- (grepl("^http://localhost", site$url) || grepl("^http://127.0.0.1", site$url))
-  payload <- list(defn = defn,
-                  data = data,
-                  dataFileName = ifelse(localhost, paste0(site$name, ".rds"), NULL))
+  payload <- if (localhost) {
+    list(defn = defn, data = data, dataFileName = paste0(site$name, ".rds"))
+  } else {
+    list(defn = defn, data = data)
+  }
   q <- POST(.makeOpencpuURL(urlPrefix=site$url, fn="saveNewComputation"),
             body = toJSON(payload),
             add_headers("Content-Type" = "application/json"),

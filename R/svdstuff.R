@@ -190,9 +190,12 @@ SVDMaster <- R6Class("SVDMaster",
 
                          sitesOK <- sapply(sites,
                                            function(x) {
-                                             payload <- list(defnId = private$defnId,
-                                                             instanceId = x$instanceId,
-                                                             dataFileName = x$dataFileName)
+                                             payload <- if (is.null(x$dataFileName)) {
+                                               list(defnId = private$defnId, instanceId = x$instanceId)
+                                             } else {
+                                               list(defnId = private$defnId, instanceId = x$instanceId,
+                                                    dataFileName = x$dataFileName)
+                                             }
                                              q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createInstanceObject"),
                                                        body = toJSON(payload),
                                                        add_headers("Content-Type" = "application/json"),
