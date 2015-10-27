@@ -9,7 +9,7 @@ stratified by sites in a manner that brings computation to the data
 that may be distributed across sites or more generally, partitioned in
 some manner. (For simplicity, we will call these partitions, sites.)
 The infrastructure consists of a single master process that issues
-queries to slave processes running at each of the sites. A query is
+queries to worker processes running at each of the sites. A query is
 merely a function call, more specifically a request to each site to
 evaluate a pre-defined function $f(\beta)$ on the data at that site,
 for a given value of parameters $\beta$.  The master process uses
@@ -81,9 +81,9 @@ distcompSetup(workspace = "full_path_to_workspace_directory",
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
 file.
 
-__Note__: On Yosemite (MacOS 10.10.x), we have found that references
-to `localhost` sometimes fail in the opencpu URL; rather the explicit
-IP address `127.0.0.1` is needed.
+__Note__: On Yosemite (MacOS 10.10.4 and below), we have found that
+references to `localhost` sometimes fail in the opencpu URL; rather
+the explicit IP address `127.0.0.1` is needed.
 
 In what follows, we assume that such initialization profile has been
 done. Furthermore, we assume that the `opencpu` server has been
@@ -222,8 +222,8 @@ print(availableComputations())
 ## $StratifiedCoxModel$definitionApp
 ## [1] "defineNewCoxModel"
 ## 
-## $StratifiedCoxModel$setupSlaveApp
-## [1] "setupCoxSlave"
+## $StratifiedCoxModel$setupWorkerApp
+## [1] "setupCoxWorker"
 ## 
 ## $StratifiedCoxModel$setupMasterApp
 ## [1] "setupCoxMaster"
@@ -235,17 +235,17 @@ print(availableComputations())
 ##         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
 ##         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7fd15364aa28>
+## <environment: 0x7fa882d9e8a8>
 ## 
 ## $StratifiedCoxModel$makeMaster
 ## function (defn, debug = FALSE) 
 ## CoxMaster$new(defnId = defn$id, formula = defn$formula, debug = debug)
-## <environment: 0x7fd15364aa28>
+## <environment: 0x7fa882d9e8a8>
 ## 
-## $StratifiedCoxModel$makeSlave
+## $StratifiedCoxModel$makeWorker
 ## function (defn, data) 
-## CoxSlave$new(data = data, formula = defn$formula)
-## <environment: 0x7fd15364aa28>
+## CoxWorker$new(data = data, formula = defn$formula)
+## <environment: 0x7fa882d9e8a8>
 ## 
 ## 
 ## $RankKSVD
@@ -255,8 +255,8 @@ print(availableComputations())
 ## $RankKSVD$definitionApp
 ## [1] "defineNewSVDModel"
 ## 
-## $RankKSVD$setupSlaveApp
-## [1] "setupSVDSlave"
+## $RankKSVD$setupWorkerApp
+## [1] "setupSVDWorker"
 ## 
 ## $RankKSVD$setupMasterApp
 ## [1] "setupSVDMaster"
@@ -269,17 +269,17 @@ print(availableComputations())
 ##         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"), 
 ##         stringsAsFactors = FALSE)
 ## }
-## <environment: 0x7fd15364aa28>
+## <environment: 0x7fa882d9e8a8>
 ## 
 ## $RankKSVD$makeMaster
 ## function (defn, debug = FALSE) 
 ## SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug)
-## <environment: 0x7fd15364aa28>
+## <environment: 0x7fa882d9e8a8>
 ## 
-## $RankKSVD$makeSlave
+## $RankKSVD$makeWorker
 ## function (defn, data) 
-## SVDSlave$new(x = data)
-## <environment: 0x7fd15364aa28>
+## SVDWorker$new(x = data)
+## <environment: 0x7fa882d9e8a8>
 ```
 
 So, we can define the ovarian data computation as follows.
@@ -349,7 +349,7 @@ first create a master object using the same definition.
 ```r
 master <- CoxMaster$new(defnId = ovarianDef$id, formula = ovarianDef$formula)
 ```
-We then add the slave sites specifying a name and a URL for each.
+We then add the worker sites specifying a name and a URL for each.
 names.
 
 
@@ -482,10 +482,6 @@ renaming, first.
 if (!require("KMsurv")) {
   stop("Please install the KMsurv package before proceeding")
 }
-```
-
-```
-## Loading required package: KMsurv
 ```
 
 
@@ -856,9 +852,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.2 (2015-08-14)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.3 (Yosemite)
+## Running under: OS X 10.10.5 (Yosemite)
 ## 
 ## locale:
 ## [1] C
@@ -867,16 +863,16 @@ sessionInfo()
 ## [1] grDevices utils     datasets  stats     graphics  methods   base     
 ## 
 ## other attached packages:
-## [1] KMsurv_0.1-5    opencpu_1.4.6   distcomp_0.25.2 survival_2.38-2
-## [5] knitr_1.10.5    devtools_1.8.0 
+## [1] rmarkdown_0.8.1 KMsurv_0.1-5    opencpu_1.5.1   distcomp_0.25.4
+## [5] survival_2.38-3 knitr_1.11      devtools_1.9.1 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.11.6      xml2_0.1.1       magrittr_1.5     splines_3.2.1   
-##  [5] xtable_1.7-4     R6_2.0.1         brew_1.0-6       highr_0.5       
-##  [9] stringr_1.0.0    httr_1.0.0       tools_3.2.1      parallel_3.2.1  
-## [13] git2r_0.10.1     htmltools_0.2.6  rversions_1.0.1  openssl_0.4     
-## [17] digest_0.6.8     shiny_0.12.1     formatR_1.2      codetools_0.2-11
-## [21] curl_0.8         evaluate_0.7     memoise_0.2.1    mime_0.3        
-## [25] stringi_0.5-2    compiler_3.2.1   jsonlite_0.9.16  httpuv_1.3.2
+##  [1] Rcpp_0.12.1      magrittr_1.5     splines_3.2.2    xtable_1.7-4    
+##  [5] R6_2.1.1         brew_1.0-6       highr_0.5.1      stringr_1.0.0   
+##  [9] httr_1.0.0       tools_3.2.2      parallel_3.2.2   htmltools_0.2.6 
+## [13] openssl_0.4      digest_0.6.8     shiny_0.12.2     formatR_1.2.1   
+## [17] codetools_0.2-14 curl_0.9.3       memoise_0.2.1    evaluate_0.8    
+## [21] mime_0.4         stringi_0.5-5    compiler_3.2.2   jsonlite_0.9.17 
+## [25] markdown_0.7.7   httpuv_1.3.3
 ```
 

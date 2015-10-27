@@ -41,14 +41,17 @@ The effect of this is that _every R_ process (including the `opencpu`
 process) has access to the `distcomp` library and the workspace.
 
 
-## OSX Yosemite Update
+## OSX Yosemite Issues (10.10.4 and below)
 
-We find that on Yosemite (MacOS 10.10.2 for example) there are issues
-with the `opencpu` package. Our suspicion is that this has more to do
+In some earlier versions of Yosemite (MacOS 10.10.2 for example) there
+were issues with the `opencpu` package. We suspected it had more to do
 with Yosemite than `opencpu` or `httpuv`---see the number of DNS
 resolver issues people are having with the move to `discoveryd` via a
 google search.
 
-Furthermore, even if `opencpu` comes up, which it does sometimes after
-many tries, you are better off using the ip address `127.0.0.1` in the
-url in place of `localhost` due to those DNS problems.
+Furthermore, even if `opencpu` came up, which it did sometimes after
+many tries, you were better off using the ip address `127.0.0.1` in
+the url in place of `localhost` due to those DNS problems.
+
+We no longer see this problem in recent versions of Yosemite
+(10.10.5).

@@ -80,9 +80,9 @@ distcompSetup(workspace = "full_path_to_workspace_directory",
 On windows, the same should be done in the `RHOME\etc\Rprofile.site`
 file.
 
-__Note__: On Yosemite (MacOS 10.10.x), we have found that references
-to `localhost` sometimes fail in the opencpu URL; rather the explicit
-IP address `127.0.0.1` is needed.
+__Note__: On Yosemite (MacOS 10.10.4 and below), we have found that
+references to `localhost` sometimes fail in the opencpu URL; rather
+the explicit IP address `127.0.0.1` is needed.
 
 In what follows, we assume that such initialization profile has been
 done. Furthermore, we assume that the `opencpu` server has been
