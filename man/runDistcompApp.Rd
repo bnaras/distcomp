@@ -4,20 +4,20 @@
 \alias{runDistcompApp}
 \title{Run a specified distcomp web application}
 \usage{
-runDistcompApp(appType = c("definition", "setupSlave", "setupMaster"))
+runDistcompApp(appType = c("definition", "setupWorker", "setupMaster"))
 }
 \arguments{
-\item{appType}{one of three values: "definition", "setupSlave", "setupMaster"}
+\item{appType}{one of three values: "definition", "setupWorker", "setupMaster"}
 }
 \value{
 the results of running the web application
 }
 \description{
-Web applications can define computation, setup slave sites or masters.
+Web applications can define computation, setup worker sites or masters.
 This function invokes the appropriate web application depending on the task
 }
 \seealso{
-\code{\link{defineNewComputation}}, \code{\link{setupSlave}},
+\code{\link{defineNewComputation}}, \code{\link{setupWorker}},
 \code{\link{setupMaster}}
 }
 

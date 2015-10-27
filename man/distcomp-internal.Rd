@@ -2,11 +2,14 @@
 % Please edit documentation in R/distcomp.R
 \name{.makeOpencpuURL}
 \alias{.deSerialize}
+\alias{.defnOK}
 \alias{.makeOpencpuURL}
 \title{Make an appropriate opencpu URL for a specified function and url prefix for the
 distcomp package}
 \usage{
 .makeOpencpuURL(fn, urlPrefix, package = "distcomp")
+
+.defnOK(defn)
 
 .deSerialize(q)
 }
@@ -15,10 +18,14 @@ distcomp package}
 
 \item{urlPrefix}{is the URL of the opencpu server with the distcomp package installed}
 
+\item{defn}{is the definition object passed}
+
 \item{q}{the result of a httr response}
 }
 \value{
 the formatted url as a string
+
+TRUE or FALSE depending on the result
 
 the converted result, if JSON, or the raw content
 }
@@ -26,11 +33,16 @@ the converted result, if JSON, or the raw content
 .makeOpencpuURL returns an appropriate URL to call a function in the distcomp
 package given the name of the function and a url prefix.
 
+.defnOK returns TRUE or FALSE depending on whether the definition object
+meets minimimal requirements.
+
 .deSerialize will convert the JSON result of a http response as needed,
 else the raw content is returned.
 }
 \examples{
 distcomp:::.makeOpencpuURL("foo", "http://localhost:9999/ocpu")
+distcomp:::.defnOK(data.frame()) ## FALSE
+distcomp:::.defnOK(data.frame(id = "ABC", stringsAsFactors=FALSE)) ## TRUE
 }
 \keyword{internal}
 

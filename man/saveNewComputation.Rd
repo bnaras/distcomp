@@ -26,7 +26,7 @@ a new computation instance. This is typically done for every site that wants to 
 in a computation with its own local data. The function examines the computation definition
 and uses the identifier therein to uniquely refer to the computation instance at the site.
 This function is invoked (maybe remotely) on the opencpu server by
-\code{\link{uploadNewComputation}} when a slave site is being set up
+\code{\link{uploadNewComputation}} when a worker site is being set up
 }
 \seealso{
 \code{\link{uploadNewComputation}}

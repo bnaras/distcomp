@@ -1,5 +1,5 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
@@ -17,12 +17,11 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
->
-> library(distcomp)
 Loading required package: survival
-> distcompSetup(workspace="~/client/client-workspace",ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+Loading required package: graphics
+Loading required package: stats
 [1] TRUE
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
 > library(distcomp)
 > uis <- readRDS("uis.RDS")
 > coxOrig <- coxph(formula=Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 +
@@ -68,8 +67,12 @@ Score (logrank) test = 51.31  on 7 df,   p=7.992e-09
 > library(opencpu)
 Initiating OpenCPU server...
 Using config: /Users/naras/.opencpu.conf
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
 OpenCPU started.
-[httpuv] http://localhost:3952/ocpu
+[httpuv] http://localhost:8046/ocpu
 OpenCPU single-user server ready.
 > siteData <- with(uis, split(x=uis, f=site))
 > nSites <- length(siteData)
@@ -167,7 +170,28 @@ Loading required package: stats
 5  0.2636376   1.30166 0.1082448  2.4356 1.4868e-02
 6 -0.2400609   0.78658 0.1156319 -2.0761 3.7887e-02
 7 -0.2125720   0.80850 0.0937466 -2.2675 2.3359e-02
+> sessionInfo()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.10.5 (Yosemite)
+
+locale:
+[1] C
+
+attached base packages:
+[1] grDevices utils     datasets  stats     graphics  methods   base
+
+other attached packages:
+[1] opencpu_1.5.1   distcomp_0.25.4 survival_2.38-3
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.1     knitr_1.11      magrittr_1.5    splines_3.2.2
+ [5] devtools_1.9.1  xtable_1.7-4    R6_2.1.1        brew_1.0-6
+ [9] stringr_1.0.0   httr_1.0.0      tools_3.2.2     parallel_3.2.2
+[13] htmltools_0.2.6 openssl_0.4     digest_0.6.8    shiny_0.12.2
+[17] curl_0.9.3      memoise_0.2.1   evaluate_0.8    mime_0.4
+[21] stringi_0.5-5   jsonlite_0.9.17 httpuv_1.3.3
 > q()
 
-Process R finished at Mon Jun  1 12:13:04 2015
+Process R finished at Tue Oct 27 11:20:21 2015
 OpenCPU stopped.

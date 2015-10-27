@@ -5,7 +5,7 @@ print(availableComputations())
 svdDef <- data.frame(compType = names(availableComputations())[2],
                      rank = 2L,
                      ncol = 5L,
-                     defnId = "SVD",
+                     id = "SVD",
                      stringsAsFactors = FALSE)
 
 library(opencpu)
@@ -56,3 +56,4 @@ print(result$v)
 print(svd(x)$v)
 
 
+sessionInfo()

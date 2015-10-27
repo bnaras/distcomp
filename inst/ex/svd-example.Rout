@@ -1,5 +1,5 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
@@ -17,12 +17,11 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
->
-> library(distcomp)
 Loading required package: survival
-> distcompSetup(workspace="~/client/client-workspace",ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+Loading required package: graphics
+Loading required package: stats
 [1] TRUE
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
 > library(distcomp)
 > print(availableComputations())
 $StratifiedCoxModel
@@ -32,8 +31,8 @@ $StratifiedCoxModel$desc
 $StratifiedCoxModel$definitionApp
 [1] "defineNewCoxModel"
 
-$StratifiedCoxModel$setupSlaveApp
-[1] "setupCoxSlave"
+$StratifiedCoxModel$setupWorkerApp
+[1] "setupCoxWorker"
 
 $StratifiedCoxModel$setupMasterApp
 [1] "setupCoxMaster"
@@ -45,17 +44,17 @@ function ()
         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"),
         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
 }
-<environment: 0x7f9b10cedb50>
+<environment: 0x7fd7a46ff2d8>
 
 $StratifiedCoxModel$makeMaster
 function (defn, debug = FALSE)
 CoxMaster$new(defnId = defn$id, formula = defn$formula, debug = debug)
-<environment: 0x7f9b10cedb50>
+<environment: 0x7fd7a46ff2d8>
 
-$StratifiedCoxModel$makeSlave
+$StratifiedCoxModel$makeWorker
 function (defn, data)
-CoxSlave$new(data = data, formula = defn$formula)
-<environment: 0x7f9b10cedb50>
+CoxWorker$new(data = data, formula = defn$formula)
+<environment: 0x7fd7a46ff2d8>
 
 
 $RankKSVD
@@ -65,8 +64,8 @@ $RankKSVD$desc
 $RankKSVD$definitionApp
 [1] "defineNewSVDModel"
 
-$RankKSVD$setupSlaveApp
-[1] "setupSVDSlave"
+$RankKSVD$setupWorkerApp
+[1] "setupSVDWorker"
 
 $RankKSVD$setupMasterApp
 [1] "setupSVDMaster"
@@ -79,29 +78,33 @@ function ()
         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"),
         stringsAsFactors = FALSE)
 }
-<environment: 0x7f9b10cedb50>
+<environment: 0x7fd7a46ff2d8>
 
 $RankKSVD$makeMaster
 function (defn, debug = FALSE)
 SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug)
-<environment: 0x7f9b10cedb50>
+<environment: 0x7fd7a46ff2d8>
 
-$RankKSVD$makeSlave
+$RankKSVD$makeWorker
 function (defn, data)
-SVDSlave$new(x = data)
-<environment: 0x7f9b10cedb50>
+SVDWorker$new(x = data)
+<environment: 0x7fd7a46ff2d8>
 
 
-> svdDef <- list(compType = names(availableComputations())[2],
-+                rank = 2L,
-+                ncol = 5L,
-+                defnId = "SVD",
-+                stringsAsFactors = FALSE)
+> svdDef <- data.frame(compType = names(availableComputations())[2],
++                      rank = 2L,
++                      ncol = 5L,
++                      id = "SVD",
++                      stringsAsFactors = FALSE)
 > library(opencpu)
 Initiating OpenCPU server...
 Using config: /Users/naras/.opencpu.conf
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
 OpenCPU started.
-[httpuv] http://localhost:6192/ocpu
+[httpuv] http://localhost:7220/ocpu
 OpenCPU single-user server ready.
 > set.seed(12345)
 > nSites <- 3
@@ -2921,7 +2924,5003 @@ $d
 [3,]  0.21305901  0.91839439
 [4,]  0.54504905  0.16843629
 [5,] -0.04232602 -0.03120945
+> result <- master$run(k=5)
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+> print(result$d)
+[1] 9.707451 8.200043 7.982650 7.257355 6.235351
+> print(svd(x)$d)
+[1] 9.707537 8.199827 7.982888 7.257286 6.235182
+> print(result$v)
+            [,1]        [,2]       [,3]        [,4]         [,5]
+[1,]  0.17947030  0.08275684  0.0165604  0.98008722 -0.008933396
+[2,]  0.78969198  0.34634459 -0.3437723 -0.16504730  0.333181988
+[3,] -0.21294972  0.91875219  0.2496210 -0.04479619 -0.214978886
+[4,] -0.54501407  0.16784298 -0.5334277  0.10025749  0.616612820
+[5,]  0.04229739 -0.03032954  0.7312254 -0.01140918  0.680060781
+> print(svd(x)$v)
+            [,1]        [,2]        [,3]        [,4]        [,5]
+[1,] -0.17946375  0.08268613 -0.01644895 -0.98010572 -0.00883063
+[2,] -0.78963831  0.34694371  0.34328503  0.16509457  0.33316749
+[3,]  0.21305901  0.91839439 -0.25083926  0.04461477 -0.21505068
+[4,]  0.54504905  0.16843629  0.53318714 -0.10009622  0.61663844
+[5,] -0.04232602 -0.03120945 -0.73121540  0.01126215  0.68002329
+> sessionInfo()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.10.5 (Yosemite)
+
+locale:
+[1] C
+
+attached base packages:
+[1] grDevices utils     datasets  stats     graphics  methods   base
+
+other attached packages:
+[1] opencpu_1.5.1   distcomp_0.25.4 survival_2.38-3
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.1     knitr_1.11      magrittr_1.5    splines_3.2.2
+ [5] devtools_1.9.1  xtable_1.7-4    R6_2.1.1        brew_1.0-6
+ [9] stringr_1.0.0   httr_1.0.0      tools_3.2.2     parallel_3.2.2
+[13] htmltools_0.2.6 openssl_0.4     digest_0.6.8    shiny_0.12.2
+[17] curl_0.9.3      memoise_0.2.1   evaluate_0.8    mime_0.4
+[21] stringi_0.5-5   jsonlite_0.9.17 httpuv_1.3.3
 > q()
 
-Process R finished at Mon Jun  1 12:39:36 2015
+Process R finished at Tue Oct 27 11:52:53 2015
 OpenCPU stopped.

@@ -169,7 +169,7 @@ hr {
 with the data and transcripts of R sessions. They are provided for
 reference.</p>
 
-<h3>Update on version 0.25.2</h3>
+<h3>Update on version 0.25.4</h3>
 
 <p>Version 0.25.1 of <code>distcomp</code> relied on imports from <code>httr</code> version
 below 0.6.x. Since then, package <code>httr</code> has been updated to version
@@ -179,10 +179,8 @@ the <code>httr::POST</code> requests that <code>distcomp</code> makes are differ
 options are now named with underscores and the parameter values are
 now not <code>logical</code> but <code>integer</code>, with <code>0L</code> for <code>FALSE</code> and <code>1L</code> for
 <code>TRUE</code>. All our examples work as before (see the examples in the <code>doc</code>
-directory), but the transcripts here are still from version 0.25.1 of
-<code>distcomp</code>. In version 0.26.x of <code>distcomp</code>, we will provide updated
-transcripts (with session information) along with some new
-improvements.</p>
+directory). The transcripts here have been updated for version 0.25.4
+of <code>distcomp</code> with session information along with some improvements.</p>
 
 <h2>Table of Contents</h2>
 
@@ -193,76 +191,68 @@ improvements.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td><code>README.md</code></td>
-<td>This file</td>
+<td><code>README.Rmd</code>, <code>README.Rmd</code></td>
+<td>This file plus generated Markdown</td>
 </tr>
 <tr>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>STCoxDefn.Rout</code></td>
-<td>R Transcript that produced <code>STCoxDefn.rds</code></td>
+<td><code>Rprofile</code></td>
+<td>Example Rprofile for use with distcomp for setting up workspace for</td>
+</tr>
+<tr>
+<td></td>
+<td>running examples locally with <code>opencpu</code> R package</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>STCoxSetup.Rout</code></td>
+<td>R Transcript for defining computation, setting up worker sites, and</td>
+</tr>
+<tr>
+<td></td>
+<td>master process using shiny apps.</td>
 </tr>
 <tr>
 <td><code>STCoxDefn.rds</code></td>
-<td>The definition file for Stratified Cox Example</td>
+<td>The generated definition file for Stratified Cox Example</td>
 </tr>
 <tr>
-<td><code>STCoxMasterSetup.Rout</code></td>
-<td>R Transcript that produced <code>STCoxTest.R</code></td>
+<td><code>STCoxMaster.R</code></td>
+<td>Master R code produced by webapp; see transcript <code>STCoxSetup.Rout</code></td>
 </tr>
 <tr>
-<td><code>STCoxSite1Setup.Rout</code></td>
-<td>R Transcript to set up Site 1 for STCoxTest</td>
-</tr>
-<tr>
-<td><code>STCoxSite2Setup.Rout</code></td>
-<td>R Transcript to set up Site 2 for STCoxTest</td>
-</tr>
-<tr>
-<td><code>STCoxTest.R</code></td>
-<td>Master R code produced by webapp; see transcript <code>STCoxMasterSetup.Rout</code></td>
-</tr>
-<tr>
-<td><code>STCoxTest.Rout</code></td>
-<td>R Transcript executing <code>STCoxTest.R</code></td>
+<td><code>STCoxMaster.Rout</code></td>
+<td>R Transcript executing <code>STCoxMaster.R</code></td>
 </tr>
 <tr>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>SVDDefn.Rout</code></td>
-<td>R Transcript that produced <code>SVDDefn.rds</code></td>
+<td><code>SVDSetup.Rout</code></td>
+<td>R Transcript for defining computation, setting up worker sites, and</td>
+</tr>
+<tr>
+<td></td>
+<td>master process using shiny apps.</td>
 </tr>
 <tr>
 <td><code>SVDDefn.rds</code></td>
-<td>The definition file for SVD Example</td>
+<td>The generated definition file for SVD Example</td>
 </tr>
 <tr>
-<td><code>SVDMasterSetup.Rout</code></td>
-<td>R Transcript that produced <code>SVDTest.R</code></td>
+<td><code>SVDMaster.R</code></td>
+<td>Master R code produced by webapp; see transcript <code>SVDSetup.Rout</code></td>
 </tr>
 <tr>
-<td><code>SVDSite1Setup.Rout</code></td>
-<td>R Transcript to set up Site 1 for SVDTest</td>
-</tr>
-<tr>
-<td><code>SVDSite2Setup.Rout</code></td>
-<td>R Transcript to set up Site 2 for SVDTest</td>
-</tr>
-<tr>
-<td><code>SVDSite3Setup.Rout</code></td>
-<td>R Transcript to set up Site 3 for SVDTest</td>
-</tr>
-<tr>
-<td><code>SVDTest.R</code></td>
-<td>Master R code produced by webapp; see transcript <code>STCoxMasterSetup.Rout</code></td>
-</tr>
-<tr>
-<td><code>SVDTest.Rout</code></td>
-<td>R Transcript executing <code>SVDTest.R</code></td>
+<td><code>SVDMaster.Rout</code></td>
+<td>R Transcript executing <code>SVDMaster.R</code></td>
 </tr>
 <tr>
 <td></td>
@@ -270,11 +260,11 @@ improvements.</p>
 </tr>
 <tr>
 <td><code>svd-example.R</code></td>
-<td>Manually created svd example</td>
+<td>Plain R code for svd example</td>
 </tr>
 <tr>
 <td><code>svd-example.Rout</code></td>
-<td>R Transcript executing <code>svd-example.R</code></td>
+<td>R Transcript executing <code>svd-example.R</code> including all 5 singular values</td>
 </tr>
 <tr>
 <td><code>svd-site1.csv</code></td>
@@ -294,7 +284,7 @@ improvements.</p>
 </tr>
 <tr>
 <td><code>uis-example.R</code></td>
-<td>Manually created uis example</td>
+<td>Plain R code for uis example</td>
 </tr>
 <tr>
 <td><code>uis-example.Rout</code></td>

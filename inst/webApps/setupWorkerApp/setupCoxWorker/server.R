@@ -98,10 +98,10 @@ shinyServer(function(input, output, session) {
     formula <- getComputationInfo("formula")
     isolate({
       result <- tryCatch(
-        { CoxSlave$new(formula = as.formula(formula), data=getComputationInfo("data")) },
+        { CoxWorker$new(formula = as.formula(formula), data=getComputationInfo("data")) },
         warning = function(x) x,
         error = function(x) x)
-      if ("CoxSlave" %in% class(result)) { ## Success
+      if ("CoxWorker" %in% class(result)) { ## Success
         "Success: data matches formula. Send to Opencpu Server."
       } else {
         paste("Error!", result$message)

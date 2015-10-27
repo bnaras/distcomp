@@ -17,7 +17,7 @@ writeCode(defn, sites, outputFileName)
 the value \code{TRUE} if all goes well
 }
 \description{
-Once a computation is defined, slave sites are set up, the master process
+Once a computation is defined, worker sites are set up, the master process
 code is written by this function. The current implementation does not allow one to mix
 localhost URLs with non-localhost URLs
 }

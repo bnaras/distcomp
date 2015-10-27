@@ -1,5 +1,5 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
@@ -17,13 +17,12 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
->
-> library(distcomp)
 Loading required package: survival
-> distcompSetup(workspace="~/client/client-workspace",ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+Loading required package: graphics
+Loading required package: stats
 [1] TRUE
-> source("STCoxTest.R")
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+> source("STCoxMaster.R")
           coef exp(coef)    se(coef)         z            p
 1 -0.028049470 0.9723403 0.008130079 -3.450086 5.604085e-04
 2  0.009144073 1.0091860 0.004991809  1.831815 6.697892e-02
@@ -32,8 +31,26 @@ Loading required package: survival
 5  0.263637628 1.3016564 0.108244755  2.435570 1.486837e-02
 6 -0.240060918 0.7865799 0.115631911 -2.076078 3.788670e-02
 7 -0.212571963 0.8085021 0.093746552 -2.267518 2.335862e-02
-> Q()
-Error: could not find function "Q"
+> sessionInfo()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.10.5 (Yosemite)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] grDevices utils     datasets  stats     graphics  methods   base
+
+other attached packages:
+[1] distcomp_0.25.4 survival_2.38-3
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.1     digest_0.6.8    mime_0.4        R6_2.1.1
+ [5] xtable_1.7-4    jsonlite_0.9.17 magrittr_1.5    httr_1.0.0
+ [9] stringi_0.5-5   curl_0.9.3      splines_3.2.2   tools_3.2.2
+[13] stringr_1.0.0   shiny_0.12.2    httpuv_1.3.3    compiler_3.2.2
+[17] htmltools_0.2.6
 > q()
 
-Process R finished at Sun May 31 21:13:34 2015
+Process R finished at Mon Oct 26 16:23:44 2015

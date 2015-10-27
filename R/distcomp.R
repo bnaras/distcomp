@@ -76,6 +76,25 @@ NULL
   paste(urlPrefix, "library", package, "R", fn, "json", sep="/")
 }
 
+#' Check that a definition object meets minimal requirements
+#'
+#' @description .defnOK returns TRUE or FALSE depending on whether the definition object
+#' meets minimimal requirements.
+#'
+#' @param defn is the definition object passed
+#' @return TRUE or FALSE depending on the result
+#'
+#' @rdname distcomp-internal
+#'
+#' @examples
+#' distcomp:::.defnOK(data.frame()) ## FALSE
+#' distcomp:::.defnOK(data.frame(id = "ABC", stringsAsFactors=FALSE)) ## TRUE
+#'
+#' @keywords internal
+.defnOK <- function(defn) {
+    ! is.null(defn$id) && nchar(defn$id) > 0
+}
+
 #' Setup a workspace and configuration for a distributed computation
 #' @description The function \code{discompsetup} sets up a distributed computation
 #' and configures some global parameters such as definition file names,
@@ -193,25 +212,25 @@ getConfig <- function(...) {
 }
 
 
-#' Make a slave object given a definition and data
-#' @description The function \code{makeSlave} returns an object of the
+#' Make a worker object given a definition and data
+#' @description The function \code{makeWorker} returns an object of the
 #' appropriate type based on a computation definition and sets the data for
 #' the object. The types of objects that can be created depend upon the
 #' available computations
 #' @seealso \code{\link{availableComputations}}
 #' @param defn the computation definition
 #' @param data the data for the computation
-#' @return a slave object of the appropriate class based on the definition
+#' @return a worker object of the appropriate class based on the definition
 #'
 #' @export
-makeSlave <- function (defn, data) {
+makeWorker <- function (defn, data) {
   compType <- defn$compType
   available <- availableComputations()
   k <- match(compType, names(available))
   if (is.na(k)) {
     stop(sprintf("No such computation: %s", compType))
   } else {
-    available[[k]]$makeSlave(defn, data)
+    available[[k]]$makeWorker(defn, data)
   }
 }
 
@@ -247,8 +266,8 @@ makeMaster <- function(defn) {
 #' \item{desc}{a textual description (25 chars at most)}
 #' \item{definitionApp}{the name of a function that will fire up a shiny webapp
 #' for defining the particular computation}
-#' \item{slaveApp}{the name of a function that will fire up a shiny webapp
-#' for setting up a slave site for the particular computation}
+#' \item{workerApp}{the name of a function that will fire up a shiny webapp
+#' for setting up a worker site for the particular computation}
 #' \item{masterApp}{the name of a function that will fire up a shiny webapp
 #' for setting up a master for the particular computation}
 #' \item{makeDefinition}{the name of a function that will return a data frame
@@ -262,8 +281,8 @@ makeMaster <- function(defn) {
 #' \item{makeMaster}{a function that will construct a master object for the
 #' computation given the definition and a logical flag indicating
 #' if debugging is desired}
-#' \item{makeSlave}{a function that will construct
-#' a slave object for that computation given the definition and data}
+#' \item{makeWorker}{a function that will construct
+#' a worker object for that computation given the definition and data}
 #'
 #' @examples
 #' availableComputations()
@@ -273,7 +292,7 @@ availableComputations <- function() {
     StratifiedCoxModel = list(
       desc = "Stratified Cox Model",
       definitionApp = "defineNewCoxModel",
-      setupSlaveApp = "setupCoxSlave",
+      setupWorkerApp = "setupCoxWorker",
       setupMasterApp = "setupCoxMaster",
       makeDefinition = function() {
         data.frame(id = getComputationInfo("id"),
@@ -284,12 +303,12 @@ availableComputations <- function() {
                    stringsAsFactors=FALSE)
       },
       makeMaster = function(defn, debug = FALSE) CoxMaster$new(defnId = defn$id, formula = defn$formula, debug=debug),
-      makeSlave = function(defn, data) CoxSlave$new(data = data, formula = defn$formula)
+      makeWorker = function(defn, data) CoxWorker$new(data = data, formula = defn$formula)
     ),
     RankKSVD = list(
       desc = "Rank K SVD",
       definitionApp = "defineNewSVDModel",
-      setupSlaveApp = "setupSVDSlave",
+      setupWorkerApp = "setupSVDWorker",
       setupMasterApp = "setupSVDMaster",
       makeDefinition = function() {
         data.frame(id = getComputationInfo("id"),
@@ -301,7 +320,7 @@ availableComputations <- function() {
                    stringsAsFactors=FALSE)
       },
       makeMaster = function(defn, debug = FALSE) SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug),
-      makeSlave = function(defn, data) SVDSlave$new(x = data)
+      makeWorker = function(defn, data) SVDWorker$new(x = data)
     )
   )
 }
@@ -428,7 +447,7 @@ createInstanceObject <- function (defnId, instanceId, dataFileName=NULL) {
                         if (is.null(dataFileName)) config$dataFileName else dataFileName,
                         sep=.Platform$file.sep))
 
-  object <- makeSlave(defn, data)
+  object <- makeWorker(defn, data)
 
   ## Check if the instance folder exists
   thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)
@@ -461,7 +480,7 @@ destroyInstanceObject <- function (instanceId) {
 #' in a computation with its own local data. The function examines the computation definition
 #' and uses the identifier therein to uniquely refer to the computation instance at the site.
 #' This function is invoked (maybe remotely) on the opencpu server by
-#' \code{\link{uploadNewComputation}} when a slave site is being set up
+#' \code{\link{uploadNewComputation}} when a worker site is being set up
 #' @seealso \code{\link{uploadNewComputation}}
 #' @param defn the identifier of an already defined computation
 #' @param data the (local) data to use
@@ -508,13 +527,16 @@ saveNewComputation <- function(defn, data, dataFileName=NULL) {
 #' @return TRUE if everything goes well
 #' @export
 uploadNewComputation <- function(site, defn, data) {
+  if (! .defnOK(defn)) {
+      stop("uploadNewComputation: Improper definition")
+  }
   localhost <- (grepl("^http://localhost", site$url) || grepl("^http://127.0.0.1", site$url))
   payload <- if (localhost) {
     list(defn = defn, data = data, dataFileName = paste0(site$name, ".rds"))
   } else {
     list(defn = defn, data = data)
   }
-  q <- POST(.makeOpencpuURL(urlPrefix=site$url, fn="saveNewComputation"),
+  q <- POST(.makeOpencpuURL(urlPrefix = site$url, fn = "saveNewComputation"),
             body = toJSON(payload),
             add_headers("Content-Type" = "application/json"),
             config=getConfig()$sslConfig
@@ -610,16 +632,16 @@ resetComputationInfo <- function() {
 }
 
 #' Run a specified distcomp web application
-#' @description Web applications can define computation, setup slave sites or masters.
+#' @description Web applications can define computation, setup worker sites or masters.
 #' This function invokes the appropriate web application depending on the task
-#' @seealso \code{\link{defineNewComputation}}, \code{\link{setupSlave}},
+#' @seealso \code{\link{defineNewComputation}}, \code{\link{setupWorker}},
 #' \code{\link{setupMaster}}
 #' @import shiny
-#' @param appType one of three values: "definition", "setupSlave", "setupMaster"
+#' @param appType one of three values: "definition", "setupWorker", "setupMaster"
 #' @return the results of running the web application
 #'
 #' @export
-runDistcompApp <- function(appType = c("definition", "setupSlave", "setupMaster")) {
+runDistcompApp <- function(appType = c("definition", "setupWorker", "setupMaster")) {
   resetComputationInfo()
   appType <- match.arg(appType)
   app <- paste0(appType, "App")
@@ -646,16 +668,16 @@ defineNewComputation <- function() {
   runDistcompApp(appType = "definition")
 }
 
-#' Setup a slave site
+#' Setup a worker site
 #' @description This function just calls \code{\link{runDistcompApp}} with the
-#' parameter "setupSlave"
+#' parameter "setupWorker"
 #' @seealso \code{\link{runDistcompApp}}
 #' @return the results of running the web application
 #'
 #' @export
-setupSlave <- function() {
+setupWorker <- function() {
   setComputationInfo("workingDir", getwd())
-  runDistcompApp(appType = "setupSlave")
+  runDistcompApp(appType = "setupWorker")
 }
 
 #' Setup a computation master
@@ -673,7 +695,7 @@ setupMaster <- function() {
 }
 
 #' Write the code necessary to run a master process
-#' @description Once a computation is defined, slave sites are set up, the master process
+#' @description Once a computation is defined, worker sites are set up, the master process
 #' code is written by this function. The current implementation does not allow one to mix
 #' localhost URLs with non-localhost URLs
 #' @seealso \code{\link{setupMaster}}

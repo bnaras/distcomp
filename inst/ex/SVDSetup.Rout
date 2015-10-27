@@ -1,0 +1,66 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Loading required package: survival
+Loading required package: graphics
+Loading required package: stats
+[1] TRUE
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+> defineNewComputation()
+Loading required package: shiny
+
+Listening on http://127.0.0.1:6424
+
+Listening on http://127.0.0.1:6424
+[1] TRUE
+> setupWorker()
+
+Listening on http://127.0.0.1:6424
+
+Listening on http://127.0.0.1:6424
+[1] TRUE
+> setupWorker()
+
+Listening on http://127.0.0.1:6424
+
+Listening on http://127.0.0.1:6424
+[1] TRUE
+> setupWorker()
+
+Listening on http://127.0.0.1:6424
+
+Listening on http://127.0.0.1:6424
+[1] TRUE
+> setupMaster()
+
+Listening on http://127.0.0.1:6424
+  C-c C-c
+> ## Cancelled above operation due to typo
+> setupMaster()
+
+Listening on http://127.0.0.1:6424
+  C-c C-c
+> ## Cancelled above due to typo
+> setupMaster()
+
+Listening on http://127.0.0.1:6424
+[1] TRUE
+> q()
+
+Process R finished at Mon Oct 26 17:16:07 2015

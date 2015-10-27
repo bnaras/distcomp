@@ -106,10 +106,10 @@ shinyServer(function(input, output, session) {
     if (input$checkFormula == 0) return()
     isolate({
       result <- tryCatch(
-        { CoxSlave$new(formula = as.formula(input$formula), data=getComputationInfo("data")) },
+        { CoxWorker$new(formula = as.formula(input$formula), data=getComputationInfo("data")) },
         warning = function(x) x,
         error = function(x) x)
-      if ("CoxSlave" %in% class(result)) { ## Success
+      if ("CoxWorker" %in% class(result)) { ## Success
         setComputationInfo("formula", input$formula)
         ## At this point, generate the definition id too.
         ## object <- list(compType = getComputationInfo("compType"),

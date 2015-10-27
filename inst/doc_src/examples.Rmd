@@ -9,7 +9,7 @@ stratified by sites in a manner that brings computation to the data
 that may be distributed across sites or more generally, partitioned in
 some manner. (For simplicity, we will call these partitions, sites.)
 The infrastructure consists of a single master process that issues
-queries to slave processes running at each of the sites. A query is
+queries to worker processes running at each of the sites. A query is
 merely a function call, more specifically a request to each site to
 evaluate a pre-defined function $f(\beta)$ on the data at that site,
 for a given value of parameters $\beta$.  The master process uses
@@ -214,7 +214,7 @@ first create a master object using the same definition.
 ```{r}
 master <- CoxMaster$new(defnId = ovarianDef$id, formula = ovarianDef$formula)
 ```
-We then add the slave sites specifying a name and a URL for each.
+We then add the worker sites specifying a name and a URL for each.
 names.
 
 ```{r}

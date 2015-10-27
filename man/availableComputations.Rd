@@ -11,8 +11,8 @@ a list with the components corresponding to a computation
 \item{desc}{a textual description (25 chars at most)}
 \item{definitionApp}{the name of a function that will fire up a shiny webapp
 for defining the particular computation}
-\item{slaveApp}{the name of a function that will fire up a shiny webapp
-for setting up a slave site for the particular computation}
+\item{workerApp}{the name of a function that will fire up a shiny webapp
+for setting up a worker site for the particular computation}
 \item{masterApp}{the name of a function that will fire up a shiny webapp
 for setting up a master for the particular computation}
 \item{makeDefinition}{the name of a function that will return a data frame
@@ -26,8 +26,8 @@ designed for the purpose}
 \item{makeMaster}{a function that will construct a master object for the
 computation given the definition and a logical flag indicating
 if debugging is desired}
-\item{makeSlave}{a function that will construct
-a slave object for that computation given the definition and data}
+\item{makeWorker}{a function that will construct
+a worker object for that computation given the definition and data}
 }
 \description{
 The function \code{availableComputations} returns a list

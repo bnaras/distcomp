@@ -39,3 +39,5 @@ result <- master$run()
 master$summary()
 
 print(master$summary(), digits=5)
+
+sessionInfo()
