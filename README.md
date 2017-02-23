@@ -54,4 +54,4 @@ many tries, you were better off using the ip address `127.0.0.1` in
 the url in place of `localhost` due to those DNS problems.
 
 We no longer see this problem in recent versions of Yosemite
-(10.10.5).
+(10.10.5+).
