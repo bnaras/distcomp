@@ -28,6 +28,6 @@ void R_init_distcomp(DllInfo *dll){
        Anyone who then tried to link to my C code would be SOL.
        It also wouldn't work with .C(routines[1], ....
     */
-   /* R_useDynamicSymbols(dll, FALSE);  */
+    R_useDynamicSymbols(dll, FALSE);
 }
 
