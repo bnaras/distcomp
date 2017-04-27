@@ -16,7 +16,8 @@ list.files(system.file("doc", package = "distcomp"))
 list.files(system.file("doc_src", package = "distcomp"))
 ```
 
-The examples described in the arxiv paper are available as follows:
+The examples described in the Journal of Statistical Software paper
+are available as follows:
 
 ```{r}
 list.files(system.file("ex", package = "distcomp"))

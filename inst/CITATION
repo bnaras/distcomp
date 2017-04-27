@@ -1,0 +1,28 @@
+bibentry(bibtype = "Article",
+  title        = "Software for Distributed Computation on Medical Databases: A Demonstration Project",
+  author       = c(person(given = "Balasubramanian",
+                          family = "Narasimhan",
+                          email = "naras@stat.stanford.edu"),
+                   person(given = c("Daniel", "L."),
+                          family = "Rubin"),
+                   person(given = c("Samuel", "M."),
+                          family = "Gross"),
+                   person(given = "Marina",
+                          family = "Bendersky"),
+                   person(given = c("Philip", "W."),
+                          family = "Lavori")),
+  journal      = "Journal of Statistical Software",
+  year         = "2017",
+  volume       = "77",
+  number       = "13",
+  pages        = "1--22",
+  doi          = "10.18637/jss.v077.i13",
+
+  header       = "To cite distcomp in publications use:",
+  textVersion  =
+  paste("Balasubramanian Narasimhan, Daniel L. Rubin, Samuel M. Gross, Marina Bendersky, Philip W. Lavori (2017).",
+        "Software for Distributed Computation on Medical Databases: A Demonstration Project.",
+        "Journal of Statistical Software, 77(13), 1-22.",
+        "doi:10.18637/jss.v077.i13")
+)
+
