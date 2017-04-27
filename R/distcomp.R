@@ -6,7 +6,7 @@
 #' local data and transmitting only summaries, some privacy controls can be
 #' maintained. Even when participants have no objections in principle to data
 #' aggregation, it may still be useful to keep data local and expose just the
-#' computations. For further details, please see the arxiv paper cited below.
+#' computations. For further details, please see the reference cited below.
 #'
 #' The initial implementation consists of a stratified Cox model fit with
 #' distributed survival data and a Singular Value Decomposition
@@ -43,7 +43,8 @@
 #' @seealso The source for the examples: \code{system.file("doc_src", "examples.Rmd", package="distcomp")}.
 #' @docType package
 #' @references Software for Distributed Computation on Medical Databases:
-#' A Demonstration Project \url{http://arxiv.org/abs/1412.6890}
+#' A Demonstration Project. Journal of Statistical Software, 77(13), 1-22.
+#' doi:10.18637/jss.v077.i13
 #' @references Appendix E of Modeling Survival Data: Extending the Cox Model by
 #' Terry M. Therneau and Patricia Grambsch. Springer Verlag, 2000.
 #' @name distcomp
