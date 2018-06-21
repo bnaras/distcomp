@@ -11,13 +11,14 @@ distcompSetup(workspacePath = "", defnPath = paste(workspacePath, "defn",
   ssl_verifyhost = 1L, ssl_verifypeer = 1L)
 }
 \arguments{
-\item{workspacePath}{a folder specifying the workspace path. This has to be
-writable by the opencpu process. On a cloud opencpu server on Ubuntu, for example,
-this requires a one-time modification of apparmor profiles to enable write
-permissions to this path}
+\item{workspacePath}{a folder specifying the workspace path. This
+has to be writable by the opencpu process. On a cloud opencpu
+server on Ubuntu, for example, this requires a one-time
+modification of apparmor profiles to enable write permissions
+to this path}
 
-\item{defnPath}{the path where definition files will reside, organized by
-computation identifiers}
+\item{defnPath}{the path where definition files will reside,
+organized by computation identifiers}
 
 \item{instancePath}{the path where instance objects will reside}
 
@@ -27,11 +28,11 @@ computation identifiers}
 
 \item{instanceFileName}{the name for the instance files}
 
-\item{ssl_verifyhost}{integer value, usually \code{1L}, but for testing with
-snake-oil certs, one might set this to \code{0L}}
+\item{ssl_verifyhost}{integer value, usually \code{1L}, but for
+testing with snake-oil certs, one might set this to \code{0L}}
 
-\item{ssl_verifypeer}{integer value, usually \code{1L}, but for testing with
-snake-oil certs, one might set this to \code{0L}}
+\item{ssl_verifypeer}{integer value, usually \code{1L}, but for
+testing with snake-oil certs, one might set this to \code{0L}}
 }
 \value{
 TRUE if all is well

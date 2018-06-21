@@ -28,7 +28,7 @@ computation fit
   \item{\code{var(beta, ...)}}{Compute the variance of the parameter vector beta}
   \item{\code{kosher()}}{Check if inputs and state of object are sane. For future use}
   \item{\code{getP()}}{Returns the dimension of the parameter vector}
-  \item{\code{run()}}{Run the fitting iterations and save the result}
+  \item{\code{run(control)}}{Run the fitting iterations and save the result using control object}
   \item{\code{summary()}}{Return a summary data frame columns for \code{coef}, \code{exp(coef)},
         standard error, z-score, and p-value for each parameter in the model following
         the same format as the \code{survival} package}
