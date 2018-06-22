@@ -158,7 +158,7 @@ SVDMaster <- R6Class("SVDMaster",
                              result <- private$result
                              result$v <- cbind(result$v, v)
                              result$d <- c(result$d, d)
-                             private$result <- result
+
                              sites <- private$sites
                              n <- length(sites)
                              if (private$dry_run) {
@@ -167,6 +167,7 @@ SVDMaster <- R6Class("SVDMaster",
                              } else {
                                  Map(private$mapFn, sites, rep(list(v), n), rep(list("fixU"), n))
                              }
+                             private$result <- result
                          },
                          reset = function() {
                              private$result <- list()
