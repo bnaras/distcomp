@@ -4,4 +4,5 @@
 .Rhistory
 src/*.o
 src/*.so
-inst/expt/*
+inst/expt
+inst/stuff
