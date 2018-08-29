@@ -24,8 +24,8 @@ knitr::opts_chunk$set(
 )
 suppressMessages(suppressWarnings(library(distcomp)))
 dcWorkspace <- tempdir()
-distcompSetup(workspace = dcWorkspace,
-              ssl_verifyhost = 0L, ssl_verifypeer = 0L)
+ignore <- distcompSetup(workspace = dcWorkspace,
+                        ssl_verifyhost = 0L, ssl_verifypeer = 0L)
 ```
 
 ## Introduction

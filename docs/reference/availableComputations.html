@@ -178,17 +178,17 @@ a worker object for that computation given the definition and data</p></dd>
 #&gt;         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
 #&gt;         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
 #&gt; }
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; $StratifiedCoxModel$makeMaster
 #&gt; function (defn, debug = FALSE) 
-#&gt; CoxMaster$new(defnId = defn$id, formula = defn$formula, debug = debug)
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; CoxMaster$new(defn = defn, debug = debug)
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; $StratifiedCoxModel$makeWorker
 #&gt; function (defn, data) 
-#&gt; CoxWorker$new(data = data, formula = defn$formula)
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; CoxWorker$new(defn = defn, data = data)
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; 
 #&gt; $RankKSVD
@@ -212,17 +212,17 @@ a worker object for that computation given the definition and data</p></dd>
 #&gt;         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"), 
 #&gt;         stringsAsFactors = FALSE)
 #&gt; }
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; $RankKSVD$makeMaster
 #&gt; function (defn, debug = FALSE) 
-#&gt; SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug)
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; SVDMaster$new(defn = defn, debug = debug)
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; $RankKSVD$makeWorker
 #&gt; function (defn, data) 
-#&gt; SVDWorker$new(x = data)
-#&gt; &lt;environment: 0x7fcfc51c9658&gt;
+#&gt; SVDWorker$new(defn = defn, data = data)
+#&gt; &lt;environment: 0x7f91852b5378&gt;
 #&gt; 
 #&gt; </div></pre>
   </div>

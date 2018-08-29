@@ -127,8 +127,7 @@ a distributed SVD model computation</p>
 
     
     <dl class='dl-horizontal'>
-  <dt><code>SVDWorker$new(x, stateful = TRUE)</code></dt><dd><p>Create a new SVD worker object with data x and flag
-        for preserving state between iterations</p></dd>
+  <dt><code>SVDWorker$new(defn, data, stateful = TRUE)</code></dt><dd><p>Create a new SVD worker object with given definition defn, data and flag for preserving state between iterations</p></dd>
   <dt><code>reset()</code></dt><dd><p>Initialize work matrix and set up starting values for iterating</p></dd>
   <dt><code>dimX(...)</code></dt><dd><p>Return the dimensions of the matrix</p></dd>
   <dt><code>updateV(arg, ...)</code></dt><dd><p>Return an updated value for the V vector, normalized by <code>arg</code></p></dd>
