@@ -104,20 +104,21 @@ NULL
 #' an error if the workspace areas are not writeable
 #' @seealso \code{getConfig}
 #'
-#' @param workspacePath a folder specifying the workspace path. This has to be
-#' writable by the opencpu process. On a cloud opencpu server on Ubuntu, for example,
-#' this requires a one-time modification of apparmor profiles to enable write
-#' permissions to this path
-#' @param defnPath the path where definition files will reside, organized by
-#' computation identifiers
+#' @param workspacePath a folder specifying the workspace path. This
+#'     has to be writable by the opencpu process. On a cloud opencpu
+#'     server on Ubuntu, for example, this requires a one-time
+#'     modification of apparmor profiles to enable write permissions
+#'     to this path
+#' @param defnPath the path where definition files will reside,
+#'     organized by computation identifiers
 #' @param instancePath the path where instance objects will reside
 #' @param defnFileName the name for the compdef definition files
 #' @param dataFileName the name for the data files
 #' @param instanceFileName the name for the instance files
-#' @param ssl_verifyhost integer value, usually \code{1L}, but for testing with
-#' snake-oil certs, one might set this to \code{0L}
-#' @param ssl_verifypeer integer value, usually \code{1L}, but for testing with
-#' snake-oil certs, one might set this to \code{0L}
+#' @param ssl_verifyhost integer value, usually \code{1L}, but for
+#'     testing with snake-oil certs, one might set this to \code{0L}
+#' @param ssl_verifypeer integer value, usually \code{1L}, but for
+#'     testing with snake-oil certs, one might set this to \code{0L}
 #' @return TRUE if all is well
 #'
 #' @importFrom httr config
@@ -303,8 +304,8 @@ availableComputations <- function() {
                    formula = getComputationInfo("formula"),
                    stringsAsFactors=FALSE)
       },
-      makeMaster = function(defn, debug = FALSE) CoxMaster$new(defnId = defn$id, formula = defn$formula, debug=debug),
-      makeWorker = function(defn, data) CoxWorker$new(data = data, formula = defn$formula)
+      makeMaster = function(defn, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
+      makeWorker = function(defn, data) CoxWorker$new(defn = defn, data = data)
     ),
     RankKSVD = list(
       desc = "Rank K SVD",
@@ -320,8 +321,8 @@ availableComputations <- function() {
                    ncol = getComputationInfo("ncol"),
                    stringsAsFactors=FALSE)
       },
-      makeMaster = function(defn, debug = FALSE) SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug),
-      makeWorker = function(defn, data) SVDWorker$new(x = data)
+      makeMaster = function(defn, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
+      makeWorker = function(defn, data) SVDWorker$new(defn = defn, data = data)
     )
   )
 }
@@ -531,18 +532,22 @@ uploadNewComputation <- function(site, defn, data) {
   if (! .defnOK(defn)) {
       stop("uploadNewComputation: Improper definition")
   }
-  localhost <- (grepl("^http://localhost", site$url) || grepl("^http://127.0.0.1", site$url))
-  payload <- if (localhost) {
-    list(defn = defn, data = data, dataFileName = paste0(site$name, ".rds"))
+  if (is.null(site$worker)) {
+      localhost <- (grepl("^http://localhost", site$url) || grepl("^http://127.0.0.1", site$url))
+      payload <- if (localhost) {
+                     list(defn = defn, data = data, dataFileName = paste0(site$name, ".rds"))
+                 } else {
+                     list(defn = defn, data = data)
+                 }
+      q <- POST(.makeOpencpuURL(urlPrefix = site$url, fn = "saveNewComputation"),
+                body = toJSON(payload),
+                add_headers("Content-Type" = "application/json"),
+                config=getConfig()$sslConfig
+                )
+      .deSerialize(q)
   } else {
-    list(defn = defn, data = data)
+
   }
-  q <- POST(.makeOpencpuURL(urlPrefix = site$url, fn = "saveNewComputation"),
-            body = toJSON(payload),
-            add_headers("Content-Type" = "application/json"),
-            config=getConfig()$sslConfig
-            )
-  .deSerialize(q)
 }
 
 

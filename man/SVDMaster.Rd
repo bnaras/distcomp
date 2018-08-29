@@ -15,9 +15,8 @@ SVDMaster
 
 
 \describe{
-  \item{\code{SVDMaster$new(defnId, k, debug=FALSE)}}{Create an SVD master object
-        with the specified id, the number of singular vectors desired, and the debugging flag.
-        The debug flag is used for debugging computations}
+  \item{\code{SVDMaster$new(defn, debug = FALSE)}}{Create an SVD master object
+        with the specified computation definition. The debug flag is used for debugging computations}
   \item{\code{kosher()}}{Check if inputs and state of object are sane. For future use}
   \item{\code{updateV(arg)}}{Return an updated value for the V vector}
   \item{\code{updateU(arg)}}{Return an updated value for the U vector}
@@ -25,8 +24,9 @@ SVDMaster
   \item{\code{reset()}}{Initialize the computation}
   \item{\code{dimX(, ...)}}{Return the dimensions of the matrix}
   \item{\code{normU(arg, ...)}}{Normalize U vector by \code{arg}}
-  \item{\code{addSite(name, url)}}{Add a worker site
-        for participating in the distributed computation}
+  \item{\code{addSite(name, url = NULL, worker = NULL)}}{Add a worker site
+        for participating in the distributed computation. Exactly one of \code{url}
+        or \code{worker} should be specified}
   \item{\code{run(k = private$k, thr = 1e-8, max.iter = 100)}}{Run the SVD computation until either the
         threshold is reached or the max.iter number of iterations are used up}
   \item{\code{summary()}}{Return the summary of results}

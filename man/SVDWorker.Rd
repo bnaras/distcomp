@@ -16,8 +16,7 @@ a distributed SVD model computation
 
 
 \describe{
-  \item{\code{SVDWorker$new(x, stateful=TRUE)}}{Create a new SVD worker object with data x and flag
-        for preserving state between iterations}
+  \item{\code{SVDWorker$new(defn, data, stateful = TRUE)}}{Create a new SVD worker object with given definition defn, data and flag for preserving state between iterations}
   \item{\code{reset()}}{Initialize work matrix and set up starting values for iterating}
   \item{\code{dimX(...)}}{Return the dimensions of the matrix}
   \item{\code{updateV(arg, ...)}}{Return an updated value for the V vector, normalized by \code{arg}}
