@@ -4,9 +4,9 @@
 \alias{distcompSetup}
 \title{Setup a workspace and configuration for a distributed computation}
 \usage{
-distcompSetup(workspacePath = "", defnPath = paste(workspacePath, "defn",
-  sep = .Platform$file.sep), instancePath = paste(workspacePath, "instances",
-  sep = .Platform$file.sep), defnFileName = "defn.rds",
+distcompSetup(workspacePath = "", defnPath = paste(workspacePath,
+  "defn", sep = .Platform$file.sep), instancePath = paste(workspacePath,
+  "instances", sep = .Platform$file.sep), defnFileName = "defn.rds",
   dataFileName = "data.rds", instanceFileName = "instance.rds",
   ssl_verifyhost = 1L, ssl_verifypeer = 1L)
 }

@@ -16,15 +16,15 @@ computation fit
 
 
 \describe{
-  \item{\code{CoxMaster$new(defnId, formula, debug=FALSE)}}{Create a new
-        CoxMaster object using the defnId and formula. The debug flag is useful for
+  \item{\code{CoxMaster$new(defn, data, debug=FALSE)}}{Create a new
+        CoxMaster object using the defn and data. The debug flag is useful for
         debugging}
   \item{\code{logLik(beta, ...)}}{Compute the partial log likelihood for all the data
         by aggregating the values at each site. The return value is numeric scalar with
         two attributes: \code{gradient} contains the score vector, and \code{hessian}
         contains the estimated hessian matrix}
-  \item{\code{addSite(name, url)}}{Add a worker
-        site for participating in the distributed computation}
+  \item{\code{addSite(name, url = NULL, worker = NULL)}}{Add a worker
+        site for participating in the distributed computation. Exactly one of \code{url} or \code{worker} should be specified}
   \item{\code{var(beta, ...)}}{Compute the variance of the parameter vector beta}
   \item{\code{kosher()}}{Check if inputs and state of object are sane. For future use}
   \item{\code{getP()}}{Returns the dimension of the parameter vector}

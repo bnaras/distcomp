@@ -16,7 +16,7 @@ a distributed Cox model computation
 
 
 \describe{
-  \item{\code{CoxWorker$new(formula, data, stateful=TRUE)}}{Create a new CoxWorker instance
+  \item{\code{CoxWorker$new(defn, data, stateful=TRUE)}}{Create a new CoxWorker instance
         object using formuala and data. The stateful flag indicates whether the object
         state is to be saved between iterations}
   \item{\code{logLik(beta, ...)}}{Compute the partial log likelihood for the local data

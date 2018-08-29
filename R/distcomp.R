@@ -304,8 +304,8 @@ availableComputations <- function() {
                    formula = getComputationInfo("formula"),
                    stringsAsFactors=FALSE)
       },
-      makeMaster = function(defn, debug = FALSE) CoxMaster$new(defnId = defn$id, formula = defn$formula, debug=debug),
-      makeWorker = function(defn, data) CoxWorker$new(data = data, formula = defn$formula)
+      makeMaster = function(defn, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
+      makeWorker = function(defn, data) CoxWorker$new(defn = defn, data = data)
     ),
     RankKSVD = list(
       desc = "Rank K SVD",
@@ -321,8 +321,8 @@ availableComputations <- function() {
                    ncol = getComputationInfo("ncol"),
                    stringsAsFactors=FALSE)
       },
-      makeMaster = function(defn, debug = FALSE) SVDMaster$new(defnId = defn$id, k = defn$rank, debug = debug),
-      makeWorker = function(defn, data) SVDWorker$new(x = data)
+      makeMaster = function(defn, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
+      makeWorker = function(defn, data) SVDWorker$new(defn = defn, data = data)
     )
   )
 }
