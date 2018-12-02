@@ -19,15 +19,15 @@ This package is described in detail in the paper [_Software for Distributed Comp
 
 Install this package the usual way in R or via:
 
-```{r}
+```{r, eval = FALSE}
 library(devtools)
-install_github("hrpcisd/distcomp")
+install_github("bnaras/distcomp")
 ```
 
 Then, you will find a document that describes several examples
 installed under the R library tree. For example:
 
-```{r}
+```{r, eval = FALSE}
 list.files(system.file("doc", package = "distcomp"))
 list.files(system.file("doc_src", package = "distcomp"))
 ```
@@ -35,7 +35,7 @@ list.files(system.file("doc_src", package = "distcomp"))
 The examples described in the reference below are available as
 follows:
 
-```{r}
+```{r, eval = FALSE}
 list.files(system.file("ex", package = "distcomp"))
 ```
 
