@@ -6,8 +6,6 @@ distcomp
 [![Travis build
 status](https://travis-ci.org/bnaras/distcomp.svg?branch=master)](https://travis-ci.org/bnaras/distcomp)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/distcomp)](https://cran.r-project.org/package=distcomp)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/bnaras/distcomp/master.svg)](https://codecov.io/github/bnaras/distcomp?branch=master)
 [![](https://cranlogs.r-pkg.org/badges/distcomp)](https://cran.r-project.org/package=distcomp)
 
 This package is described in detail in the paper [*Software for
