@@ -19,9 +19,9 @@ Description: Implementing algorithms and fitting models when sites (possibly rem
   provided. The former makes direct use of code from the R 'survival' package. (That is,
   the underlying Cox model code is derived from that in the R 'survival' package.)
   Sites may provide data via several means: CSV files, Redcap API, etc. An extensible
-  design allows for new methods to be added in the future. Web applications are provided
-  (via 'shiny') for the implemented methods to help in designing and deploying the
-  computations.
+  design allows for new methods to be added in the future and includes facilities
+  for local prototyping and testing. Web applications are provided (via 'shiny') for
+  the implemented methods to help in designing and deploying the computations.
 Copyright: inst/COPYRIGHTS
 Encoding: UTF-8
 License: LGPL (>= 2)

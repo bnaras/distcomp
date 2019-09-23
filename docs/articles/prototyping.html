@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prototyping Distributed Computations • distcomp</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Prototyping Distributed Computations">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -67,13 +68,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Prototyping Distributed Computations</h1>
                         <h4 class="author">Balasubramanian Narasimhan</h4>
             
-            <h4 class="date">2018-12-02</h4>
+            <h4 class="date">2019-09-23</h4>
       
       
       <div class="hidden name"><code>prototyping.Rmd</code></div>
@@ -90,49 +92,49 @@
 <p>Previous versions of <code>distcomp</code> assumed all computations were done using <code>opencpu</code> remote calls. This meant that the results were time-consuming to check; for reasonably sized problems one would have to wait for hours.</p>
 <p>Version 1.1 of <code>distcomp</code> addresses this by allowing local computations, in essence <em>faking</em> the <code>opencpu</code> calls. All calculations are done locally at normal speeds (rather than a https <code>POST</code> request) while ensuring that the sites are only privy to their own data. This enables others to use the distributed svd algorithm implemented in <code>distcomp</code> as a function call.</p>
 <p>To install this version of <code>distcomp</code>, uninstall any previously installed versions and then execute:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'hrpcisd/distcomp'</span>, <span class="dt">ref =</span> <span class="st">"fake_it"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'hrpcisd/distcomp'</span>, <span class="dt">ref =</span> <span class="st">"fake_it"</span>)</a></code></pre></div>
 <p>You will need C/C++ compilers to install.</p>
 </div>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-example" class="anchor"></a>An Example</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">available &lt;-<span class="st"> </span><span class="kw"><a href="../reference/availableComputations.html">availableComputations</a></span>()
-( computationNames &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(available) )</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">available &lt;-<span class="st"> </span><span class="kw"><a href="../reference/availableComputations.html">availableComputations</a></span>()</a>
+<a class="sourceLine" id="cb2-2" title="2">( computationNames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(available) )</a></code></pre></div>
 <pre><code>## [1] "StratifiedCoxModel" "RankKSVD"</code></pre>
 <p>We will perform an SVD on a 1500 by 20 matrix where the matrix is distributed across three sites each having a 500 by 20 matrix. We will extract the first 10 components using this distributed algorithm.</p>
 <p>We first define the computation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svdDef &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">2</span>],
-                     <span class="dt">rank =</span> 20L,
-                     <span class="dt">ncol =</span> 20L,
-                     <span class="dt">id =</span> <span class="st">"SVD"</span>,
-                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">svdDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb4-2" title="2">                     <span class="dt">rank =</span> 20L,</a>
+<a class="sourceLine" id="cb4-3" title="3">                     <span class="dt">ncol =</span> 20L,</a>
+<a class="sourceLine" id="cb4-4" title="4">                     <span class="dt">id =</span> <span class="st">"SVD"</span>,</a>
+<a class="sourceLine" id="cb4-5" title="5">                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>We generate some synthetic data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">12345</span>)
-## Three sites
-nSites &lt;-<span class="st"> </span><span class="dv">3</span>
-siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq.int</a></span>(nSites), <span class="cf">function</span>(i) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">10000</span>), <span class="dt">ncol=</span><span class="dv">20</span>))</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">12345</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">## Three sites</span></a>
+<a class="sourceLine" id="cb5-3" title="3">nSites &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb5-4" title="4">siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq.int</a></span>(nSites), <span class="cf">function</span>(i) <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">10000</span>), <span class="dt">ncol=</span><span class="dv">20</span>))</a></code></pre></div>
 <p>We now create local objects to represent the sites, a list of three items, each with a name and its specific data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sites &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq.int</a></span>(nSites),
-                <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"site"</span>, x),
-                                 <span class="dt">worker =</span> <span class="kw"><a href="../reference/makeWorker.html">makeWorker</a></span>(<span class="dt">defn =</span> svdDef, <span class="dt">data =</span> siteData[[x]])
-                                 ))</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">sites &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq.int</a></span>(nSites),</a>
+<a class="sourceLine" id="cb6-2" title="2">                <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"site"</span>, x),</a>
+<a class="sourceLine" id="cb6-3" title="3">                                 <span class="dt">worker =</span> <span class="kw"><a href="../reference/makeWorker.html">makeWorker</a></span>(<span class="dt">defn =</span> svdDef, <span class="dt">data =</span> siteData[[x]])</a>
+<a class="sourceLine" id="cb6-4" title="4">                                 ))</a></code></pre></div>
 <p>We are now ready to create a master object and add sites to it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">master &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeMaster.html">makeMaster</a></span>(svdDef)
-<span class="cf">for</span> (site <span class="cf">in</span> sites) {
-  master<span class="op">$</span><span class="kw">addSite</span>(<span class="dt">name =</span> site<span class="op">$</span>name, <span class="dt">worker =</span> site<span class="op">$</span>worker)
-}</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">master &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeMaster.html">makeMaster</a></span>(svdDef)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="cf">for</span> (site <span class="cf">in</span> sites) {</a>
+<a class="sourceLine" id="cb7-3" title="3">  master<span class="op">$</span><span class="kw">addSite</span>(<span class="dt">name =</span> site<span class="op">$</span>name, <span class="dt">worker =</span> site<span class="op">$</span>worker)</a>
+<a class="sourceLine" id="cb7-4" title="4">}</a></code></pre></div>
 <p>When any of the sites specify a <code>worker</code> argument in the call to <code>addSite</code>, it is an indication that the computation is to be performed locally. Otherwise, a URL will have to be specified using the <code>url</code> argument to <code>addSite</code>. (Only one of <code>worker</code> or <code>url</code> can be specified.)</p>
 <p>Finally, we are ready to run the decomposition, specifying a maximum number of iterations, so that things don’t go haywire. This takes less than 5 seconds on my laptop.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>(<span class="dt">max.iter =</span> <span class="dv">10000</span>))</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>(<span class="dt">max.iter =</span> <span class="dv">10000</span>))</a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  12.131   1.658   4.688</code></pre>
+##   6.033   3.555   8.294</code></pre>
 <p>The result is a named list of two things, the <span class="math inline">\(d\)</span> diagonal values and the <span class="math inline">\(v\)</span> matrix.</p>
 <p>We can compare the results obtained here with the actual.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">full_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/do.call">do.call</a></span>(rbind, siteData)
-full_svd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/svd">svd</a></span>(full_data)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">full_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(rbind, siteData)</a>
+<a class="sourceLine" id="cb10-2" title="2">full_svd &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/svd.html">svd</a></span>(full_data)</a></code></pre></div>
 <p>Let’s print it side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d_table &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">truth =</span> full_svd<span class="op">$</span>d, <span class="dt">distcomp =</span> result<span class="op">$</span>d)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(d_table)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">d_table &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">truth =</span> full_svd<span class="op">$</span>d, <span class="dt">distcomp =</span> result<span class="op">$</span>d)</a>
+<a class="sourceLine" id="cb11-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(d_table)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">truth</th>
@@ -222,35 +224,35 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>We can also compare the <span class="math inline">\(v\)</span> matrix, taking into account the signs may be different.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/norm">norm</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(result<span class="op">$</span>v) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(full_svd<span class="op">$</span>v), <span class="st">"F"</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/norm.html">norm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(result<span class="op">$</span>v) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(full_svd<span class="op">$</span>v), <span class="st">"F"</span>)</a></code></pre></div>
 <pre><code>## [1] 1.124008e-05</code></pre>
 </div>
 <div id="stratified-cox-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stratified-cox-model" class="anchor"></a>Stratified Cox Model</h2>
 <p>The approach for the stratified Cox model is similar. We start with a definition.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coxDef &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">1</span>],
-                     <span class="dt">formula =</span> <span class="st">"Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat"</span>,
-                     <span class="dt">projectName =</span> <span class="st">"STCoxTest"</span>,
-                     <span class="dt">projectDesc =</span> <span class="st">"STCox Project Desc"</span>,
-                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">coxDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb14-2" title="2">                     <span class="dt">formula =</span> <span class="st">"Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat"</span>,</a>
+<a class="sourceLine" id="cb14-3" title="3">                     <span class="dt">projectName =</span> <span class="st">"STCoxTest"</span>,</a>
+<a class="sourceLine" id="cb14-4" title="4">                     <span class="dt">projectDesc =</span> <span class="st">"STCox Project Desc"</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>We now create two sites with appropriate data</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Two sites
-siteDataFiles &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"ex"</span>, <span class="dt">package=</span><span class="st">"distcomp"</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"uis-site1.csv"</span>, <span class="st">"uis-site2.csv"</span>))
-siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(siteDataFiles, read.csv)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co">## Two sites</span></a>
+<a class="sourceLine" id="cb15-2" title="2">siteDataFiles &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"ex"</span>, <span class="dt">package=</span><span class="st">"distcomp"</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"uis-site1.csv"</span>, <span class="st">"uis-site2.csv"</span>))</a>
+<a class="sourceLine" id="cb15-3" title="3">siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(siteDataFiles, read.csv)</a></code></pre></div>
 <p>We now create local objects to represent the two sites, each with a name and its specific data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sites &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_along</a></span>(siteData),
-                <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"site"</span>, x),
-                                 <span class="dt">worker =</span> <span class="kw"><a href="../reference/makeWorker.html">makeWorker</a></span>(<span class="dt">defn =</span> coxDef, <span class="dt">data =</span> siteData[[x]])
-                                 ))</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">sites &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(siteData),</a>
+<a class="sourceLine" id="cb16-2" title="2">                <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"site"</span>, x),</a>
+<a class="sourceLine" id="cb16-3" title="3">                                 <span class="dt">worker =</span> <span class="kw"><a href="../reference/makeWorker.html">makeWorker</a></span>(<span class="dt">defn =</span> coxDef, <span class="dt">data =</span> siteData[[x]])</a>
+<a class="sourceLine" id="cb16-4" title="4">                                 ))</a></code></pre></div>
 <p>We are now ready to create a master object and add sites to it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">master &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeMaster.html">makeMaster</a></span>(coxDef)
-<span class="cf">for</span> (site <span class="cf">in</span> sites) {
-  master<span class="op">$</span><span class="kw">addSite</span>(<span class="dt">name =</span> site<span class="op">$</span>name, <span class="dt">worker =</span> site<span class="op">$</span>worker)
-}</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">master &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeMaster.html">makeMaster</a></span>(coxDef)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="cf">for</span> (site <span class="cf">in</span> sites) {</a>
+<a class="sourceLine" id="cb17-3" title="3">  master<span class="op">$</span><span class="kw">addSite</span>(<span class="dt">name =</span> site<span class="op">$</span>name, <span class="dt">worker =</span> site<span class="op">$</span>worker)</a>
+<a class="sourceLine" id="cb17-4" title="4">}</a></code></pre></div>
 <p>Now we can run the model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>()
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(master<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(), <span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>()</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(master<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(), <span class="dt">digits =</span> <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>##        coef exp(coef) se(coef)      z         p
 ## 1 -0.028076    0.9723 0.008131 -3.453 5.542e-04
 ## 2  0.009146    1.0092 0.004991  1.832 6.691e-02
@@ -260,10 +262,10 @@ siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdo
 ## 6 -0.240021    0.7866 0.115632 -2.076 3.792e-02
 ## 7 -0.212616    0.8085 0.093747 -2.268 2.333e-02</code></pre>
 <p>The above result will be the same as what we obtain from a Cox regression fit.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coxFit &lt;-<span class="st"> </span>survival<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/survival/topics/coxph">coxph</a></span>(<span class="dt">formula=</span><span class="kw">Surv</span>(time, censor) <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>becktota <span class="op">+</span><span class="st"> </span>ndrugfp1 <span class="op">+</span><span class="st"> </span>ndrugfp2 <span class="op">+</span>
-<span class="st">                              </span>ivhx3 <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>treat <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(site),
-                          <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(siteData[[<span class="dv">1</span>]], siteData[[<span class="dv">2</span>]]))
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(coxFit)<span class="op">$</span>coefficients</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">coxFit &lt;-<span class="st"> </span>survival<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span>(<span class="dt">formula=</span><span class="kw">Surv</span>(time, censor) <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>becktota <span class="op">+</span><span class="st"> </span>ndrugfp1 <span class="op">+</span><span class="st"> </span>ndrugfp2 <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">                              </span>ivhx3 <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>treat <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(site),</a>
+<a class="sourceLine" id="cb20-3" title="3">                          <span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(siteData[[<span class="dv">1</span>]], siteData[[<span class="dv">2</span>]]))</a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(coxFit)<span class="op">$</span>coefficients</a></code></pre></div>
 <pre><code>##                   coef exp(coef)    se(coef)         z     Pr(&gt;|z|)
 ## age       -0.028075893 0.9723146 0.008130685 -3.453078 5.542280e-04
 ## becktota   0.009145528 1.0091875 0.004991421  1.832250 6.691425e-02
@@ -276,13 +278,13 @@ siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdo
 <div id="session-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo</a></span>()</code></pre></div>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin17.7.0 (64-bit)
-## Running under: macOS  10.14.1
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</a></code></pre></div>
+<pre><code>## R version 3.6.1 (2019-07-05)
+## Platform: x86_64-apple-darwin18.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.6
 ## 
 ## Matrix products: default
-## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.3/lib/libopenblasp-r0.3.3.dylib
+## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.7/lib/libopenblasp-r0.3.7.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -291,23 +293,24 @@ siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdo
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] distcomp_1.1    survival_2.43-1
+## [1] distcomp_1.1      survival_2.44-1.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.0       knitr_1.20       xml2_1.2.0       magrittr_1.5    
-##  [5] roxygen2_6.1.1   splines_3.5.1    MASS_7.3-51.1    xtable_1.8-3    
-##  [9] lattice_0.20-38  R6_2.3.0         rlang_0.3.0.1    highr_0.7       
-## [13] httr_1.3.1       stringr_1.3.1    tools_3.5.1      grid_3.5.1      
-## [17] htmltools_0.3.6  commonmark_1.6   yaml_2.2.0       rprojroot_1.3-2 
-## [21] digest_0.6.18    assertthat_0.2.0 pkgdown_1.2.0    crayon_1.3.4    
-## [25] Matrix_1.2-15    shiny_1.2.0      later_0.7.5      promises_1.0.1  
-## [29] fs_1.2.6         mime_0.6         memoise_1.1.0    evaluate_0.12   
-## [33] rmarkdown_1.10   stringi_1.2.4    compiler_3.5.1   desc_1.2.0      
-## [37] backports_1.1.2  jsonlite_1.5     httpuv_1.4.5</code></pre>
+##  [1] Rcpp_1.0.2       knitr_1.25       magrittr_1.5     splines_3.6.1   
+##  [5] MASS_7.3-51.4    xtable_1.8-4     lattice_0.20-38  R6_2.4.0        
+##  [9] rlang_0.4.0      highr_0.8        httr_1.4.1       stringr_1.4.0   
+## [13] tools_3.6.1      grid_3.6.1       xfun_0.9         htmltools_0.3.6 
+## [17] yaml_2.2.0       assertthat_0.2.1 digest_0.6.20    rprojroot_1.3-2 
+## [21] pkgdown_1.4.1    crayon_1.3.4     Matrix_1.2-17    shiny_1.3.2     
+## [25] later_0.8.0      promises_1.0.1   fs_1.3.1         mime_0.7        
+## [29] memoise_1.1.0    evaluate_0.14    rmarkdown_1.15   stringi_1.4.3   
+## [33] compiler_3.6.1   desc_1.2.0       backports_1.1.4  jsonlite_1.6    
+## [37] httpuv_1.5.2</code></pre>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -323,17 +326,20 @@ siteData &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdo
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://statistics.stanford.edu/people/balasubramanian-narasimhan">Balasubramanian Narasimhan</a>, <a href="https://www.linkedin.com/in/marina-bendersky-60525516">Marina Bendersky</a>, <a href="https://www.linkedin.com/in/sam-gross-06aa9389">Sam Gross</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
