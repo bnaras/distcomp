@@ -88,18 +88,13 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install this package the usual way in R or via:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"bnaras/distcomp"</span>)</a></code></pre></div>
+<p><code>{r, eval = FALSE} library(devtools) install_github("bnaras/distcomp")</code></p>
 <p>Then, you will find a document that describes several examples installed under the R library tree. For example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"doc"</span>, <span class="dt">package =</span> <span class="st">"distcomp"</span>))</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"doc_src"</span>, <span class="dt">package =</span> <span class="st">"distcomp"</span>))</a></code></pre></div>
+<p><code>{r, eval = FALSE} list.files(system.file("doc", package = "distcomp")) list.files(system.file("doc_src", package = "distcomp"))</code></p>
 <p>The examples described in the reference below are available as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"ex"</span>, <span class="dt">package =</span> <span class="st">"distcomp"</span>))</a></code></pre></div>
+<p><code>{r, eval = FALSE} list.files(system.file("ex", package = "distcomp"))</code></p>
 <p>Use of this package requires some configuration. In particular, to run the examples on a local machine where a single <code>opencpu</code> server will be emulating several sites, a suitable R profile needs to be set up. That profile will be something along the lines of</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(distcomp)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="reference/distcompSetup.html">distcompSetup</a></span>(<span class="dt">workspace =</span> <span class="st">"full_path_to_workspace_directory"</span>,</a>
-<a class="sourceLine" id="cb4-3" title="3">              <span class="dt">ssl_verifyhost =</span> 0L, <span class="dt">ssl_verifypeer =</span> 0L)</a></code></pre></div>
-<p>where the workspace is a directory that the <code>opencpu</code> server can serialize objects to. On Unix or Mac, the above can be inserted into an <code>.Rprofile</code> file, but on Windows, we find that the <code>Rprofile.site</code> file needs to contain the above lines.</p>
+<p><code>{r, eval=FALSE} library(distcomp) distcompSetup(workspace = "full_path_to_workspace_directory",               ssl_verifyhost = 0L, ssl_verifypeer = 0L)</code> where the workspace is a directory that the <code>opencpu</code> server can serialize objects to. On Unix or Mac, the above can be inserted into an <code>.Rprofile</code> file, but on Windows, we find that the <code>Rprofile.site</code> file needs to contain the above lines.</p>
 <p>The effect of this is that <em>every R</em> process (including the <code>opencpu</code> process) has access to the <code>distcomp</code> library and the workspace.</p>
 </div>
 <div id="prototyping-new-computations" class="section level2">
@@ -138,12 +133,9 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://statistics.stanford.edu/people/balasubramanian-narasimhan">Balasubramanian Narasimhan</a> <br><small class="roles"> Author, maintainer </small>  </li>
-<li>
-<a href="https://www.linkedin.com/in/marina-bendersky-60525516">Marina Bendersky</a> <br><small class="roles"> Author </small>  </li>
-<li>
-<a href="https://www.linkedin.com/in/sam-gross-06aa9389">Sam Gross</a> <br><small class="roles"> Author </small>  </li>
+<li>Balasubramanian Narasimhan <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Marina Bendersky <br><small class="roles"> Author </small>  </li>
+<li>Sam Gross <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -151,10 +143,10 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/bnaras/distcomp"><img src="https://travis-ci.org/bnaras/distcomp.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://travis-ci.org/bnaras/distcomp"><img src="https://travis-ci.org/bnaras/distcomp.svg?branch=master" alt="Travis build status"></a></li>
 <li><a href="https://cran.r-project.org/package=distcomp"><img src="http://www.r-pkg.org/badges/version/distcomp" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://codecov.io/github/bnaras/distcomp?branch=master"><img src="https://img.shields.io/codecov/c/github/bnaras/distcomp/master.svg" alt="Coverage Status"></a></li>
-<li><a href="https://cloud.r-project.org/package=distcomp"><img src="https://cranlogs.r-pkg.org/badges/distcomp"></a></li>
+<li><a href="https://cran.r-project.org/package=distcomp"><img src="https://cranlogs.r-pkg.org/badges/distcomp"></a></li>
 </ul>
 </div>
 </div>
@@ -162,7 +154,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://statistics.stanford.edu/people/balasubramanian-narasimhan">Balasubramanian Narasimhan</a>, <a href="https://www.linkedin.com/in/marina-bendersky-60525516">Marina Bendersky</a>, <a href="https://www.linkedin.com/in/sam-gross-06aa9389">Sam Gross</a>.</p>
+  <p>Developed by Balasubramanian Narasimhan, Marina Bendersky, Sam Gross.</p>
 </div>
 
 <div class="pkgdown">

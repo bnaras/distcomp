@@ -54,17 +54,7 @@ Version 1.1 of `distcomp` addresses this by allowing local
 computations, in essence _faking_ the `opencpu` calls. All
 calculations are done locally at normal speeds (rather than a https
 `POST` request) while ensuring that the sites are only privy to their
-own data.  This enables others to use the distributed svd algorithm
-implemented in `distcomp` as a function call. 
-
-To install this version of `distcomp`, uninstall any previously
-installed versions and then execute:
-
-```{r, eval = FALSE}
-devtools::install_github('hrpcisd/distcomp', ref = "fake_it")
-```
-
-You will need C/C++ compilers to install. 
+own data. 
 
 ## An Example
 
