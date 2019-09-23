@@ -61,7 +61,9 @@ To install this version of `distcomp`, uninstall any previously
 installed versions and then execute:
 
 ```{r, eval = FALSE}
-devtools::install_github('hrpcisd/distcomp', ref = "fake_it")
+##devtools::install_github('hrpcisd/distcomp', ref = "fake_it")
+## Moved to master
+devtools::install_github('hrpcisd/distcomp')
 ```
 
 You will need C/C++ compilers to install. 
@@ -69,6 +71,7 @@ You will need C/C++ compilers to install.
 ## An Example
 
 ```{r}
+library(distcomp)
 available <- availableComputations()
 ( computationNames <- names(available) )
 ```
