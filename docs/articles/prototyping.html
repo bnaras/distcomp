@@ -124,7 +124,7 @@
 <p>Finally, we are ready to run the decomposition, specifying a maximum number of iterations, so that things don’t go haywire. This takes less than 5 seconds on my laptop.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>(<span class="dt">max.iter =</span> <span class="dv">10000</span>))</a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   5.968   3.451   8.141</code></pre>
+##   6.451   3.676   8.856</code></pre>
 <p>The result is a named list of two things, the <span class="math inline">\(d\)</span> diagonal values and the <span class="math inline">\(v\)</span> matrix.</p>
 <p>We can compare the results obtained here with the actual.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">full_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(rbind, siteData)</a>
