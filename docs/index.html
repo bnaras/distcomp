@@ -88,13 +88,18 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install this package the usual way in R or via:</p>
-<p><code>{r, eval = FALSE} library(devtools) install_github("bnaras/distcomp")</code></p>
+<pre><code><a href="https://rdrr.io/r/base/library.html">library(devtools)
+install_github("bnaras/distcomp")</a></code></pre>
 <p>Then, you will find a document that describes several examples installed under the R library tree. For example:</p>
-<p><code>{r, eval = FALSE} list.files(system.file("doc", package = "distcomp")) list.files(system.file("doc_src", package = "distcomp"))</code></p>
+<pre><code><a href="https://rdrr.io/r/base/list.files.html">list.files(system.file("doc", package = "distcomp")) 
+list.files(system.file("doc_src", package = "distcomp"))</a></code></pre>
 <p>The examples described in the reference below are available as follows:</p>
-<p><code>{r, eval = FALSE} list.files(system.file("ex", package = "distcomp"))</code></p>
+<pre><code><a href="https://rdrr.io/r/base/list.files.html">list.files(system.file("ex", package = "distcomp"))</a></code></pre>
 <p>Use of this package requires some configuration. In particular, to run the examples on a local machine where a single <code>opencpu</code> server will be emulating several sites, a suitable R profile needs to be set up. That profile will be something along the lines of</p>
-<p><code>{r, eval=FALSE} library(distcomp) distcompSetup(workspace = "full_path_to_workspace_directory",               ssl_verifyhost = 0L, ssl_verifypeer = 0L)</code> where the workspace is a directory that the <code>opencpu</code> server can serialize objects to. On Unix or Mac, the above can be inserted into an <code>.Rprofile</code> file, but on Windows, we find that the <code>Rprofile.site</code> file needs to contain the above lines.</p>
+<pre><code><a href="https://rdrr.io/r/base/library.html">library(distcomp) 
+distcompSetup(workspace = "full_path_to_workspace_directory",
+              ssl_verifyhost = 0L, ssl_verifypeer = 0L)</a></code></pre>
+<p>where the workspace is a directory that the <code>opencpu</code> server can serialize objects to. On Unix or Mac, the above can be inserted into an <code>.Rprofile</code> file, but on Windows, we find that the <code>Rprofile.site</code> file needs to contain the above lines.</p>
 <p>The effect of this is that <em>every R</em> process (including the <code>opencpu</code> process) has access to the <code>distcomp</code> library and the workspace.</p>
 </div>
 <div id="prototyping-new-computations" class="section level2">
@@ -145,7 +150,6 @@
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/bnaras/distcomp"><img src="https://travis-ci.org/bnaras/distcomp.svg?branch=master" alt="Travis build status"></a></li>
 <li><a href="https://cran.r-project.org/package=distcomp"><img src="http://www.r-pkg.org/badges/version/distcomp" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://codecov.io/github/bnaras/distcomp?branch=master"><img src="https://img.shields.io/codecov/c/github/bnaras/distcomp/master.svg" alt="Coverage Status"></a></li>
 <li><a href="https://cran.r-project.org/package=distcomp"><img src="https://cranlogs.r-pkg.org/badges/distcomp"></a></li>
 </ul>
 </div>
