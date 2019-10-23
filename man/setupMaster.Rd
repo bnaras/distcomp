@@ -10,9 +10,9 @@ setupMaster()
 the results of running the web application
 }
 \description{
-This function just calls \code{\link{runDistcompApp}} with the
+This function just calls \code{\link[=runDistcompApp]{runDistcompApp()}} with the
 parameter "setupMaster"
 }
 \seealso{
-\code{\link{runDistcompApp}}
+\code{\link[=runDistcompApp]{runDistcompApp()}}
 }

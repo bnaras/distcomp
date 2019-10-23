@@ -21,5 +21,5 @@ the object. The types of objects that can be created depend upon the
 available computations
 }
 \seealso{
-\code{\link{availableComputations}}
+\code{\link[=availableComputations]{availableComputations()}}
 }

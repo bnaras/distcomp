@@ -14,7 +14,7 @@
 #' @importFrom stats model.offset
 #' @importFrom stats model.weights
 #' @importFrom stats .getXlevels
-#' @useDynLib distcomp, .registration = TRUE
+#' @useDynLib distcomp
 #' @keywords internal
 #tt <- function(x) x
 dccoxph <- function(formula, data, weights, subset, na.action,
@@ -141,8 +141,8 @@ dccoxph <- function(formula, data, weights, subset, na.action,
                 newstrat <-  as.integer(c(1, 1*(diff(strats[sorted])!=0)))
             }
             if (storage.mode(Y) != "double") storage.mode(Y) <- "double"
-            counts <- .Call(Ccoxcount1, Y[sorted,],
-                            as.integer(newstrat))
+            counts <- .Call('Ccoxcount1', Y[sorted,],
+                            as.integer(newstrat), PACKAGE = "distcomp")
             tindex <- sorted[counts$index]
         }
         else {
@@ -156,10 +156,10 @@ dccoxph <- function(formula, data, weights, subset, na.action,
                 newstrat  <- c(1L, as.integer(diff(strats[sort.end])!=0))
             }
             if (storage.mode(Y) != "double") storage.mode(Y) <- "double"
-            counts <- .Call(Ccoxcount2, Y,
+            counts <- .Call('Ccoxcount2', Y,
                             as.integer(sort.start -1L),
                             as.integer(sort.end -1L),
-                            as.integer(newstrat))
+                            as.integer(newstrat), PACKAGE = "distcomp")
             tindex <- counts$index
         }
         mf <- mf[tindex,]
@@ -309,7 +309,7 @@ dccoxph.fit <- function(x, y, strata, offset, init, control,
 	}
 
         storage.mode(weights) <- storage.mode(init) <- "double"
-        coxfit <- .Call(Ccoxfit6,
+        coxfit <- .Call('Ccoxfit6',
                         as.integer(maxiter),
                         stime,
                         sstat,
@@ -321,18 +321,20 @@ dccoxph.fit <- function(x, y, strata, offset, init, control,
                         as.double(control$eps),
                         as.double(control$toler.chol),
                         as.vector(init),
-                        as.integer(1))  # internally rescale
+                        as.integer(1),
+                        PACKAGE = "distcomp")  # internally rescale
 
         if (nullmodel) {
             score <- exp(offset[sorted])
-            coxres <- .C(Ccoxmart, as.integer(n),
+            coxres <- .C('Ccoxmart', as.integer(n),
                          as.integer(method=='efron'),
                          stime,
                          sstat,
                          newstrat,
                          as.double(score),
                          as.double(weights),
-                         resid=double(n))
+                         resid=double(n),
+                         PACKAGE = "distcomp")
 
             resid <- double(n)
             resid[sorted] <- coxres$resid
@@ -366,14 +368,15 @@ dccoxph.fit <- function(x, y, strata, offset, init, control,
             names(coef) <- dimnames(x)[[2]]
             lp <- c(x %*% coef) + offset - sum(coef*coxfit$means)
             score <- exp(lp[sorted])
-            coxres <- .C(Ccoxmart, as.integer(n),
+            coxres <- .C('Ccoxmart', as.integer(n),
                          as.integer(method=='efron'),
                          stime,
                          sstat,
                          newstrat,
                          as.double(score),
                          as.double(weights),
-                         resid=double(n))
+                         resid=double(n),
+                         PACKAGE = "distcomp")
             resid <- double(n)
             resid[sorted] <- coxres$resid
             names(resid) <- rownames

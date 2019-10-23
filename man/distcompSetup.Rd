@@ -38,7 +38,7 @@ testing with snake-oil certs, one might set this to \code{0L}}
 TRUE if all is well
 }
 \description{
-The function \code{discompsetup} sets up a distributed computation
+The function \code{distcompSetup} sets up a distributed computation
 and configures some global parameters such as definition file names,
 data file names, instance object file names, and ssl configuration parameters. The
 function creates some of necessary subdirectories if not already present and throws
@@ -50,5 +50,5 @@ distcompSetup(workspacePath="./workspace")
 }
 }
 \seealso{
-\code{getConfig}
+\code{\link[=getConfig]{getConfig()}}
 }

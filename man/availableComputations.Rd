@@ -41,5 +41,5 @@ are implemented, this list is augmented.
 availableComputations()
 }
 \seealso{
-\code{\link{getComputationInfo}}
+\code{\link[=getComputationInfo]{getComputationInfo()}}
 }

@@ -17,6 +17,5 @@ Web applications can define computation, setup worker sites or masters.
 This function invokes the appropriate web application depending on the task
 }
 \seealso{
-\code{\link{defineNewComputation}}, \code{\link{setupWorker}},
-\code{\link{setupMaster}}
+\code{\link[=defineNewComputation]{defineNewComputation()}}, \code{\link[=setupWorker]{setupWorker()}}, \code{\link[=setupMaster]{setupMaster()}}
 }

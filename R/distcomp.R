@@ -1,6 +1,6 @@
 #' Distributed Computing with R
 #'
-#' \code{distcomp} is a collection of methods to fit models to data that may be
+#' `distcomp` is a collection of methods to fit models to data that may be
 #' distributed at various sites. The package arose as a way of addressing the
 #' issues regarding data aggregation; by allowing sites to have control over
 #' local data and transmitting only summaries, some privacy controls can be
@@ -17,30 +17,30 @@
 #' We make the following assumptions in the implementation:
 #' (a) the aggregate data is logically a stacking of data at each site, i.e.,
 #' the full data is row-partitioned into sites where the rows are observations;
-#' (b) Each site has the package \code{distcomp} installed and a workspace setup
-#' for (writeable) use by the \code{opencpu} server
-#' (see \code{\link{distcompSetup}}); and (c) each site is exposing \code{distcomp}
-#' via an \code{opencpu} server.
+#' (b) Each site has the package `distcomp` installed and a workspace setup
+#' for (writeable) use by the `opencpu` server
+#' (see [distcompSetup()]; and (c) each site is exposing `distcomp`
+#' via an `opencpu` server.
 #'
 #' The main computation happens via a master process, a script of R code,
-#' that makes calls to \code{distcomp} functions at worker sites via \code{opencpu}.
-#' The use of \code{opencpu} allows developers to prototype their distributed implementations
-#' on a local machine using the \code{opencpu} package that runs such a server locally
-#' using \code{localhost} ports.
+#' that makes calls to `distcomp` functions at worker sites via `opencpu`.
+#' The use of `opencpu` allows developers to prototype their distributed implementations
+#' on a local machine using the `opencpu` package that runs such a server locally
+#' using `localhost` ports.
 #'
-#' Note that \code{distcomp} computations are not intended for speed/efficiency;
+#' Note that `distcomp` computations are not intended for speed/efficiency;
 #' indeed, they are orders of magnitude slower. However, the models that are fit are
 #' not meant to be recomputed often. These and other details are discussed in the
 #' paper mentioned above.
 #'
 #' The current implementation, particularly the Stratified Cox Model, makes direct use of
-#' code from \code{\link[survival]{coxph}}. That is, the underlying Cox model code is
-#' derived from that in the R \code{survival} survival package.
+#' code from [survival::coxph()]. That is, the underlying Cox model code is
+#' derived from that in the R `survival` survival package.
 #'
 #' For an understanding of how this package is meant to be used, please see the documented
 #' examples and the reference.
-#' @seealso The examples in \code{system.file("doc", "examples.html", package="distcomp")}
-#' @seealso The source for the examples: \code{system.file("doc_src", "examples.Rmd", package="distcomp")}.
+#' @seealso The examples in `system.file("doc", "examples.html", package="distcomp")`
+#' @seealso The source for the examples: `system.file("doc_src", "examples.Rmd", package="distcomp")`.
 #' @docType package
 #' @references Software for Distributed Computation on Medical Databases:
 #' A Demonstration Project. Journal of Statistical Software, 77(13), 1-22.
@@ -97,12 +97,12 @@ NULL
 }
 
 #' Setup a workspace and configuration for a distributed computation
-#' @description The function \code{discompsetup} sets up a distributed computation
+#' @description The function `distcompSetup` sets up a distributed computation
 #' and configures some global parameters such as definition file names,
 #' data file names, instance object file names, and ssl configuration parameters. The
 #' function creates some of necessary subdirectories if not already present and throws
 #' an error if the workspace areas are not writeable
-#' @seealso \code{getConfig}
+#' @seealso [getConfig()]
 #'
 #' @param workspacePath a folder specifying the workspace path. This
 #'     has to be writable by the opencpu process. On a cloud opencpu
@@ -115,10 +115,10 @@ NULL
 #' @param defnFileName the name for the compdef definition files
 #' @param dataFileName the name for the data files
 #' @param instanceFileName the name for the instance files
-#' @param ssl_verifyhost integer value, usually \code{1L}, but for
-#'     testing with snake-oil certs, one might set this to \code{0L}
-#' @param ssl_verifypeer integer value, usually \code{1L}, but for
-#'     testing with snake-oil certs, one might set this to \code{0L}
+#' @param ssl_verifyhost integer value, usually `1L`, but for
+#'     testing with snake-oil certs, one might set this to `0L`
+#' @param ssl_verifypeer integer value, usually `1L`, but for
+#'     testing with snake-oil certs, one might set this to `0L`
 #' @return TRUE if all is well
 #'
 #' @importFrom httr config
@@ -183,9 +183,9 @@ distcompSetup <- function(workspacePath = "",
 
 
 #' Return the workspace and configuration setup values
-#' @description The function \code{getConfig} returns the values of the
-#' configuration parameters set up by \code{distcompSetup}
-#' @seealso \code{distcompSetup}
+#' @description The function `getConfig` returns the values of the
+#' configuration parameters set up by `distcompSetup`
+#' @seealso [distcompSetup()]
 #' @param ... any further arguments
 #' @return a list consisting of
 #' \item{workspacePath}{a folder specifying the workspace path. This has to be
@@ -198,10 +198,10 @@ distcompSetup <- function(workspacePath = "",
 #' \item{defnFileName}{the name for the compdef definition files}
 #' \item{dataFileName}{the name for the data files}
 #' \item{instanceFileName}{the name for the instance files}
-#' \item{ssl_verifyhost}{integer value, usually \code{1L}, but for testing with
-#' snake-oil certs, one might set this to \code{0L}}
-#' \item{ssl_verifypeer}{integer value, usually \code{1L}, but for testing with
-#' snake-oil certs, one might set this to \code{0L}}
+#' \item{ssl_verifyhost}{integer value, usually `1L`, but for testing with
+#' snake-oil certs, one might set this to `0L`}
+#' \item{ssl_verifypeer}{integer value, usually `1L`, but for testing with
+#' snake-oil certs, one might set this to `0L`}
 #'
 #' @examples
 #' \dontrun{
@@ -215,11 +215,11 @@ getConfig <- function(...) {
 
 
 #' Make a worker object given a definition and data
-#' @description The function \code{makeWorker} returns an object of the
+#' @description The function `makeWorker` returns an object of the
 #' appropriate type based on a computation definition and sets the data for
 #' the object. The types of objects that can be created depend upon the
 #' available computations
-#' @seealso \code{\link{availableComputations}}
+#' @seealso [availableComputations()]
 #' @param defn the computation definition
 #' @param data the data for the computation
 #' @return a worker object of the appropriate class based on the definition
@@ -237,10 +237,10 @@ makeWorker <- function (defn, data) {
 }
 
 #' Make a master object given a definition
-#' @description The function \code{makeMaster} returns a master object
+#' @description The function `makeMaster` returns a master object
 #' corresponding to the definition. The types of master objects that can
 #' be created depend upon the available computations
-#' @seealso \code{\link{availableComputations}}
+#' @seealso [availableComputations()]
 #' @param defn the computation definition
 #' @return a master object of the appropriate class based on the definition
 #'
@@ -257,13 +257,13 @@ makeMaster <- function(defn) {
 }
 
 #' Return the currently available (implemented) computations
-#' @description The function \code{availableComputations} returns a list
+#' @description The function `availableComputations` returns a list
 #' of available computations with various components. The names of this list
 #' (with no spaces) are unique canonical tags that are used throughout the
 #' package to unambiguously refer to the type of computation; web applications
 #' particularly rely on this list to instantiate objects. As more computations
 #' are implemented, this list is augmented.
-#' @seealso \code{\link{getComputationInfo}}
+#' @seealso [getComputationInfo()]
 #' @return a list with the components corresponding to a computation
 #' \item{desc}{a textual description (25 chars at most)}
 #' \item{definitionApp}{the name of a function that will fire up a shiny webapp
@@ -278,7 +278,7 @@ makeMaster <- function(defn) {
 #' applications to construct a definition object based on inputs specified
 #' by the users. Since the full information is often gathered incrementally by
 #' several web applications, the inputs are set in a global variable and
-#' therefore retrieved here using the function \code{getComputationInfo}
+#' therefore retrieved here using the function `getComputationInfo`
 #' designed for the purpose}
 #' \item{makeMaster}{a function that will construct a master object for the
 #' computation given the definition and a logical flag indicating
@@ -291,49 +291,65 @@ makeMaster <- function(defn) {
 #' @export
 availableComputations <- function() {
   list(
-    StratifiedCoxModel = list(
-      desc = "Stratified Cox Model",
-      definitionApp = "defineNewCoxModel",
-      setupWorkerApp = "setupCoxWorker",
-      setupMasterApp = "setupCoxMaster",
-      makeDefinition = function() {
-        data.frame(id = getComputationInfo("id"),
-                   compType = getComputationInfo("compType"),
-                   projectName = getComputationInfo("projectName"),
-                   projectDesc = getComputationInfo("projectDesc"),
-                   formula = getComputationInfo("formula"),
-                   stringsAsFactors=FALSE)
-      },
-      makeMaster = function(defn, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
-      makeWorker = function(defn, data) CoxWorker$new(defn = defn, data = data)
-    ),
-    RankKSVD = list(
-      desc = "Rank K SVD",
-      definitionApp = "defineNewSVDModel",
-      setupWorkerApp = "setupSVDWorker",
-      setupMasterApp = "setupSVDMaster",
-      makeDefinition = function() {
-        data.frame(id = getComputationInfo("id"),
-                   compType = getComputationInfo("compType"),
-                   projectName = getComputationInfo("projectName"),
-                   projectDesc = getComputationInfo("projectDesc"),
-                   rank = getComputationInfo("rank"),
-                   ncol = getComputationInfo("ncol"),
-                   stringsAsFactors=FALSE)
-      },
-      makeMaster = function(defn, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
-      makeWorker = function(defn, data) SVDWorker$new(defn = defn, data = data)
-    )
+      QueryCount = list(
+          desc = "Distributed Query Count",
+          definitionApp = "defineNewQueryCountModel",
+          setupWorkerApp = "setupQueryCountWorker",
+          setupMasterApp = "setupQueryCountMaster",
+          makeDefinition = function() {
+              data.frame(id = getComputationInfo("id"),
+                         compType = getComputationInfo("compType"),
+                         projectName = getComputationInfo("projectName"),
+                         projectDesc = getComputationInfo("projectDesc"),
+                         filterCondition = getComputationInfo("filterCondition"),
+                         stringsAsFactors=FALSE)
+          },
+          makeMaster = function(defn, debug = FALSE) QueryCountMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data) QueryCountWorker$new(defn = defn, data = data)
+      ),
+      StratifiedCoxModel = list(
+          desc = "Stratified Cox Model",
+          definitionApp = "defineNewCoxModel",
+          setupWorkerApp = "setupCoxWorker",
+          setupMasterApp = "setupCoxMaster",
+          makeDefinition = function() {
+              data.frame(id = getComputationInfo("id"),
+                         compType = getComputationInfo("compType"),
+                         projectName = getComputationInfo("projectName"),
+                         projectDesc = getComputationInfo("projectDesc"),
+                         formula = getComputationInfo("formula"),
+                         stringsAsFactors=FALSE)
+          },
+          makeMaster = function(defn, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data) CoxWorker$new(defn = defn, data = data)
+      ),
+      RankKSVD = list(
+          desc = "Rank K SVD",
+          definitionApp = "defineNewSVDModel",
+          setupWorkerApp = "setupSVDWorker",
+          setupMasterApp = "setupSVDMaster",
+          makeDefinition = function() {
+              data.frame(id = getComputationInfo("id"),
+                         compType = getComputationInfo("compType"),
+                         projectName = getComputationInfo("projectName"),
+                         projectDesc = getComputationInfo("projectDesc"),
+                         rank = getComputationInfo("rank"),
+                         ncol = getComputationInfo("ncol"),
+                         stringsAsFactors=FALSE)
+          },
+          makeMaster = function(defn, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data) SVDWorker$new(defn = defn, data = data)
+      )
   )
 }
 
 #' Return currently implemented data sources
-#' @description The function \code{availableDataSources} returns the
+#' @description The function `availableDataSources` returns the
 #' currently implemented data sources such as CSV files, Redcap etc.
 #'
 #' @return a list of named arguments, each of which is another list, with
-#' required fields named \code{desc}, a textual description and
-#' \code{requiredPackages}
+#' required fields named `desc`, a textual description and
+#' `requiredPackages`
 #'
 #' @examples
 #' availableDataSources()
@@ -348,12 +364,12 @@ availableDataSources <- function() {
 
 
 #' Make a computation definition given the computation type
-#' @description The function \code{makeDefinition} returns a computational
+#' @description The function `makeDefinition` returns a computational
 #' definition based on current inputs (from the global store) given a
 #' canonical computation type tag. This is a utility function for web
 #' applications to use as input is being gathered
 #'
-#' @seealso \code{\link{availableComputations}}
+#' @seealso [availableComputations()]
 #' @param compType the canonical computation type tag
 #' @return a data frame corresponding to the computation type
 #' @examples
@@ -372,7 +388,7 @@ makeDefinition <- function(compType) {
 }
 
 #' Given the id of a serialized object, invoke a method on the object with arguments
-#' @description The function \code{executeMethod} is really the heart of distcomp.
+#' @description The function `executeMethod` is really the heart of distcomp.
 #' It executes an arbitrary method on an object that has been serialized to the
 #' distcomp workspace with any specified arguments. The result, which is dependent
 #' on the computation that is executed, is returned. If the object needs to save
@@ -423,17 +439,17 @@ executeMethod <- function(objectId, method, ...) {
 
 
 #' Given the definition identifier of an object, instantiate and store object in workspace
-#' @description The function \code{createInstanceObject} uses a definition identified by
+#' @description The function `createInstanceObject` uses a definition identified by
 #' defnId to create the appropriate object instance. The instantiated object is assigned
 #' the instanceId and saved under the dataFileName if the latter is specified.
 #' This instantiated object may change state between iterations when a computation executes
-#' @seealso \code{\link{availableComputations}}
+#' @seealso [availableComputations()]
 #' @param defnId the identifier of an already defined computation
 #' @param instanceId an indentifier to use for the created instance
-#' @param dataFileName a file name to use for saving the data. Typically \code{NULL}, this
+#' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
 #' is only needed when one is using a single opencpu server to behave like multiple
 #' sites in which case the data file name serves to distinguish the site-specific data files.
-#' When it is \code{NULL}, the data file name is taken from the configuration settings
+#' When it is `NULL`, the data file name is taken from the configuration settings
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
@@ -460,11 +476,11 @@ createInstanceObject <- function (defnId, instanceId, dataFileName=NULL) {
 }
 
 #' Destroy an instance object given its identifier
-#' @description The function \code{destroyInstanceObject} deletes an object associated
+#' @description The function `destroyInstanceObject` deletes an object associated
 #' with the instanceId. This is typically done after a computation completes and results
 #' have been obtained.
 #' @param instanceId the id of the object to destroy
-#' @seealso \code{\link{createInstanceObject}}
+#' @seealso [createInstanceObject()]
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
@@ -477,19 +493,19 @@ destroyInstanceObject <- function (instanceId) {
 
 #' Save a computation instance, given the computation definition, associated data and
 #' possibly a data file name to use
-#' @description The function \code{saveNewComputation} uses the computation definition to save
+#' @description The function `saveNewComputation` uses the computation definition to save
 #' a new computation instance. This is typically done for every site that wants to participate
 #' in a computation with its own local data. The function examines the computation definition
 #' and uses the identifier therein to uniquely refer to the computation instance at the site.
 #' This function is invoked (maybe remotely) on the opencpu server by
-#' \code{\link{uploadNewComputation}} when a worker site is being set up
-#' @seealso \code{\link{uploadNewComputation}}
+#' [uploadNewComputation()] when a worker site is being set up
+#' @seealso [uploadNewComputation()]
 #' @param defn the identifier of an already defined computation
 #' @param data the (local) data to use
-#' @param dataFileName a file name to use for saving the data. Typically \code{NULL}, this
+#' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
 #' is only needed when one is using a single opencpu server to behave like multiple
 #' sites in which case the data file name serves to distinguish the site-specific data files.
-#' When it is \code{NULL}, the data file name is taken from the configuration settings
+#' When it is `NULL`, the data file name is taken from the configuration settings
 #' @return TRUE if everything goes well
 #' @export
 saveNewComputation <- function(defn, data, dataFileName=NULL) {
@@ -510,13 +526,13 @@ saveNewComputation <- function(defn, data, dataFileName=NULL) {
 }
 
 #' Upload a new computation and data to an opencpu server
-#' @description The function \code{uploadNewComputation} is really a remote version
-#' of \code{\link{saveNewComputation}}, invoking that function on an opencpu server.
+#' @description The function `uploadNewComputation` is really a remote version
+#' of [saveNewComputation()], invoking that function on an opencpu server.
 #' This is typically done for every site that wants to participate in a computation
 #' with its own local data. Note that a site is always a list of at least a unique
 #' name element (distinguishing the site from others) and a url element.
-#' @seealso \code{\link{saveNewComputation}}
-#' @param site a list of two items, a unique \code{name} and a \code{url}
+#' @seealso [saveNewComputation()]
+#' @param site a list of two items, a unique `name` and a `url`
 #' @param defn the identifier of an already defined computation
 #' @param data the (local) data to use
 #' @importFrom stringr str_trim
@@ -554,10 +570,10 @@ uploadNewComputation <- function(site, defn, data) {
 #' Generate an identifier for an object
 #' @description A hash is generated based on the contents of the object
 #'
-#' @seealso \code{\link[digest]{digest}}
+#' @seealso [digest::digest()]
 #' @param object the object for which a hash is desired
 #' @param algo the algorithm to use, default is "xxhash64" from
-#' \code{\link[digest]{digest}}
+#' [digest::digest()]
 #' @importFrom digest digest
 #' @return the hash as a string
 #'
@@ -578,7 +594,7 @@ generateId <- function(object, algo="xxhash64") digest::digest(object, algo=algo
 #' active at any time, they do so via a global store, essentially a hash table.
 #' This function sets a name to a value
 #'
-#' @seealso \code{\link{getComputationInfo}}
+#' @seealso [getComputationInfo()]
 #' @param name the name for the object
 #' @param value the value for the object
 #' @return invisibly returns the all the name value pairs
@@ -602,9 +618,9 @@ setComputationInfo <- function(name, value) {
 #' active at any time, they do so via a global store, essentially a hash table.
 #' This function retrieves the value of a name
 #'
-#' @seealso \code{\link{setComputationInfo}}
+#' @seealso [setComputationInfo()]
 #' @param name the name for the object
-#' @return the value for the variable, \code{NULL} if not set
+#' @return the value for the variable, `NULL` if not set
 #'
 #' @export
 getComputationInfo <- function(name) {
@@ -622,7 +638,7 @@ getComputationInfo <- function(name) {
 #' active at any time, they do so via a global store, essentially a hash table.
 #' This function clears the store, except for the working directory.
 #'
-#' @seealso \code{\link{setComputationInfo}} \code{\link{getComputationInfo}}
+#' @seealso [setComputationInfo()], [getComputationInfo()]
 #' @return an empty list
 #'
 #' @export
@@ -640,8 +656,7 @@ resetComputationInfo <- function() {
 #' Run a specified distcomp web application
 #' @description Web applications can define computation, setup worker sites or masters.
 #' This function invokes the appropriate web application depending on the task
-#' @seealso \code{\link{defineNewComputation}}, \code{\link{setupWorker}},
-#' \code{\link{setupMaster}}
+#' @seealso [defineNewComputation()], [setupWorker()], [setupMaster()]
 #' @import shiny
 #' @param appType one of three values: "definition", "setupWorker", "setupMaster"
 #' @return the results of running the web application
@@ -663,9 +678,9 @@ runDistcompApp <- function(appType = c("definition", "setupWorker", "setupMaster
 }
 
 #' Define a new computation
-#' @description This function just calls \code{\link{runDistcompApp}} with the
+#' @description This function just calls [runDistcompApp()] with the
 #' parameter "definition"
-#' @seealso \code{\link{runDistcompApp}}
+#' @seealso [runDistcompApp()]
 #' @return the results of running the web application
 #'
 #' @export
@@ -675,9 +690,9 @@ defineNewComputation <- function() {
 }
 
 #' Setup a worker site
-#' @description This function just calls \code{\link{runDistcompApp}} with the
+#' @description This function just calls [runDistcompApp()] with the
 #' parameter "setupWorker"
-#' @seealso \code{\link{runDistcompApp}}
+#' @seealso [runDistcompApp()]
 #' @return the results of running the web application
 #'
 #' @export
@@ -687,9 +702,9 @@ setupWorker <- function() {
 }
 
 #' Setup a computation master
-#' @description This function just calls \code{\link{runDistcompApp}} with the
+#' @description This function just calls [runDistcompApp()] with the
 #' parameter "setupMaster"
-#' @seealso \code{\link{runDistcompApp}}
+#' @seealso [runDistcompApp()]
 #' @return the results of running the web application
 #'
 #' @export
@@ -701,24 +716,36 @@ setupMaster <- function() {
 }
 
 #' Write the code necessary to run a master process
-#' @description Once a computation is defined, worker sites are set up, the master process
-#' code is written by this function. The current implementation does not allow one to mix
-#' localhost URLs with non-localhost URLs
-#' @seealso \code{\link{setupMaster}}
+#' @description Once a computation is defined, worker sites are set
+#'     up, the master process code is written by this function. The
+#'     current implementation does not allow one to mix localhost URLs
+#'     with non-localhost URLs
+#' @seealso [setupMaster()]
 #' @param defn the computation definition
-#' @param sites a named list of site URLs participating in the computation
-#' @param outputFileName the name of the output file to which code will be written
-#' @return the value \code{TRUE} if all goes well
+#' @param sites a named list of site URLs participating in the
+#'     computation
+#' @param outputFilenamePrefix the name of the output file prefix
+#'     using which code and data will be written
+#' @return the value `TRUE` if all goes well
 #' @export
-writeCode <- function(defn, sites, outputFileName) {
+writeCode <- function(defn, sites, outputFilenamePrefix) {
   compType <- defn$compType
   siteNames <- names(sites)
   wd <- getComputationInfo("workingDir")
-  f <- file(paste(wd, outputFileName, sep=.Platform$file.sep), open="w")
+  f <- file(paste(wd, paste0(outputFilenamePrefix, ".R"), sep=.Platform$file.sep), open="w")
   writeLines("library(distcomp)", con=f)
-  writeLines(sprintf("defn <- jsonlite::fromJSON('%s')", toJSON(defn)), f)
-  writeLines(sprintf("sites <- jsonlite::fromJSON('%s', simplifyDataFrame = FALSE)", toJSON(sites)), f)
-  ##dump(c("defn", "sites"), f)
+  ## Change in version 1.2
+  ## writeLines(sprintf("defn <- jsonlite::fromJSON('%s')", toJSON(defn)), f)
+  ## writeLines(sprintf("sites <- jsonlite::fromJSON('%s', simplifyDataFrame = FALSE)", toJSON(sites)), f)
+  ## dump(c("defn", "sites"), f)
+  ## Neither dump, nor conversion to JSON is foolproof.  So resorting to
+  ## R serialization.
+  dataForCode  <- list(defn = defn, sites = sites)
+  dataFilename  <- paste0(outputFilenamePrefix, ".RDS")
+  dataFilepath <- paste(wd, dataFilename, sep=.Platform$file.sep)
+  saveRDS(dataForCode, dataFilepath)
+  writeLines(sprintf("masterData <- readRDS('%s')", dataFilename), f)
+  writeLines("defn <- masterData$defn; sites <- masterData$sites;", f)
   writeLines("master <- makeMaster(defn)", f)
   writeLines("for (site in sites) {", f)
   writeLines("   master$addSite(name = site$name, url = site$url)", f)

@@ -70,7 +70,7 @@ extract the first 10 components using this distributed algorithm.
 We first define the computation.
 
 ```{r}
-svdDef <- data.frame(compType = computationNames[2],
+svdDef <- data.frame(compType = "RankKSVD",
                      rank = 20L,
                      ncol = 20L,
                      id = "SVD",
@@ -148,7 +148,7 @@ norm(abs(result$v) - abs(full_svd$v), "F")
 The approach for the stratified Cox model is similar. We start with a definition.
 
 ```{r}
-coxDef <- data.frame(compType = computationNames[1],
+coxDef <- data.frame(compType = "StratifiedCoxModel",
                      formula = "Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat",
                      projectName = "STCoxTest",
                      projectDesc = "STCox Project Desc",

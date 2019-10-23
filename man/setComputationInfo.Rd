@@ -21,5 +21,5 @@ active at any time, they do so via a global store, essentially a hash table.
 This function sets a name to a value
 }
 \seealso{
-\code{\link{getComputationInfo}}
+\code{\link[=getComputationInfo]{getComputationInfo()}}
 }

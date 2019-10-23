@@ -4,23 +4,26 @@
 \alias{writeCode}
 \title{Write the code necessary to run a master process}
 \usage{
-writeCode(defn, sites, outputFileName)
+writeCode(defn, sites, outputFilenamePrefix)
 }
 \arguments{
 \item{defn}{the computation definition}
 
-\item{sites}{a named list of site URLs participating in the computation}
+\item{sites}{a named list of site URLs participating in the
+computation}
 
-\item{outputFileName}{the name of the output file to which code will be written}
+\item{outputFilenamePrefix}{the name of the output file prefix
+using which code and data will be written}
 }
 \value{
 the value \code{TRUE} if all goes well
 }
 \description{
-Once a computation is defined, worker sites are set up, the master process
-code is written by this function. The current implementation does not allow one to mix
-localhost URLs with non-localhost URLs
+Once a computation is defined, worker sites are set
+up, the master process code is written by this function. The
+current implementation does not allow one to mix localhost URLs
+with non-localhost URLs
 }
 \seealso{
-\code{\link{setupMaster}}
+\code{\link[=setupMaster]{setupMaster()}}
 }

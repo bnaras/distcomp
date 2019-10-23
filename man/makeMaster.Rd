@@ -18,5 +18,5 @@ corresponding to the definition. The types of master objects that can
 be created depend upon the available computations
 }
 \seealso{
-\code{\link{availableComputations}}
+\code{\link[=availableComputations]{availableComputations()}}
 }

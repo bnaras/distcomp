@@ -19,5 +19,5 @@ active at any time, they do so via a global store, essentially a hash table.
 This function retrieves the value of a name
 }
 \seealso{
-\code{\link{setComputationInfo}}
+\code{\link[=setComputationInfo]{setComputationInfo()}}
 }

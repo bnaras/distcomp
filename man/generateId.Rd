@@ -10,7 +10,7 @@ generateId(object, algo = "xxhash64")
 \item{object}{the object for which a hash is desired}
 
 \item{algo}{the algorithm to use, default is "xxhash64" from
-\code{\link[digest]{digest}}}
+\code{\link[digest:digest]{digest::digest()}}}
 }
 \value{
 the hash as a string
@@ -19,5 +19,5 @@ the hash as a string
 A hash is generated based on the contents of the object
 }
 \seealso{
-\code{\link[digest]{digest}}
+\code{\link[digest:digest]{digest::digest()}}
 }

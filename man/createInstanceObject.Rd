@@ -26,5 +26,5 @@ the instanceId and saved under the dataFileName if the latter is specified.
 This instantiated object may change state between iterations when a computation executes
 }
 \seealso{
-\code{\link{availableComputations}}
+\code{\link[=availableComputations]{availableComputations()}}
 }

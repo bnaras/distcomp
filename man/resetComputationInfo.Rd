@@ -16,5 +16,5 @@ active at any time, they do so via a global store, essentially a hash table.
 This function clears the store, except for the working directory.
 }
 \seealso{
-\code{\link{setComputationInfo}} \code{\link{getComputationInfo}}
+\code{\link[=setComputationInfo]{setComputationInfo()}}, \code{\link[=getComputationInfo]{getComputationInfo()}}
 }

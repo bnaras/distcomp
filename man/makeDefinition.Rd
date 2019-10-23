@@ -24,5 +24,5 @@ makeDefinition(names(availableComputations())[1])
 }
 }
 \seealso{
-\code{\link{availableComputations}}
+\code{\link[=availableComputations]{availableComputations()}}
 }

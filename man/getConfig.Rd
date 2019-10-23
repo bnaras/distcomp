@@ -36,5 +36,5 @@ getConfig()
 }
 }
 \seealso{
-\code{distcompSetup}
+\code{\link[=distcompSetup]{distcompSetup()}}
 }

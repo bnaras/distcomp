@@ -33,8 +33,8 @@ shinyUI(fluidPage(
              , tabPanel(title = "Output R code"
                       , value = "outputResult"
                       , textInput(inputId = "outputFile"
-                                , label = "Output File Name"
-                                , value = "master.R")
+                                , label = "Output Filename Prefix"
+                                , value = "master")
                       , actionButton(inputId = "saveCode"
                                    , label = "Save Code")
                       , conditionalPanel(condition = "input.saveCode != 0"

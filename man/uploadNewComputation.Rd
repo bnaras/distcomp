@@ -18,11 +18,11 @@ TRUE if everything goes well
 }
 \description{
 The function \code{uploadNewComputation} is really a remote version
-of \code{\link{saveNewComputation}}, invoking that function on an opencpu server.
+of \code{\link[=saveNewComputation]{saveNewComputation()}}, invoking that function on an opencpu server.
 This is typically done for every site that wants to participate in a computation
 with its own local data. Note that a site is always a list of at least a unique
 name element (distinguishing the site from others) and a url element.
 }
 \seealso{
-\code{\link{saveNewComputation}}
+\code{\link[=saveNewComputation]{saveNewComputation()}}
 }
