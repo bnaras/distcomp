@@ -4,12 +4,18 @@
 \alias{makeWorker}
 \title{Make a worker object given a definition and data}
 \usage{
-makeWorker(defn, data)
+makeWorker(defn, data, pubkey_bits, pubkey_n, den_bits)
 }
 \arguments{
 \item{defn}{the computation definition}
 
 \item{data}{the data for the computation}
+
+\item{pubkey_bits}{the number of bits for the public key}
+
+\item{pubkey_n}{the \code{n} for public key}
+
+\item{den_bits}{the number of bits for the denominator}
 }
 \value{
 a worker object of the appropriate class based on the definition

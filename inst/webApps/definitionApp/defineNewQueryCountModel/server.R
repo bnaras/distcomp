@@ -5,6 +5,7 @@ shinyServer(function(input, output, session) {
                    compType = getComputationInfo("compType"),
                    projectName = getComputationInfo("projectName"),
                    projectDesc = getComputationInfo("projectDesc"),
+                   he = getComputationInfo("he"),
                    filterCondition = getComputationInfo("filterCondition"),
                    stringsAsFactors=FALSE)
     }

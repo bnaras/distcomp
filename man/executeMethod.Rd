@@ -2,7 +2,8 @@
 % Please edit documentation in R/distcomp.R
 \name{executeMethod}
 \alias{executeMethod}
-\title{Given the id of a serialized object, invoke a method on the object with arguments}
+\title{Given the id of a serialized object, invoke a method on the object
+with arguments}
 \usage{
 executeMethod(objectId, method, ...)
 }
@@ -17,10 +18,11 @@ executeMethod(objectId, method, ...)
 a result that depends on the computation being executed
 }
 \description{
-The function \code{executeMethod} is really the heart of distcomp.
-It executes an arbitrary method on an object that has been serialized to the
-distcomp workspace with any specified arguments. The result, which is dependent
-on the computation that is executed, is returned. If the object needs to save
-state between iterations on it, it is automatically serialized back for the ensuing
-iterations
+The function \code{executeMethod} is really the heart of
+distcomp.  It executes an arbitrary method on an object that
+has been serialized to the distcomp workspace with any
+specified arguments. The result, which is dependent on the
+computation that is executed, is returned. If the object needs
+to save state between iterations on it, it is automatically
+serialized back for the ensuing iterations
 }

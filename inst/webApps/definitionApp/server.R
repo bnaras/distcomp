@@ -34,7 +34,8 @@ shinyServer(function(input, output, session) {
     setComputationInfo("compType", compType)
     setComputationInfo("projectName", input$nameIn)
     setComputationInfo("projectDesc", input$descIn)
-    paste(input$compType, "chosen.")
+    setComputationInfo("he", input$he)
+    sprintf("%s chosen (Homomomorphic Computation = ).", input$compType, input$he)
   })
 
   observe({
@@ -46,6 +47,7 @@ shinyServer(function(input, output, session) {
     setComputationInfo("compType", compType)
     setComputationInfo("projectName", input$nameIn)
     setComputationInfo("projectDesc", input$descIn)
+    setComputationInfo("he", input$he)
     stopApp(compType)
   })
 })

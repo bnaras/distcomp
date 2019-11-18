@@ -222,17 +222,21 @@ getConfig <- function(...) {
 #' @seealso [availableComputations()]
 #' @param defn the computation definition
 #' @param data the data for the computation
+#' @param pubkey_bits the number of bits for the public key
+#' @param pubkey_n the `n` for public key
+#' @param den_bits the number of bits for the denominator
 #' @return a worker object of the appropriate class based on the definition
 #'
 #' @export
-makeWorker <- function (defn, data) {
+makeWorker <- function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
   compType <- defn$compType
   available <- availableComputations()
   k <- match(compType, names(available))
   if (is.na(k)) {
     stop(sprintf("No such computation: %s", compType))
   } else {
-    available[[k]]$makeWorker(defn, data)
+      available[[k]]$makeWorker(defn = defn, data = data, pubkey_bits = pubkey_bits,
+                                pubkey_n = pubkey_n, den_bits = den_bits)
   }
 }
 
@@ -242,17 +246,18 @@ makeWorker <- function (defn, data) {
 #' be created depend upon the available computations
 #' @seealso [availableComputations()]
 #' @param defn the computation definition
+#' @param debug a debug flag
 #' @return a master object of the appropriate class based on the definition
 #'
 #' @export
-makeMaster <- function(defn) {
+makeMaster <- function(defn, partyNumber, debug = FALSE) {
   compType <- defn$compType
   available <- availableComputations()
   k <- match(compType, names(available))
   if (is.na(k)) {
     stop(sprintf("No such computation: %s", compType))
   } else {
-    available[[k]]$makeMaster(defn)
+    available[[k]]$makeMaster(defn = defn, partyNumber = partyNumber, debug = debug)
   }
 }
 
@@ -301,11 +306,12 @@ availableComputations <- function() {
                          compType = getComputationInfo("compType"),
                          projectName = getComputationInfo("projectName"),
                          projectDesc = getComputationInfo("projectDesc"),
+                         he = getComputationInfo("he"),
                          filterCondition = getComputationInfo("filterCondition"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, debug = FALSE) QueryCountMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data) QueryCountWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) if(defn$he) HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, debug = debug) else QueryCountMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if (defn$he) HEQueryCountWorker$new(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits) else QueryCountWorker$new(defn = defn, data = data)
       ),
       StratifiedCoxModel = list(
           desc = "Stratified Cox Model",
@@ -317,11 +323,12 @@ availableComputations <- function() {
                          compType = getComputationInfo("compType"),
                          projectName = getComputationInfo("projectName"),
                          projectDesc = getComputationInfo("projectDesc"),
+                         he = getComputationInfo("he"),
                          formula = getComputationInfo("formula"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data) CoxWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) CoxWorker$new(defn = defn, data = data)
       ),
       RankKSVD = list(
           desc = "Rank K SVD",
@@ -333,15 +340,46 @@ availableComputations <- function() {
                          compType = getComputationInfo("compType"),
                          projectName = getComputationInfo("projectName"),
                          projectDesc = getComputationInfo("projectDesc"),
+                         he = getComputationInfo("he"),
                          rank = getComputationInfo("rank"),
                          ncol = getComputationInfo("ncol"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data) SVDWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) SVDWorker$new(defn = defn, data = data)
       )
   )
 }
+
+#' Given the definition identifier of an object, instantiate and store object in workspace
+#' @description The function `createNCPInstance` uses a definition identified by
+#' defnId to create the appropriate object instance. The instantiated object is assigned
+#' the instanceId and saved under the dataFileName if the latter is specified.
+#' This instantiated object may change state between iterations when a computation executes
+#' @param number 1 or 2 for indentifying NC party
+#' @param defnId the computation definition id
+#' @param instanceId an indentifier to use for the created instance
+#' @param pubkey the public key
+#' @param den the denominator for rational approximations
+#' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
+#' is only needed when one is using a single opencpu server to behave like multiple
+#' sites in which case the data file name serves to distinguish the site-specific data files.
+#' When it is `NULL`, the data file name is taken from the configuration settings
+#' @import utils
+#' @return TRUE if everything goes well
+#' @export
+createNCPInstance <- function (number, defnId, instanceId, pubkey, den, data_file_name=NULL) {
+    config <- getConfig()
+    defn <- readRDS(paste(config$defnPath, defnId, config$defnFileName, sep=.Platform$file.sep))
+    object <- HE_NCP$new(name = name, number = number, defn = defn, pubkey = pubkey, den = den)
+    ## Check if the instance folder exists
+    thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)
+    dir.create(thisInstancePath)
+    ## Save it under the instance id to find it.
+    saveRDS(object, file=paste(thisInstancePath, config$instanceFileName, sep=.Platform$file.sep))
+    TRUE
+}
+
 
 #' Return currently implemented data sources
 #' @description The function `availableDataSources` returns the
@@ -387,14 +425,15 @@ makeDefinition <- function(compType) {
   }
 }
 
-#' Given the id of a serialized object, invoke a method on the object with arguments
-#' @description The function `executeMethod` is really the heart of distcomp.
-#' It executes an arbitrary method on an object that has been serialized to the
-#' distcomp workspace with any specified arguments. The result, which is dependent
-#' on the computation that is executed, is returned. If the object needs to save
-#' state between iterations on it, it is automatically serialized back for the ensuing
-#' iterations
-#'
+#' Given the id of a serialized object, invoke a method on the object
+#' with arguments
+#' @description The function `executeMethod` is really the heart of
+#'     distcomp.  It executes an arbitrary method on an object that
+#'     has been serialized to the distcomp workspace with any
+#'     specified arguments. The result, which is dependent on the
+#'     computation that is executed, is returned. If the object needs
+#'     to save state between iterations on it, it is automatically
+#'     serialized back for the ensuing iterations
 #' @param objectId the (instance) identifier of the object on which to invoke a method
 #' @param method the name of the method to invoke
 #' @param ... further arguments as appropriate for the method
@@ -410,6 +449,64 @@ executeMethod <- function(objectId, method, ...) {
     saveRDS(object, file=filePath)
   }
   result
+}
+
+#' Given the id of a serialized object, invoke a method on the object
+#' with arguments using homomorphic encryption
+#' @description The function `executeHEMethod` is a homomorphic
+#'     encryption wrapper around `executeMethod`. It ensures any
+#'     returned result is encrypted using the homomorphic encryption
+#'     function.
+#' @param objectId the (instance) identifier of the object on which to
+#'     invoke a method
+#' @param method the name of the method to invoke
+#' @param ... further arguments as appropriate for the method
+#' @return a list containing an integer and a fractional result
+#' @export
+executeHEMethod <- function(objectId, method, ...) {
+  config <- getConfig()
+  filePath <- paste(config$instancePath, objectId, config$instanceFileName, sep=.Platform$file.sep)
+  object <- readRDS(file=filePath)
+  call <- substitute(object$METHOD(...), list(METHOD = as.name(method)))
+  result <- eval(call)
+  if (object$getStateful()) {
+    saveRDS(object, file=filePath)
+  }
+  pubkey <- object$pubkey
+  den  <- object$den
+  intValue  <- floor(result); fracValue <- result - intValue;
+  encIntValue <- pubkey$encrypt(intValue)
+  encFracValue <- pubkey$encrypt(result.fracnum)
+
+  result <- list(int = pubkey$add(encIntValue, enc.offset$int),
+                 frac = pubkey$add(enc.result.fracnum, enc.offset$frac))
+
+
+}
+
+
+#' Given the name of an object in the global environment, invoke a
+#' method on the object with arguments
+#' @description The function `executeMethodOnObject` executes an
+#'     arbitrary method on an object that has been instantiated in the
+#'     global environment.The result, which is dependent on the
+#'     computation that is executed, is returned. If the object needs
+#'     to save state between iterations on it, it is automatically
+#'     serialized back for the ensuing iterations
+#' @param objectName the identifier of the object that exists in the
+#'     global environment
+#' @param method the name of the method to invoke
+#' @param ... further arguments as appropriate for the method
+#' @return a result that depends on the computation being executed
+#' @export
+executeMethodOnObject  <- function(objectName, method, ...) {
+    object <- get(x = objectName, envir = .GlobalEnv)
+    call <- substitute(object$METHOD(...), list(METHOD = as.name(method)))
+    result <- eval(call)
+    if (object$getStateful()) {
+        saveRDS(object, file=filePath)
+    }
+    result
 }
 
 #' Deserialize the result of a http response
@@ -446,6 +543,9 @@ executeMethod <- function(objectId, method, ...) {
 #' @seealso [availableComputations()]
 #' @param defnId the identifier of an already defined computation
 #' @param instanceId an indentifier to use for the created instance
+#' @param pubkey_bits number of bits for public key
+#' @param pubkey_n the `n` for public key
+#' @param den_bits the number of bits for the denominator
 #' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
 #' is only needed when one is using a single opencpu server to behave like multiple
 #' sites in which case the data file name serves to distinguish the site-specific data files.
@@ -453,7 +553,7 @@ executeMethod <- function(objectId, method, ...) {
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
-createInstanceObject <- function (defnId, instanceId, dataFileName=NULL) {
+createInstanceObject <- function (defnId, instanceId, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL, dataFileName=NULL) {
   config <- getConfig()
   defn <- readRDS(paste(config$defnPath, defnId, config$defnFileName, sep=.Platform$file.sep))
   compType <- defn$compType
@@ -465,7 +565,7 @@ createInstanceObject <- function (defnId, instanceId, dataFileName=NULL) {
                         if (is.null(dataFileName)) config$dataFileName else dataFileName,
                         sep=.Platform$file.sep))
 
-  object <- makeWorker(defn, data)
+  object <- makeWorker(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
 
   ## Check if the instance folder exists
   thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)

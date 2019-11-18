@@ -4,10 +4,12 @@
 \alias{makeMaster}
 \title{Make a master object given a definition}
 \usage{
-makeMaster(defn)
+makeMaster(defn, partyNumber, debug = FALSE)
 }
 \arguments{
 \item{defn}{the computation definition}
+
+\item{debug}{a debug flag}
 }
 \value{
 a master object of the appropriate class based on the definition
