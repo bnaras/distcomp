@@ -5,9 +5,6 @@
 \alias{NCP}
 \title{Create a non-cooperating object for use in a distributed homomorphic computation}
 \format{An \code{\link[R6:R6Class]{R6::R6Class()}} generator object}
-\usage{
-NCP
-}
 \description{
 \code{NCP} objects are worker objects that separate a
 master process from communicating directly with the worker
@@ -28,4 +25,96 @@ from each other.
 }
 }
 
-\keyword{datasets}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{NCP$new()}}
+\item \href{#method-getStateful}{\code{NCP$getStateful()}}
+\item \href{#method-setParams}{\code{NCP$setParams()}}
+\item \href{#method-getSites}{\code{NCP$getSites()}}
+\item \href{#method-setSites}{\code{NCP$setSites()}}
+\item \href{#method-addSite}{\code{NCP$addSite()}}
+\item \href{#method-run}{\code{NCP$run()}}
+\item \href{#method-clone}{\code{NCP$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$new(
+  ncp_defn,
+  comp_defn,
+  sites = list(),
+  pubkey_bits = NULL,
+  pubkey_n = NULL,
+  den_bits = NULL
+)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getStateful"></a>}}
+\subsection{Method \code{getStateful()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$getStateful()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParams"></a>}}
+\subsection{Method \code{setParams()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$setParams(pubkey_bits, pubkey_n, den_bits)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getSites"></a>}}
+\subsection{Method \code{getSites()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$getSites()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setSites"></a>}}
+\subsection{Method \code{setSites()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$setSites(sites)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addSite"></a>}}
+\subsection{Method \code{addSite()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$addSite(name, url = NULL, worker = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-run"></a>}}
+\subsection{Method \code{run()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$run(token)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

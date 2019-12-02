@@ -246,19 +246,20 @@ makeWorker <- function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bit
 #' be created depend upon the available computations
 #' @seealso [availableComputations()]
 #' @param defn the computation definition
+#' @param partyNumber the number of the noncooperating party, if HE is desired
 #' @param debug a debug flag
 #' @return a master object of the appropriate class based on the definition
 #'
 #' @export
-makeMaster <- function(defn, partyNumber, debug = FALSE) {
-  compType <- defn$compType
-  available <- availableComputations()
-  k <- match(compType, names(available))
-  if (is.na(k)) {
-    stop(sprintf("No such computation: %s", compType))
-  } else {
-    available[[k]]$makeMaster(defn = defn, partyNumber = partyNumber, debug = debug)
-  }
+makeMaster <- function(defn, partyNumber = NULL, debug = FALSE) {
+    compType <- defn$compType
+    available <- availableComputations()
+    k <- match(compType, names(available))
+    if (is.na(k)) {
+        stop(sprintf("No such computation: %s", compType))
+    } else {
+        available[[k]]$makeMaster(defn = defn, partyNumber = partyNumber, debug = debug)
+    }
 }
 
 #' Return the currently available (implemented) computations
@@ -310,7 +311,7 @@ availableComputations <- function() {
                          filterCondition = getComputationInfo("filterCondition"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) if(defn$he) HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, debug = debug) else QueryCountMaster$new(defn = defn, debug = debug),
+          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, debug = debug) else QueryCountMaster$new(defn = defn, debug = debug),
           makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if (defn$he) HEQueryCountWorker$new(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits) else QueryCountWorker$new(defn = defn, data = data)
       ),
       StratifiedCoxModel = list(
@@ -327,8 +328,8 @@ availableComputations <- function() {
                          formula = getComputationInfo("formula"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) CoxMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) CoxWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) stop("Not implemented") else CoxMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if(!is.null(defn$he) && defn$he) stop("Not implemented") else CoxWorker$new(defn = defn, data = data)
       ),
       RankKSVD = list(
           desc = "Rank K SVD",
@@ -345,8 +346,8 @@ availableComputations <- function() {
                          ncol = getComputationInfo("ncol"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) SVDMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) SVDWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) stop("Not implemented") else SVDMaster$new(defn = defn, debug = debug),
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if(!is.null(defn$he) && defn$he) stop("Not implemented") else SVDWorker$new(defn = defn, data = data)
       )
   )
 }
@@ -356,11 +357,12 @@ availableComputations <- function() {
 #' defnId to create the appropriate object instance. The instantiated object is assigned
 #' the instanceId and saved under the dataFileName if the latter is specified.
 #' This instantiated object may change state between iterations when a computation executes
-#' @param number 1 or 2 for indentifying NC party
-#' @param defnId the computation definition id
+#' @param name identifying the NC party
+#' @param ncpId the id indicating the NCP definition
 #' @param instanceId an indentifier to use for the created instance
-#' @param pubkey the public key
-#' @param den the denominator for rational approximations
+#' @param pubkey_bits the public key number of bits
+#' @param pubkey_n the pubkey n
+#' @param den_bits the denominator number of bits for for rational approximations
 #' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
 #' is only needed when one is using a single opencpu server to behave like multiple
 #' sites in which case the data file name serves to distinguish the site-specific data files.
@@ -368,15 +370,32 @@ availableComputations <- function() {
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
-createNCPInstance <- function (number, defnId, instanceId, pubkey, den, data_file_name=NULL) {
+createNCPInstance <- function (name, ncpId, instanceId, pubkey_bits, pubkey_n, den_bits, dataFileName = NULL) {
     config <- getConfig()
-    defn <- readRDS(paste(config$defnPath, defnId, config$defnFileName, sep=.Platform$file.sep))
-    object <- HE_NCP$new(name = name, number = number, defn = defn, pubkey = pubkey, den = den)
+    defnPath <- paste(config$defnPath, ncpId, sep=.Platform$file.sep)
+    ncpDefnFileName <- paste(name, "defn.rds", sep = "-")
+    ncpDefn <- readRDS(paste(defnPath, ncpDefnFileName, sep=.Platform$file.sep))
+    compDef <- readRDS(paste(defnPath, config$defnFileName, sep=.Platform$file.sep))
+    ncp <- makeNCP(ncp_defn = ncpDefn, comp_defn = compDef, pubkey_bits = pubkey_bits,
+                   pubkey_n = gmp::as.bigz(pubkey_n), den_bits = den_bits)
+
+    ncpDataFileName  <- if (is.null(dataFileName)) {
+                            paste(name, config$dataFileName, sep = "-")
+                        } else {
+                            dataFileName
+                        }
+    sites  <- readRDS(paste(defnPath, ncpDataFileName, sep=.Platform$file.sep))
+    site_names  <- sites$name
+    site_urls  <- sites$url
+    for (i in seq_along(site_names)) {
+        ncp$addSite(name = site_names[i], url = site_urls[i])
+    }
+
     ## Check if the instance folder exists
     thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)
     dir.create(thisInstancePath)
     ## Save it under the instance id to find it.
-    saveRDS(object, file=paste(thisInstancePath, config$instanceFileName, sep=.Platform$file.sep))
+    saveRDS(ncp, file=paste(thisInstancePath, config$instanceFileName, sep=.Platform$file.sep))
     TRUE
 }
 
@@ -527,16 +546,17 @@ executeMethodOnObject  <- function(objectName, method, ...) {
 #' @keywords internal
 ## Deserialize URL result, only handle JSON at the moment
 .deSerialize <- function(q) {
-  cType <- headers(q)['content-type']
-  if (cType == "application/json")
-    fromJSON(rawToChar(q$content))
-  else
-    q$content
+    httr::stop_for_status(q)
+    cType <- headers(q)['content-type']
+    if (cType == "application/json")
+        fromJSON(rawToChar(q$content), simplifyDataFrame = FALSE)
+    else
+        q$content
 }
 
 
 #' Given the definition identifier of an object, instantiate and store object in workspace
-#' @description The function `createInstanceObject` uses a definition identified by
+#' @description The function `createWorkerInstance` uses a definition identified by
 #' defnId to create the appropriate object instance. The instantiated object is assigned
 #' the instanceId and saved under the dataFileName if the latter is specified.
 #' This instantiated object may change state between iterations when a computation executes
@@ -553,13 +573,13 @@ executeMethodOnObject  <- function(objectName, method, ...) {
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
-createInstanceObject <- function (defnId, instanceId, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL, dataFileName=NULL) {
+createWorkerInstance <- function (defnId, instanceId, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL, dataFileName=NULL) {
   config <- getConfig()
   defn <- readRDS(paste(config$defnPath, defnId, config$defnFileName, sep=.Platform$file.sep))
   compType <- defn$compType
   available <- availableComputations()
   if (!(compType %in% names(available))) {
-    stop(paste("createInstanceObject: No such computation:", compType))
+    stop(paste("createWorkerInstance: No such computation:", compType))
   }
   data <- readRDS(paste(config$defnPath, defnId,
                         if (is.null(dataFileName)) config$dataFileName else dataFileName,
@@ -580,7 +600,7 @@ createInstanceObject <- function (defnId, instanceId, pubkey_bits = NULL, pubkey
 #' with the instanceId. This is typically done after a computation completes and results
 #' have been obtained.
 #' @param instanceId the id of the object to destroy
-#' @seealso [createInstanceObject()]
+#' @seealso [createWorkerInstance()]
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
@@ -600,7 +620,7 @@ destroyInstanceObject <- function (instanceId) {
 #' This function is invoked (maybe remotely) on the opencpu server by
 #' [uploadNewComputation()] when a worker site is being set up
 #' @seealso [uploadNewComputation()]
-#' @param defn the identifier of an already defined computation
+#' @param defn an already defined computation
 #' @param data the (local) data to use
 #' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
 #' is only needed when one is using a single opencpu server to behave like multiple
@@ -666,6 +686,89 @@ uploadNewComputation <- function(site, defn, data) {
   }
 }
 
+#' Save an NCP instance, given the sites as associated data and
+#' possibly a data file name to use
+#' @description The function `saveNewNCP` uses the list of sites
+#'     definition to save a new NCP instance. This is
+#'     typically done for every pair of NCPs used in a computation. The function examines the
+#'     computation definition and uses the identifier therein to
+#'     uniquely refer to the computation instance at the site.  This
+#'     function is invoked (maybe remotely) on the opencpu server by
+#'     [uploadNewComputation()] when a worker site is being set up
+#' @seealso [uploadNewNCP()]
+#' @param defn a definition of the ncp
+#' @param data the list of sites with name and url to use
+#' @param dataFileName a file name to use for saving the
+#'     data. Typically `NULL`, this is only needed when one is using a
+#'     single opencpu server to behave like multiple sites in which
+#'     case the data file name serves to distinguish the site-specific
+#'     data files.  When it is `NULL`, the data file name is taken
+#'     from the definition settings
+#' @return TRUE if everything goes well
+#' @export
+saveNewNCP <- function(defn, data, dataFileName = NULL) {
+  config <- getConfig()
+  defnId <- defn$id
+  thisDefnPath <- paste(config$defnPath, defnId, sep = .Platform$file.sep)
+  ncpDefnFileName <- paste(defn$name, "defn.rds", sep = "-")
+  ## Should tryCatch this
+  if (!file.exists(thisDefnPath)) {
+    dir.create(thisDefnPath)
+  }
+  saveRDS(object = defn, file = paste(thisDefnPath, ncpDefnFileName, sep = .Platform$file.sep))
+  ncpDataFileName  <- if (is.null(dataFileName)) {
+                          paste(defn$name, config$dataFileName, sep = "-")
+                      } else {
+                          dataFileName
+                      }
+  saveRDS(object = data, file = paste(thisDefnPath, ncpDataFileName, sep = .Platform$file.sep))
+  TRUE
+}
+
+#' Upload a new Non-Cooperating Party (NCP) information and sites to
+#' an opencpu server
+#' @description The function `uploadNewNCP` is really a remote version
+#'     of [saveNewNCP()], invoking that function on an opencpu server.
+#'     This is typically done for the two NCPs participating in a
+#'     computation with the list of sites. Note that sites are always
+#'     a list of at least a unique name element (distinguishing the
+#'     site from others) and a url element.
+#' @seealso [saveNewNCP()]
+#' @param defn a definition for the NCP
+#' @param url the url for the NCP. Only one of url and worker can be
+#'     non-null
+#' @param worker the worker for the NCP if local. Only one of url and
+#'     worker can be non-null
+#' @param sites a list of lists, each containing two items, a unique
+#'     `name` and a (not necessarily unique) `url`. This is the data
+#'     for the NCP!
+#' @importFrom stringr str_trim
+#' @importFrom httr POST
+#' @importFrom httr headers
+#' @importFrom httr add_headers
+#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite toJSON
+#'
+#' @return TRUE if everything goes well
+#' @export
+uploadNewNCP <- function(defn, url = NULL, worker = NULL, sites) {
+    if (is.null(worker)) {
+        localhost <- (grepl("^http://localhost", url) || grepl("^http://127.0.0.1", url))
+        payload <- if (localhost) {
+                       list(defn = defn, data = sites, dataFileName = paste0(defn$name, "-data.rds"))
+                   } else {
+                       list(defn = defn, data = sites)
+                   }
+        q <- POST(.makeOpencpuURL(urlPrefix = url, fn = "saveNewNCP"),
+                  body = toJSON(payload),
+                  add_headers("Content-Type" = "application/json"),
+                  config=getConfig()$sslConfig
+                  )
+        .deSerialize(q)
+    } else {
+
+    }
+}
 
 #' Generate an identifier for an object
 #' @description A hash is generated based on the contents of the object
@@ -855,3 +958,27 @@ writeCode <- function(defn, sites, outputFilenamePrefix) {
   close(f)
   TRUE
 }
+
+#' Instantiate an noncooperating party
+#' @param ncp_defn the NCP definition
+#' @param comp_defn the computation definition
+#' @param sites a list of sites each entry a named list of name, url, worker
+#' @param pubkey_bits number of bits for public key
+#' @param pubkey_n the n for the public key
+#' @param den_bits the log to base 2 of the denominator
+#' @return an NCP object
+#' @export
+makeNCP  <- function(ncp_defn, comp_defn, sites = list(), pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
+    NCP$new(ncp_defn = ncp_defn, comp_defn = comp_defn, sites = sites, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
+}
+
+
+#' Instantiate a master process for HE operations
+#' @param defn the computation definition
+#' @return an master object for HE operations
+#' @export
+makeHEMaster  <- function(defn) {
+    HEMaster$new(defn)
+}
+
+

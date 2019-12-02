@@ -6,13 +6,10 @@
 \title{Create a HEMaster process for use in a distributed homomorphic
 computation}
 \format{An \code{\link[R6:R6Class]{R6::R6Class()}} generator object}
-\usage{
-HEMaster
-}
 \description{
 \code{HEMaster} objects run a distributed computation based
 upon a definition file that encapsulates all information
-necessary to performa computation. A master makes use of two
+necessary to perform a computation. A master makes use of two
 non-cooperating parties which communicate with sites that
 perform the actual computations using local data.
 }
@@ -29,4 +26,71 @@ definition provided}
 \seealso{
 \code{\link[=NCP]{NCP()}}
 }
-\keyword{datasets}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{HEMaster$new()}}
+\item \href{#method-getNC_party}{\code{HEMaster$getNC_party()}}
+\item \href{#method-getPubkey}{\code{HEMaster$getPubkey()}}
+\item \href{#method-addNCP}{\code{HEMaster$addNCP()}}
+\item \href{#method-run}{\code{HEMaster$run()}}
+\item \href{#method-clone}{\code{HEMaster$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$new(defn)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getNC_party"></a>}}
+\subsection{Method \code{getNC_party()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$getNC_party()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getPubkey"></a>}}
+\subsection{Method \code{getPubkey()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$getPubkey()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addNCP"></a>}}
+\subsection{Method \code{addNCP()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$addNCP(ncp_defn, url = NULL, ncpWorker = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-run"></a>}}
+\subsection{Method \code{run()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$run(debug = FALSE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -4,7 +4,7 @@
 \alias{makeWorker}
 \title{Make a worker object given a definition and data}
 \usage{
-makeWorker(defn, data, pubkey_bits, pubkey_n, den_bits)
+makeWorker(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL)
 }
 \arguments{
 \item{defn}{the computation definition}

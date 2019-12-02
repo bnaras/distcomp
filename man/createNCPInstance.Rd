@@ -4,19 +4,28 @@
 \alias{createNCPInstance}
 \title{Given the definition identifier of an object, instantiate and store object in workspace}
 \usage{
-createNCPInstance(number, defnId, instanceId, pubkey, den,
-  data_file_name = NULL)
+createNCPInstance(
+  name,
+  ncpId,
+  instanceId,
+  pubkey_bits,
+  pubkey_n,
+  den_bits,
+  dataFileName = NULL
+)
 }
 \arguments{
-\item{number}{1 or 2 for indentifying NC party}
+\item{name}{identifying the NC party}
 
-\item{defnId}{the computation definition id}
+\item{ncpId}{the id indicating the NCP definition}
 
 \item{instanceId}{an indentifier to use for the created instance}
 
-\item{pubkey}{the public key}
+\item{pubkey_bits}{the public key number of bits}
 
-\item{den}{the denominator for rational approximations}
+\item{pubkey_n}{the pubkey n}
+
+\item{den_bits}{the denominator number of bits for for rational approximations}
 
 \item{dataFileName}{a file name to use for saving the data. Typically \code{NULL}, this
 is only needed when one is using a single opencpu server to behave like multiple

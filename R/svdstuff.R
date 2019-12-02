@@ -231,7 +231,7 @@ SVDMaster <- R6Class("SVDMaster",
                                                                       list(defnId = defn$id, instanceId = x$instanceId,
                                                                            dataFileName = x$dataFileName)
                                                                   }
-                                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createInstanceObject"),
+                                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
                                                                  body = toJSON(payload),
                                                                  add_headers("Content-Type" = "application/json"),
                                                                  config = getConfig()$sslConfig

@@ -3,7 +3,7 @@
 #'
 #' @description `HEMaster` objects run a distributed computation based
 #'     upon a definition file that encapsulates all information
-#'     necessary to performa computation. A master makes use of two
+#'     necessary to perform a computation. A master makes use of two
 #'     non-cooperating parties which communicate with sites that
 #'     perform the actual computations using local data.
 #'
@@ -43,10 +43,11 @@ HEMaster  <-
                     private$keys <- homomorpheR::PaillierKeyPair$new(1024) ## Generate new public and private key.
                     self$den <- gmp::as.bigq(2)^(self$den_bits)  #Our denominator for rational approximations
                 },
+                getNC_party = function() private$nc_party,
                 getPubkey = function() {
                     private$keys$pubkey
                 },
-                addNCP  = function(url = NULL, ncpWorker = NULL) {
+                addNCP  = function(ncp_defn, url = NULL, ncpWorker = NULL) {
                     'Add an NCP identified by url or ncpWorker'
                     ## Only one of url/ncpWorker should be non-null
                     stopifnot((is.null(url) + is.null(ncpWorker)) == 1)
@@ -54,18 +55,22 @@ HEMaster  <-
                     if (n == 2) stop("Two NC parties already added!")
                     ## Mixing url and ncpWorker parties not allowed for now
                     if (private$dry_run && !is.null(url)) stop("Mixing local and remote NCP not allowed!")
-                    number = n + 1L
+                    name  <- ncp_defn$name
+                    number <- ncp_defn$number
+                    if (!(number %in% c(1, 2))) stop("Party number should be 1 or 2!")
+                    if (ncp_defn$id != private$defn$id) stop("NC Party id does not match computation defn id!")
+                    config <- getConfig()
+
                     if (is.null(url)) {
                         private$dry_run <- TRUE
-                        private$nc_party[[number]]  <- list(name = paste0("NCP", number), number = number,
+                        private$nc_party[[number]]  <- list(defn = ncp_defn,
                                                             worker = ncpWorker)
                     } else {
                         localhost <- (grepl("^http://localhost", url) ||
                                       grepl("^http://127.0.0.1", url))
-                        private$nc_party[[number]]  <- list(name = paste0("NCP", number), url = url,
-                                                            number = number,
-                                                            localhost = localhost,
-                                                            dataFileName = if (localhost) paste0(name, ".rds") else NULL)
+                        private$nc_party[[number]]  <- list(defn = ncp_defn,
+                                                            url = url,
+                                                            dataFileName = if (localhost) paste(name, config$dataFileName, sep = "-") else NULL)
                     }
                 },
                 ## run method
@@ -86,9 +91,9 @@ HEMaster  <-
                     if (dry_run) {
                         ## NCP workers have already been instantiated, so configure them
                         workers  <- lapply(private$nc_party, function(x) x$worker)
-                        ## Send an indentiying number, pubkey and denominator
-                        workers[[1L]]$setParams(number = 1, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
-                        workers[[2L]]$setParams(number = 2, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
+                        ## Send an indentifying number, pubkey and denominator
+                        workers[[1L]]$setParams(pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
+                        workers[[2L]]$setParams(pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
                         ## Ask each worker to run the computation
                         result1  <- workers[[1L]]$run(token)
                         result2  <- workers[[2L]]$run(token)
@@ -99,9 +104,10 @@ HEMaster  <-
                         ## Function to create NCP objects remotely
                         ## To minimize requests, we send everything in one request
                         makeNCP  <- function(ncp) {
-                            payload <- list(number = ncp$number, defnId = defn$id,
+                            payload <- list(name = ncp$name, ncpId = ncp$id,
+                                            instanceId = instanceId,
                                             pubkey_bits = pubkey_bits, pubkey_n = pubkey_n,
-                                            den_bits = den_bits, instanceId = instanceId,
+                                            den_bits = den_bits,
                                             dataFileName = ncp$dataFileName)
                             q <- POST(url = .makeOpencpuURL(urlPrefix=ncp$url, fn="createNCPInstance"),
                                       body = toJSON(payload),

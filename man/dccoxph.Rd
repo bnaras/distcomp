@@ -5,10 +5,24 @@
 \alias{dccoxph.fit}
 \title{Functions copied and modified from survival package}
 \usage{
-dccoxph(formula, data, weights, subset, na.action, init, control,
-  ties = c("efron", "breslow", "exact"), singular.ok = TRUE,
-  robust = FALSE, model = FALSE, x = FALSE, y = TRUE, tt,
-  method = ties, ...)
+dccoxph(
+  formula,
+  data,
+  weights,
+  subset,
+  na.action,
+  init,
+  control,
+  ties = c("efron", "breslow", "exact"),
+  singular.ok = TRUE,
+  robust = FALSE,
+  model = FALSE,
+  x = FALSE,
+  y = TRUE,
+  tt,
+  method = ties,
+  ...
+)
 
 dccoxph.fit(x, y, strata, offset, init, control, weights, method, rownames)
 }

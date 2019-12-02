@@ -159,7 +159,7 @@ QueryCountMaster <- R6Class(
                                                      list(defnId = defn$id, instanceId = x$instanceId,
                                                           dataFileName = x$dataFileName)
                                                  }
-                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createInstanceObject"),
+                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
                                                 body = toJSON(payload),
                                                 add_headers("Content-Type" = "application/json"),
                                                 config = getConfig()$sslConfig
@@ -381,7 +381,7 @@ HEQueryCountMaster <- R6Class(
                                                           dataFileName = x$dataFileName,
                                                           pubkey_bits = self$pubkey_bits, pubkey_n = self$pubkey <- n, den_bits = self$den_bits)
                                                  }
-                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createInstanceObject"),
+                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
                                                 body = toJSON(payload),
                                                 add_headers("Content-Type" = "application/json"),
                                                 config = getConfig()$sslConfig
@@ -422,7 +422,6 @@ HEQueryCountMaster <- R6Class(
             result <- private$result
             if (length(result) == 0) {
                 stop ("Run the computation first using run()")
-                result <- private$result
             }
             result
         }

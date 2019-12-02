@@ -18,5 +18,5 @@ with the instanceId. This is typically done after a computation completes and re
 have been obtained.
 }
 \seealso{
-\code{\link[=createInstanceObject]{createInstanceObject()}}
+\code{\link[=createWorkerInstance]{createWorkerInstance()}}
 }

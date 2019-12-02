@@ -4,10 +4,12 @@
 \alias{makeMaster}
 \title{Make a master object given a definition}
 \usage{
-makeMaster(defn, partyNumber, debug = FALSE)
+makeMaster(defn, partyNumber = NULL, debug = FALSE)
 }
 \arguments{
 \item{defn}{the computation definition}
+
+\item{partyNumber}{the number of the noncooperating party, if HE is desired}
 
 \item{debug}{a debug flag}
 }
