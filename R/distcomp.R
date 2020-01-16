@@ -63,7 +63,7 @@ NULL
 #' @rdname distcomp-internal
 #' @import utils
 #' @importFrom stringr str_trim
-#' @importFrom httr POST
+#' @importFrom httr POST stop_for_status
 #' @importFrom httr headers
 #' @importFrom httr add_headers
 #' @importFrom jsonlite fromJSON

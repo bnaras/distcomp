@@ -104,13 +104,16 @@ HEMaster  <-
                         ##list(result1 = result1, result2 = result2)
                     } else {
                         ## Create an instance id to use for this run
-                        instanceId <- generateId(object=list(Sys.time(), self))
+                        ## for each party
+                        nc_party[[1L]]$instanceId  <- generateId(object=list(Sys.time(), nc_party[[1L]]))
+                        nc_party[[2L]]$instanceId  <- generateId(object=list(Sys.time(), nc_party[[2L]]))
                         ## Function to create NCP objects remotely
                         ## To minimize requests, we send everything in one request
                         makeNCP  <- function(ncp) {
-                            payload <- list(name = ncp$name, ncpId = ncp$id,
-                                            instanceId = instanceId,
-                                            pubkey_bits = pubkey_bits, pubkey_n = pubkey_n,
+                            ncp_defn  <- ncp$defn
+                            payload <- list(name = ncp_defn$name, ncpId = ncp_defn$id,
+                                            instanceId = ncp$instanceId,
+                                            pubkey_bits = pubkey_bits, pubkey_n = as.character(pubkey_n),
                                             den_bits = den_bits,
                                             dataFileName = ncp$dataFileName)
                             q <- POST(url = .makeOpencpuURL(urlPrefix=ncp$url, fn="createNCPInstance"),
@@ -126,9 +129,9 @@ HEMaster  <-
                             stop("makeNCP:  Either or both NCP did not respond successfully!")
                         }
                         ## Now run the computation on each NCP
-                        runNCP  <- function(objectId, ncp, token) {
-                            payload <- list(objectId = objectId, method = "run", token = token)
-                            q <- POST(.makeOpencpuURL(urlPrefix=ncp$url, fn="executeMethod"),
+                        runNCP  <- function(ncp, token) {
+                            payload <- list(objectId = ncp$instanceId, method = "run", token = token)
+                            q <- POST(.makeOpencpuURL(urlPrefix=ncp$url, fn="executeHEMethod"),
                                       body = jsonlite::toJSON(payload),
                                       add_headers("Content-Type" = "application/json"),
                                       config=getConfig()$sslConfig
@@ -136,15 +139,15 @@ HEMaster  <-
                             .deSerialize(q)
                         }
                         ## Each result is list of int part and a fractional part
-                        result1  <- runNCP(objectId = instanceId, ncp = nc_party[[1L]], token = token)
-                        result2  <- runNCP(objectId = instanceId, url = nc_party[[2L]], token = token)
+                        result1  <- runNCP(ncp = nc_party[[1L]], token = token)
+                        result2  <- runNCP(ncp = nc_party[[2L]], token = token)
                         ## Then we can clean up the instance object on sites with a call to any one of
                         ## the NCPs via ncp$cleanupInstance(instanceId)
                         ## executeMethod(objectId = instanceId, "cleanup")
                         ##list(result1 = result1, result2 = result2)
                     }
                     ## Accumulate the integer and fractional parts across NCPs
-                    sumInt  <- pubkey$add(result1$int, result2$int)
+                    sumInt  <- pubkey$add(gmp::as.bigz(result1$int), gmp::as.bigz(result2$int))
                     ## ignore frac
                     ## sumFrac  <- pubkey$add(result1$frac, result2$frac)
                     privkey  <- private$keys$getPrivateKey()
@@ -158,7 +161,7 @@ HEMaster  <-
                         }
                         sitesOK <- sapply(nc_party,
                                           function(x) {
-                                              payload <- list(instanceId = instanceId)
+                                              payload <- list(instanceId = x$instanceId)
                                               q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
                                                         body = jsonlite::toJSON(payload),
                                                         add_headers("Content-Type" = "application/json"),

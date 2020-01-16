@@ -377,7 +377,8 @@ HEQueryCountMaster <- R6Class(
             dry_run <- private$dry_run
             debug  <- private$debug
             defn <- private$defn
-            n <- length(sites)
+            sites  <- private$sites
+            ##n <- length(sites)
             if (dry_run) {
                 ## Workers have already been created and passed
                 workers  <- lapply(sites, function(x) x$worker)
