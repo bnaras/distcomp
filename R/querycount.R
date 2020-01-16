@@ -70,7 +70,7 @@ QueryCountMaster <- R6Class(
             payload <- list(objectId = site$instanceId,
                             method = "queryCount")
             q <- POST(.makeOpencpuURL(urlPrefix=site$url, fn="executeMethod"),
-                      body = toJSON(payload),
+                      body = jsonlite::toJSON(payload),
                       add_headers("Content-Type" = "application/json"),
                       config = getConfig()$sslConfig
                       )
@@ -160,7 +160,7 @@ QueryCountMaster <- R6Class(
                                                           dataFileName = x$dataFileName)
                                                  }
                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
-                                                body = toJSON(payload),
+                                                body = jsonlite::toJSON(payload),
                                                 add_headers("Content-Type" = "application/json"),
                                                 config = getConfig()$sslConfig
                                                 )
@@ -184,7 +184,7 @@ QueryCountMaster <- R6Class(
                                   function(x) {
                                       payload <- list(instanceId = x$instanceId)
                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
-                                                body = toJSON(payload),
+                                                body = jsonlite::toJSON(payload),
                                                 add_headers("Content-Type" = "application/json"),
                                                 config=getConfig()$sslConfig
                                                 )
@@ -213,7 +213,7 @@ QueryCountMaster <- R6Class(
 #' @docType class
 #' @seealso [HEQueryCountMaster()] which goes hand-in-hand with this object
 #' @importFrom R6 R6Class
-#' @importFrom homomorpheR PaillierKeyPair
+#' @importFrom homomorpheR PaillierKeyPair random.bigz
 #' @section Methods:
 #'
 #' \describe{
@@ -246,12 +246,21 @@ HEQueryCountWorker <- R6Class(
             }
             stopifnot(self$kosher())
         },
+        setResultsCache = function(value) {
+            private$results_cache  <- value
+        },
         setParams = function(pubkey_bits, pubkey_n, den_bits) {
+            if(is.character(pubkey_n)) { ## we serialize stuff to character over the wire...
+                pubkey_n  <- gmp::as.bigz(pubkey_n)
+            }
             if (!is.null(pubkey_bits)) {
                 self$pubkey  <- homomorpheR::PaillierPublicKey$new(pubkey_bits, pubkey_n)
                 self$den <- gmp::as.bigq(2)^(den_bits)  #Our denominator for rational approximations
             }
             TRUE
+        },
+        getResultsCache = function() {
+            private$result_cache
         },
         queryCount = function(partyNumber, token) {
             result  <- private$result_cache[[token]]
@@ -261,7 +270,10 @@ HEQueryCountWorker <- R6Class(
                 ## Add random quantity and encrypt
                 pubkey <- self$pubkey
                 ## Generate random offset for int and frac parts
-                offset <- random.bigz(nBits = 256)
+                ## making nBits 256 ensures that x-r and x+r are both positive if x is 1024 bits
+                offset <- homomorpheR::random.bigz(nBits = 256)
+                ## For debugging set offset to zero
+                ##offset  <- 0
                 zero  <- pubkey$encrypt(0)
                 ncp1Result  <- list(int = pubkey$encrypt(result.int - offset), frac = zero)
                 ncp2Result  <- list(int = pubkey$encrypt(result.int + offset), frac = zero)
@@ -298,7 +310,7 @@ HEQueryCountMaster <- R6Class(
                             method = "queryCount", partyNumber = private$partyNumber,
                             token = token)
             q <- POST(.makeOpencpuURL(urlPrefix=site$url, fn="executeHEMethod"),
-                      body = toJSON(payload),
+                      body = jsonlite::toJSON(payload),
                       add_headers("Content-Type" = "application/json"),
                       config = getConfig()$sslConfig
                       )
@@ -323,9 +335,13 @@ HEQueryCountMaster <- R6Class(
         },
         setParams = function(pubkey_bits, pubkey_n, den_bits) {
             self$pubkey_bits  <- pubkey_bits
+            if(is.character(pubkey_n)) { ## we serialize stuff to character over the wire...
+                pubkey_n  <- gmp::as.bigz(pubkey_n)
+            }
             self$pubkey_n  <- pubkey_n
             self$den_bits  <- den_bits
             self$pubkey  <- homomorpheR::PaillierPublicKey$new(pubkey_bits, pubkey_n)
+            ##browser()
             self$den <- gmp::as.bigq(2)^(den_bits)  #Our denominator for rational approximations
             TRUE
         },
@@ -340,10 +356,18 @@ HEQueryCountMaster <- R6Class(
             } else {
                 mapFn <- private$mapFn
             }
+            ##browser()
             results <- Map(mapFn, sites, rep(token, length(sites)))
+            pubkey  <- self$pubkey
             zero  <- pubkey$encrypt(0)
-            intResults  <- lapply(results, function(x) x$int)
-            fracResults  <- lapply(results, function(x) x$frac)
+            ## The results could arrive as strings over the wire, so convert
+            intResults  <- lapply(results, function(x) gmp::as.bigz(x$int))
+            fracResults  <- lapply(results, function(x) gmp::as.bigz(x$frac))
+            ## ADD manually for testing
+            ## intSum  <- pubkey$add(intResults[[1L]], intResults[[2L]])
+            ## intSum  <- pubkey$add(intSum, intResults[[3L]])
+            ## fracSum  <- pubkey$add(intResults[[1L]], intResults[[2L]])
+            ## fracSum  <- pubkey$add(fracSum, intResults[[3L]])
             intSum  <- Reduce(f = pubkey$add, x = intResults, init = zero)
             fracSum  <- Reduce(f = pubkey$add, x = fracResults, init = zero)
             list(int = intSum, frac = fracSum)
@@ -351,6 +375,7 @@ HEQueryCountMaster <- R6Class(
         run = function(token) {
             'Run Computation'
             dry_run <- private$dry_run
+            debug  <- private$debug
             defn <- private$defn
             n <- length(sites)
             if (dry_run) {
@@ -363,7 +388,9 @@ HEQueryCountMaster <- R6Class(
             } else {
                 ## Create an instance Id
                 ## Make remote call to instantiate workers
-                instanceId <- generateId(object=list(Sys.time(), self))
+                ## instanceId <- generateId(object=list(Sys.time(), self))
+                ## Instancd ID for HE method is just the token!
+                instanceId  <- token
                 ## Augment each site with object instance ids
                 private$sites <- sites <- lapply(private$sites,
                                                  function(x) list(name = x$name,
@@ -373,16 +400,17 @@ HEQueryCountMaster <- R6Class(
                                                                   instanceId = if (x$localhost) x$name else instanceId))
                 sitesOK <- sapply(sites,
                                   function(x) {
+                                      ### FIXED NOW. BUG HERE. This payload of pubkey stuff needs to made character!!
                                       payload <- if (is.null(x$dataFileName)) {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
-                                                          pubkey_bits = self$pubkey_bits, pubkey_n = self$pubkey <- n, den_bits = self$den_bits)
+                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
                                                  } else {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
                                                           dataFileName = x$dataFileName,
-                                                          pubkey_bits = self$pubkey_bits, pubkey_n = self$pubkey <- n, den_bits = self$den_bits)
+                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
                                                  }
-                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
-                                                body = toJSON(payload),
+                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createHEWorkerInstance"),
+                                                body = jsonlite::toJSON(payload),
                                                 add_headers("Content-Type" = "application/json"),
                                                 config = getConfig()$sslConfig
                                                 )
@@ -397,24 +425,24 @@ HEQueryCountMaster <- R6Class(
             }
             private$result  <- result  <- self$queryCount(token)
 
-            if (!dry_run) {
-                if (debug) {
-                    print("run(): checking worker object cleanup")
-                }
-                sitesOK <- sapply(sites,
-                                  function(x) {
-                                      payload <- list(instanceId = x$instanceId)
-                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
-                                                body = toJSON(payload),
-                                                add_headers("Content-Type" = "application/json"),
-                                                config=getConfig()$sslConfig
-                                                )
-                                      .deSerialize(q)
-                                  })
-                if (!all(sitesOK)) {
-                    warning("run():  Some sites did not clean up successfully!")
-                }
-            }
+            ## if (!dry_run) {
+            ##     if (debug) {
+            ##         print("run(): checking worker object cleanup")
+            ##     }
+            ##     sitesOK <- sapply(sites,
+            ##                       function(x) {
+            ##                           payload <- list(instanceId = x$instanceId)
+            ##                           q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
+            ##                                     body = jsonlite::toJSON(payload),
+            ##                                     add_headers("Content-Type" = "application/json"),
+            ##                                     config=getConfig()$sslConfig
+            ##                                     )
+            ##                           .deSerialize(q)
+            ##                       })
+            ##     if (!all(sitesOK)) {
+            ##         warning("run():  Some sites did not clean up successfully!")
+            ##     }
+            ## }
             result
         },
         summary = function() {

@@ -115,6 +115,7 @@ NULL
 #' @param defnFileName the name for the compdef definition files
 #' @param dataFileName the name for the data files
 #' @param instanceFileName the name for the instance files
+#' @param resultsCacheFileName the name for the instance results cache files for HE computations
 #' @param ssl_verifyhost integer value, usually `1L`, but for
 #'     testing with snake-oil certs, one might set this to `0L`
 #' @param ssl_verifypeer integer value, usually `1L`, but for
@@ -134,6 +135,7 @@ distcompSetup <- function(workspacePath = "",
                           defnFileName = "defn.rds",
                           dataFileName = "data.rds",
                           instanceFileName = "instance.rds",
+                          resultsCacheFileName = "results_cache.rds",
                           ssl_verifyhost = 1L,
                           ssl_verifypeer = 1L) {
   ## TODO: In the next version, this should be stuffed in an R6 class
@@ -175,6 +177,7 @@ distcompSetup <- function(workspacePath = "",
                                   defnFileName = defnFileName,
                                   dataFileName = dataFileName,
                                   instanceFileName = instanceFileName,
+                                  resultsCacheFileName = resultsCacheFileName,
                                   sslConfig = config(ssl_verifyhost = ssl_verifyhost,
                                     ssl_verifypeer = ssl_verifypeer))
   distcompEnv[["computationInfo"]] <- list()
@@ -216,16 +219,20 @@ getConfig <- function(...) {
 
 #' Make a worker object given a definition and data
 #' @description The function `makeWorker` returns an object of the
-#' appropriate type based on a computation definition and sets the data for
-#' the object. The types of objects that can be created depend upon the
-#' available computations
+#'     appropriate type based on a computation definition and sets the
+#'     data for the object. The types of objects that can be created
+#'     depend upon the available computations
 #' @seealso [availableComputations()]
 #' @param defn the computation definition
 #' @param data the data for the computation
-#' @param pubkey_bits the number of bits for the public key
-#' @param pubkey_n the `n` for public key
-#' @param den_bits the number of bits for the denominator
-#' @return a worker object of the appropriate class based on the definition
+#' @param pubkey_bits the number of bits for the public key (used only
+#'     if `he` is `TRUE` in computation definition)
+#' @param pubkey_n the `n` for public key (used only if `he` is `TRUE`
+#'     in computation definition)
+#' @param den_bits the number of bits for the denominator (used only
+#'     if `he` is `TRUE` in computation definition)
+#' @return a worker object of the appropriate class based on the
+#'     definition
 #'
 #' @export
 makeWorker <- function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
@@ -242,13 +249,15 @@ makeWorker <- function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bit
 
 #' Make a master object given a definition
 #' @description The function `makeMaster` returns a master object
-#' corresponding to the definition. The types of master objects that can
-#' be created depend upon the available computations
+#'     corresponding to the definition. The types of master objects
+#'     that can be created depend upon the available computations
 #' @seealso [availableComputations()]
 #' @param defn the computation definition
-#' @param partyNumber the number of the noncooperating party, if HE is desired
+#' @param partyNumber the number of the noncooperating party, which
+#'     can be optionally set if HE is desired
 #' @param debug a debug flag
-#' @return a master object of the appropriate class based on the definition
+#' @return a master object of the appropriate class based on the
+#'     definition
 #'
 #' @export
 makeMaster <- function(defn, partyNumber = NULL, debug = FALSE) {
@@ -311,8 +320,20 @@ availableComputations <- function() {
                          filterCondition = getComputationInfo("filterCondition"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, debug = debug) else QueryCountMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if (defn$he) HEQueryCountWorker$new(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits) else QueryCountWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) {
+              if(!is.null(defn$he) && defn$he) {
+                  HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, debug = debug)
+              } else {
+                  QueryCountMaster$new(defn = defn, debug = debug)
+              }
+          },
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
+              if (defn$he) {
+                  HEQueryCountWorker$new(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
+              } else {
+                  QueryCountWorker$new(defn = defn, data = data)
+              }
+          }
       ),
       StratifiedCoxModel = list(
           desc = "Stratified Cox Model",
@@ -328,8 +349,20 @@ availableComputations <- function() {
                          formula = getComputationInfo("formula"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) stop("Not implemented") else CoxMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if(!is.null(defn$he) && defn$he) stop("Not implemented") else CoxWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) {
+              if(!is.null(defn$he) && defn$he) {
+                  stop("Not implemented")
+              } else {
+                  CoxMaster$new(defn = defn, debug = debug)
+              }
+          },
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
+              if(!is.null(defn$he) && defn$he) {
+                  stop("Not implemented")
+              } else {
+                  CoxWorker$new(defn = defn, data = data)
+              }
+          }
       ),
       RankKSVD = list(
           desc = "Rank K SVD",
@@ -346,27 +379,45 @@ availableComputations <- function() {
                          ncol = getComputationInfo("ncol"),
                          stringsAsFactors=FALSE)
           },
-          makeMaster = function(defn, partyNumber, debug = FALSE) if(!is.null(defn$he) && defn$he) stop("Not implemented") else SVDMaster$new(defn = defn, debug = debug),
-          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) if(!is.null(defn$he) && defn$he) stop("Not implemented") else SVDWorker$new(defn = defn, data = data)
+          makeMaster = function(defn, partyNumber, debug = FALSE) {
+              if(!is.null(defn$he) && defn$he) {
+                  stop("Not implemented")
+              } else {
+                  SVDMaster$new(defn = defn, debug = debug)
+              }
+          },
+          makeWorker = function(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
+              if(!is.null(defn$he) && defn$he) {
+                  stop("Not implemented")
+              } else {
+                  SVDWorker$new(defn = defn, data = data)
+              }
+          }
       )
   )
 }
 
-#' Given the definition identifier of an object, instantiate and store object in workspace
-#' @description The function `createNCPInstance` uses a definition identified by
-#' defnId to create the appropriate object instance. The instantiated object is assigned
-#' the instanceId and saved under the dataFileName if the latter is specified.
-#' This instantiated object may change state between iterations when a computation executes
+#' Given the definition identifier of an object, instantiate and store
+#' object in workspace
+#' @description This function uses an identifier (`defnId`) to locate
+#'     a stored definition in the workspace to create the appropriate
+#'     object instance. The instantiated object is assigned the
+#'     instanceId and saved under the dataFileName if the latter is
+#'     not `NULL`.  This instantiated object may change state between
+#'     iterations when a computation executes
 #' @param name identifying the NC party
 #' @param ncpId the id indicating the NCP definition
 #' @param instanceId an indentifier to use for the created instance
 #' @param pubkey_bits the public key number of bits
 #' @param pubkey_n the pubkey n
-#' @param den_bits the denominator number of bits for for rational approximations
-#' @param dataFileName a file name to use for saving the data. Typically `NULL`, this
-#' is only needed when one is using a single opencpu server to behave like multiple
-#' sites in which case the data file name serves to distinguish the site-specific data files.
-#' When it is `NULL`, the data file name is taken from the configuration settings
+#' @param den_bits the denominator number of bits for for rational
+#'     approximations
+#' @param dataFileName a file name to use for saving the
+#'     data. Typically `NULL`, this is only needed when one is using a
+#'     single opencpu server to behave like multiple sites in which
+#'     case the data file name serves to distinguish the site-specific
+#'     data files.  When it is `NULL`, the data file name is taken
+#'     from the configuration settings
 #' @import utils
 #' @return TRUE if everything goes well
 #' @export
@@ -387,8 +438,9 @@ createNCPInstance <- function (name, ncpId, instanceId, pubkey_bits, pubkey_n, d
     sites  <- readRDS(paste(defnPath, ncpDataFileName, sep=.Platform$file.sep))
     site_names  <- sites$name
     site_urls  <- sites$url
+    ## The JSON serialization makes the columns as lists, so use double bracket indexing!
     for (i in seq_along(site_names)) {
-        ncp$addSite(name = site_names[i], url = site_urls[i])
+        ncp$addSite(name = site_names[[i]], url = site_urls[[i]])
     }
 
     ## Check if the instance folder exists
@@ -480,7 +532,7 @@ executeMethod <- function(objectId, method, ...) {
 #'     invoke a method
 #' @param method the name of the method to invoke
 #' @param ... further arguments as appropriate for the method
-#' @return a list containing an integer and a fractional result
+#' @return a list containing an integer and a fractional result converted to characters
 #' @export
 executeHEMethod <- function(objectId, method, ...) {
   config <- getConfig()
@@ -491,16 +543,10 @@ executeHEMethod <- function(objectId, method, ...) {
   if (object$getStateful()) {
     saveRDS(object, file=filePath)
   }
-  pubkey <- object$pubkey
-  den  <- object$den
-  intValue  <- floor(result); fracValue <- result - intValue;
-  encIntValue <- pubkey$encrypt(intValue)
-  encFracValue <- pubkey$encrypt(result.fracnum)
-
-  result <- list(int = pubkey$add(encIntValue, enc.offset$int),
-                 frac = pubkey$add(enc.result.fracnum, enc.offset$frac))
-
-
+  ## For an HE method, return results as strings since we need to serialize things over
+  ## the wire!
+  list(int = as.character(result$int),
+       frac = as.character(result$frac))
 }
 
 
@@ -549,7 +595,7 @@ executeMethodOnObject  <- function(objectName, method, ...) {
     httr::stop_for_status(q)
     cType <- headers(q)['content-type']
     if (cType == "application/json")
-        fromJSON(rawToChar(q$content), simplifyDataFrame = FALSE)
+        jsonlite::fromJSON(rawToChar(q$content), simplifyDataFrame = FALSE)
     else
         q$content
 }
@@ -594,6 +640,58 @@ createWorkerInstance <- function (defnId, instanceId, pubkey_bits = NULL, pubkey
   saveRDS(object, file=paste(thisInstancePath, config$instanceFileName, sep=.Platform$file.sep))
   TRUE
 }
+
+#' Given the definition identifier of an object, instantiate and store
+#' object in workspace
+#' @description The function `createHEWorkerInstance` uses a
+#'     definition identified by defnId to create the appropriate
+#'     object instance for HE computations. The instantiated object is
+#'     searched for in the instance path and loaded if already
+#'     present, otherwise it is created and assigned the instanceId
+#'     and saved under the dataFileName if the latter is specified.
+#'     This instantiated object may change state between iterations
+#'     when a computation executes
+#' @seealso [availableComputations()]
+#' @param defnId the identifier of an already defined computation
+#' @param instanceId an indentifier to use for the created instance
+#' @param pubkey_bits number of bits for public key
+#' @param pubkey_n the `n` for public key
+#' @param den_bits the number of bits for the denominator
+#' @param dataFileName a file name to use for saving the
+#'     data. Typically `NULL`, this is only needed when one is using a
+#'     single opencpu server to behave like multiple sites in which
+#'     case the data file name serves to distinguish the site-specific
+#'     data files.  When it is `NULL`, the data file name is taken
+#'     from the configuration settings
+#' @import utils
+#' @return TRUE if everything goes well
+#' @export
+createHEWorkerInstance <- function (defnId, instanceId, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL, dataFileName=NULL) {
+  config <- getConfig()
+  thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)
+  instanceFile  <- file.path(thisInstancePath, config$instanceFileName)
+  if (!file.exists(instanceFile)) {
+      defn <- readRDS(paste(config$defnPath, defnId, config$defnFileName, sep=.Platform$file.sep))
+      compType <- defn$compType
+      available <- availableComputations()
+      if (!(compType %in% names(available))) {
+          stop(paste("createWorkerInstance: No such computation:", compType))
+      }
+      data <- readRDS(paste(config$defnPath, defnId,
+                            if (is.null(dataFileName)) config$dataFileName else dataFileName,
+                            sep=.Platform$file.sep))
+
+      object <- makeWorker(defn = defn, data = data, pubkey_bits = pubkey_bits, pubkey_n = pubkey_n, den_bits = den_bits)
+      ## Check if the instance folder exists
+      thisInstancePath <- paste(config$instancePath, instanceId, sep=.Platform$file.sep)
+      dir.create(thisInstancePath)
+      ## Save it under the instance id to find it.
+      saveRDS(object, file=paste(thisInstancePath, config$instanceFileName, sep=.Platform$file.sep))
+  }
+  TRUE
+}
+
+
 
 #' Destroy an instance object given its identifier
 #' @description The function `destroyInstanceObject` deletes an object associated
@@ -676,7 +774,7 @@ uploadNewComputation <- function(site, defn, data) {
                      list(defn = defn, data = data)
                  }
       q <- POST(.makeOpencpuURL(urlPrefix = site$url, fn = "saveNewComputation"),
-                body = toJSON(payload),
+                body = jsonlite::toJSON(payload),
                 add_headers("Content-Type" = "application/json"),
                 config=getConfig()$sslConfig
                 )
@@ -709,6 +807,7 @@ uploadNewComputation <- function(site, defn, data) {
 saveNewNCP <- function(defn, data, dataFileName = NULL) {
   config <- getConfig()
   defnId <- defn$id
+  browser()
   thisDefnPath <- paste(config$defnPath, defnId, sep = .Platform$file.sep)
   ncpDefnFileName <- paste(defn$name, "defn.rds", sep = "-")
   ## Should tryCatch this
@@ -760,7 +859,7 @@ uploadNewNCP <- function(defn, url = NULL, worker = NULL, sites) {
                        list(defn = defn, data = sites)
                    }
         q <- POST(.makeOpencpuURL(urlPrefix = url, fn = "saveNewNCP"),
-                  body = toJSON(payload),
+                  body = jsonlite::toJSON(payload),
                   add_headers("Content-Type" = "application/json"),
                   config=getConfig()$sslConfig
                   )

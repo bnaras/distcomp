@@ -1,4 +1,4 @@
-#' Create a HEMaster process for use in a distributed homomorphic
+7#' Create a HEMaster process for use in a distributed homomorphic
 #' computation
 #'
 #' @description `HEMaster` objects run a distributed computation based
@@ -46,6 +46,10 @@ HEMaster  <-
                 getNC_party = function() private$nc_party,
                 getPubkey = function() {
                     private$keys$pubkey
+                },
+                ## FOR debugging only
+                getPrivKey = function() {
+                    private$keys$getPrivateKey()
                 },
                 addNCP  = function(ncp_defn, url = NULL, ncpWorker = NULL) {
                     'Add an NCP identified by url or ncpWorker'
@@ -97,7 +101,7 @@ HEMaster  <-
                         ## Ask each worker to run the computation
                         result1  <- workers[[1L]]$run(token)
                         result2  <- workers[[2L]]$run(token)
-                        list(result1, result2)
+                        ##list(result1 = result1, result2 = result2)
                     } else {
                         ## Create an instance id to use for this run
                         instanceId <- generateId(object=list(Sys.time(), self))
@@ -110,7 +114,7 @@ HEMaster  <-
                                             den_bits = den_bits,
                                             dataFileName = ncp$dataFileName)
                             q <- POST(url = .makeOpencpuURL(urlPrefix=ncp$url, fn="createNCPInstance"),
-                                      body = toJSON(payload),
+                                      body = jsonlite::toJSON(payload),
                                       add_headers("Content-Type" = "application/json"),
                                       config=getConfig()$sslConfig
                                       )
@@ -125,7 +129,7 @@ HEMaster  <-
                         runNCP  <- function(objectId, ncp, token) {
                             payload <- list(objectId = objectId, method = "run", token = token)
                             q <- POST(.makeOpencpuURL(urlPrefix=ncp$url, fn="executeMethod"),
-                                      body = toJSON(payload),
+                                      body = jsonlite::toJSON(payload),
                                       add_headers("Content-Type" = "application/json"),
                                       config=getConfig()$sslConfig
                                       )
@@ -134,7 +138,10 @@ HEMaster  <-
                         ## Each result is list of int part and a fractional part
                         result1  <- runNCP(objectId = instanceId, ncp = nc_party[[1L]], token = token)
                         result2  <- runNCP(objectId = instanceId, url = nc_party[[2L]], token = token)
-                        list(result1, result2)
+                        ## Then we can clean up the instance object on sites with a call to any one of
+                        ## the NCPs via ncp$cleanupInstance(instanceId)
+                        ## executeMethod(objectId = instanceId, "cleanup")
+                        ##list(result1 = result1, result2 = result2)
                     }
                     ## Accumulate the integer and fractional parts across NCPs
                     sumInt  <- pubkey$add(result1$int, result2$int)
@@ -153,7 +160,7 @@ HEMaster  <-
                                           function(x) {
                                               payload <- list(instanceId = instanceId)
                                               q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
-                                                        body = toJSON(payload),
+                                                        body = jsonlite::toJSON(payload),
                                                         add_headers("Content-Type" = "application/json"),
                                                         config=getConfig()$sslConfig
                                                         )
