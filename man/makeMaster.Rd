@@ -9,17 +9,19 @@ makeMaster(defn, partyNumber = NULL, debug = FALSE)
 \arguments{
 \item{defn}{the computation definition}
 
-\item{partyNumber}{the number of the noncooperating party, if HE is desired}
+\item{partyNumber}{the number of the noncooperating party, which
+can be optionally set if HE is desired}
 
 \item{debug}{a debug flag}
 }
 \value{
-a master object of the appropriate class based on the definition
+a master object of the appropriate class based on the
+definition
 }
 \description{
 The function \code{makeMaster} returns a master object
-corresponding to the definition. The types of master objects that can
-be created depend upon the available computations
+corresponding to the definition. The types of master objects
+that can be created depend upon the available computations
 }
 \seealso{
 \code{\link[=availableComputations]{availableComputations()}}

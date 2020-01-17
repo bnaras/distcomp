@@ -29,7 +29,9 @@ definition defn, data, flag for preserving state between iterations, public key 
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{HEQueryCountWorker$new()}}
+\item \href{#method-setResultsCache}{\code{HEQueryCountWorker$setResultsCache()}}
 \item \href{#method-setParams}{\code{HEQueryCountWorker$setParams()}}
+\item \href{#method-getResultsCache}{\code{HEQueryCountWorker$getResultsCache()}}
 \item \href{#method-queryCount}{\code{HEQueryCountWorker$queryCount()}}
 \item \href{#method-clone}{\code{HEQueryCountWorker$clone()}}
 }
@@ -57,10 +59,26 @@ definition defn, data, flag for preserving state between iterations, public key 
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setResultsCache"></a>}}
+\subsection{Method \code{setResultsCache()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEQueryCountWorker$setResultsCache(value)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setParams"></a>}}
 \subsection{Method \code{setParams()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HEQueryCountWorker$setParams(pubkey_bits, pubkey_n, den_bits)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getResultsCache"></a>}}
+\subsection{Method \code{getResultsCache()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEQueryCountWorker$getResultsCache()}\if{html}{\out{</div>}}
 }
 
 }

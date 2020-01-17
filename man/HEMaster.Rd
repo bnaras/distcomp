@@ -32,6 +32,7 @@ definition provided}
 \item \href{#method-new}{\code{HEMaster$new()}}
 \item \href{#method-getNC_party}{\code{HEMaster$getNC_party()}}
 \item \href{#method-getPubkey}{\code{HEMaster$getPubkey()}}
+\item \href{#method-getPrivKey}{\code{HEMaster$getPrivKey()}}
 \item \href{#method-addNCP}{\code{HEMaster$addNCP()}}
 \item \href{#method-run}{\code{HEMaster$run()}}
 \item \href{#method-clone}{\code{HEMaster$clone()}}
@@ -58,6 +59,14 @@ definition provided}
 \subsection{Method \code{getPubkey()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HEMaster$getPubkey()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getPrivKey"></a>}}
+\subsection{Method \code{getPrivKey()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEMaster$getPrivKey()}\if{html}{\out{</div>}}
 }
 
 }

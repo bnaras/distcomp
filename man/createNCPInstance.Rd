@@ -2,7 +2,8 @@
 % Please edit documentation in R/distcomp.R
 \name{createNCPInstance}
 \alias{createNCPInstance}
-\title{Given the definition identifier of an object, instantiate and store object in workspace}
+\title{Given the definition identifier of an object, instantiate and store
+object in workspace}
 \usage{
 createNCPInstance(
   name,
@@ -25,19 +26,24 @@ createNCPInstance(
 
 \item{pubkey_n}{the pubkey n}
 
-\item{den_bits}{the denominator number of bits for for rational approximations}
+\item{den_bits}{the denominator number of bits for for rational
+approximations}
 
-\item{dataFileName}{a file name to use for saving the data. Typically \code{NULL}, this
-is only needed when one is using a single opencpu server to behave like multiple
-sites in which case the data file name serves to distinguish the site-specific data files.
-When it is \code{NULL}, the data file name is taken from the configuration settings}
+\item{dataFileName}{a file name to use for saving the
+data. Typically \code{NULL}, this is only needed when one is using a
+single opencpu server to behave like multiple sites in which
+case the data file name serves to distinguish the site-specific
+data files.  When it is \code{NULL}, the data file name is taken
+from the configuration settings}
 }
 \value{
 TRUE if everything goes well
 }
 \description{
-The function \code{createNCPInstance} uses a definition identified by
-defnId to create the appropriate object instance. The instantiated object is assigned
-the instanceId and saved under the dataFileName if the latter is specified.
-This instantiated object may change state between iterations when a computation executes
+This function uses an identifier (\code{defnId}) to locate
+a stored definition in the workspace to create the appropriate
+object instance. The instantiated object is assigned the
+instanceId and saved under the dataFileName if the latter is
+not \code{NULL}.  This instantiated object may change state between
+iterations when a computation executes
 }

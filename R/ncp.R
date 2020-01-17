@@ -127,7 +127,11 @@ NCP <-
                         comptypeMaster$addSite(name = site$name, url = site$url, worker = site$worker)
                     }
                     result  <- comptypeMaster$run(token)
-                    ##browser()
+                    ## If this NCP is the second party, which will
+                    ## bring up the rear in our case send sites the
+                    ## message to cleanup, or else get wrong results
+                    ## due to caching.
+                    if (private$number == 2) comptypeMaster$cleanup()
                     result
                 }
             )

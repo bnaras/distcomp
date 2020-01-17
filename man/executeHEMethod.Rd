@@ -16,7 +16,7 @@ invoke a method}
 \item{...}{further arguments as appropriate for the method}
 }
 \value{
-a list containing an integer and a fractional result
+a list containing an integer and a fractional result converted to characters
 }
 \description{
 The function \code{executeHEMethod} is a homomorphic

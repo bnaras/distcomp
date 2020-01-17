@@ -31,6 +31,7 @@ with the specified computation definition. The debug flag is used for debugging 
 \item \href{#method-setParams}{\code{HEQueryCountMaster$setParams()}}
 \item \href{#method-kosher}{\code{HEQueryCountMaster$kosher()}}
 \item \href{#method-queryCount}{\code{HEQueryCountMaster$queryCount()}}
+\item \href{#method-cleanup}{\code{HEQueryCountMaster$cleanup()}}
 \item \href{#method-run}{\code{HEQueryCountMaster$run()}}
 \item \href{#method-summary}{\code{HEQueryCountMaster$summary()}}
 \item \href{#method-clone}{\code{HEQueryCountMaster$clone()}}
@@ -73,6 +74,14 @@ with the specified computation definition. The debug flag is used for debugging 
 \subsection{Method \code{queryCount()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HEQueryCountMaster$queryCount(token)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cleanup"></a>}}
+\subsection{Method \code{cleanup()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{HEQueryCountMaster$cleanup()}\if{html}{\out{</div>}}
 }
 
 }

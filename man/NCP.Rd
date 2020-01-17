@@ -34,6 +34,7 @@ from each other.
 \item \href{#method-getSites}{\code{NCP$getSites()}}
 \item \href{#method-setSites}{\code{NCP$setSites()}}
 \item \href{#method-addSite}{\code{NCP$addSite()}}
+\item \href{#method-cleanupInstance}{\code{NCP$cleanupInstance()}}
 \item \href{#method-run}{\code{NCP$run()}}
 \item \href{#method-clone}{\code{NCP$clone()}}
 }
@@ -90,6 +91,14 @@ from each other.
 \subsection{Method \code{addSite()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NCP$addSite(name, url = NULL, worker = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cleanupInstance"></a>}}
+\subsection{Method \code{cleanupInstance()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NCP$cleanupInstance(token)}\if{html}{\out{</div>}}
 }
 
 }

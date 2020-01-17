@@ -372,13 +372,34 @@ HEQueryCountMaster <- R6Class(
             fracSum  <- Reduce(f = pubkey$add, x = fracResults, init = zero)
             list(int = intSum, frac = fracSum)
         },
+        cleanup = function() {
+            'Send cleanup message to sites'
+            if (!private$dry_run) {
+                sites  <- private$sites
+                ## Sites have already been augmented with instanceId in run method, after which
+                ## this should be called
+                sitesOK <- sapply(sites,
+                                  function(x) {
+                                      payload <- list(instanceId = x$instanceId)
+                                      q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
+                                                body = jsonlite::toJSON(payload),
+                                                add_headers("Content-Type" = "application/json"),
+                                                config=getConfig()$sslConfig
+                                                )
+                                      .deSerialize(q)
+                                  })
+                if (!all(sitesOK)) {
+                    warning("run():  Some sites did not clean up successfully!")
+                }
+            }
+            TRUE
+        },
         run = function(token) {
             'Run Computation'
             dry_run <- private$dry_run
             debug  <- private$debug
             defn <- private$defn
             sites  <- private$sites
-            ##n <- length(sites)
             if (dry_run) {
                 ## Workers have already been created and passed
                 workers  <- lapply(sites, function(x) x$worker)
@@ -425,25 +446,6 @@ HEQueryCountMaster <- R6Class(
                 }
             }
             private$result  <- result  <- self$queryCount(token)
-
-            ## if (!dry_run) {
-            ##     if (debug) {
-            ##         print("run(): checking worker object cleanup")
-            ##     }
-            ##     sitesOK <- sapply(sites,
-            ##                       function(x) {
-            ##                           payload <- list(instanceId = x$instanceId)
-            ##                           q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
-            ##                                     body = jsonlite::toJSON(payload),
-            ##                                     add_headers("Content-Type" = "application/json"),
-            ##                                     config=getConfig()$sslConfig
-            ##                                     )
-            ##                           .deSerialize(q)
-            ##                       })
-            ##     if (!all(sitesOK)) {
-            ##         warning("run():  Some sites did not clean up successfully!")
-            ##     }
-            ## }
             result
         },
         summary = function() {

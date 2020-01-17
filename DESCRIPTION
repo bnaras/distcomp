@@ -39,4 +39,4 @@ Copyright: inst/COPYRIGHTS
 Encoding: UTF-8
 License: LGPL (>= 2)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2

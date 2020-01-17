@@ -5,8 +5,8 @@
 \title{Instantiate an noncooperating party}
 \usage{
 makeNCP(
-  defn,
-  partyNumber,
+  ncp_defn,
+  comp_defn,
   sites = list(),
   pubkey_bits = NULL,
   pubkey_n = NULL,
@@ -14,9 +14,9 @@ makeNCP(
 )
 }
 \arguments{
-\item{defn}{the computation definition}
+\item{ncp_defn}{the NCP definition}
 
-\item{partyNumber}{the party number}
+\item{comp_defn}{the computation definition}
 
 \item{sites}{a list of sites each entry a named list of name, url, worker}
 
