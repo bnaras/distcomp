@@ -1,4 +1,4 @@
-#' Create a non-cooperating object for use in a distributed homomorphic computation
+#' R6 object to use as non-cooperating party in a distributed homomorphic computation
 #'
 #' @description `NCP` objects are worker objects that separate a
 #'     master process from communicating directly with the worker
@@ -10,42 +10,58 @@
 #'     that they don't communicate with each other and are isolated
 #'     from each other.
 #'
-#' @docType class
-#' @importFrom R6 R6Class
-#' @section Methods:
-#' \describe{
-#'   \item{`NCP$new(name, defn)`}{Create a new `NCP` instance with a name and a computation definition}
-#'   \item{`setParams(pubkey, den)`}{Set a public key, and a denominator for rational approximations of fractional parts of real numbers}
-#'   \item{`addSite(site)`}{Register a site for a computation}
-#' }
 #' @importFrom homomorpheR PaillierPublicKey
 #' @export
-#' @format An [R6::R6Class()] generator object
 NCP <-
     R6::R6Class(
             "NCP",
+
             private = list(
-                ## party name
+                ## name the noncooperating party name
                 name = NA,
-                ## party number
+
+                ## number the party number
                 number = NA,
-                ## stateful
+
+                ## stateful a flag indicating if the object is stateful
                 stateful = FALSE,
-                ## computation defn
+
+                ## defn the computation defn
                 defn = NA,
-                ## dry_run or not
+
+                ## dry_run flag indicating if a dry run is in effect
                 dry_run = FALSE,
-                ## The sites
+
+                ## sites the list of sites
                 sites = list()
             ),
+
             public = list(
-                ## The master's public key; everyone has this
+
+                #' @field pubkey the master's public key visible to everyone
                 pubkey = NA,
+
+                #' @field pubkey_bits the number of bits in the public key (used for reconstructing public key remotely by serializing to character)
                 pubkey_bits = NA,
+
+                #' @field pubkey_n the `n` for the public key used for reconstructing public key remotely
                 pubkey_n  = NA,
-                ## The denominator for rational arithmetic
+
+                #' @field den the denominator for rational arithmetic
                 den = NA,
+
+                #' @field den_bits the number of bits in the denominator used for reconstructing denominator remotely
                 den_bits = NA,
+
+                #' @description
+                #' Create a new `NCP` object.
+                #' @param ncp_defn the NCP definition; see example
+                #' @param comp_defn the computation definition
+                #' @param sites list of sites
+                #' @param pubkey_bits the number of bits in public key
+                #' @param pubkey_n the `n` for the public key
+                #' @param den_bits the number of bits in the denominator (power of 2) used in rational approximations
+                #' @return a new `NCP` object
                 initialize = function(ncp_defn, comp_defn, sites = list(), pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) {
                     private$name  <- ncp_defn$name
                     private$number  <- ncp_defn$number
@@ -58,23 +74,46 @@ NCP <-
                         self$den <- gmp::as.bigq(2)^(den_bits)  #Our denominator for rational approximations
                     }
                     private$sites  <- sites
-                },  getStateful = function() {
+                },
+
+                #' @description
+                #' Retrieve the value of the `stateful` field
+                getStateful = function() {
                     private$stateful
                 },
+
+                #' @description
+                #' Set some parameters of the `NCP` object for homomorphic computations
+                #' @param pubkey_bits the number of bits in public key
+                #' @param pubkey_n the `n` for the public key
+                #' @param den_bits the number of bits in the denominator (power of 2) used in rational approximations
                 setParams = function(pubkey_bits, pubkey_n, den_bits) {
                     self$pubkey_bits  <- pubkey_bits
                     self$pubkey_n  <- pubkey_n
                     self$den_bits  <- den_bits
                     self$pubkey  <- homomorpheR::PaillierPublicKey$new(pubkey_bits, pubkey_n)
                     self$den <- gmp::as.bigq(2)^(den_bits)  #Our denominator for rational approximations
-                    TRUE
+                    invisible(TRUE)
                 },
+
+                #' @description
+                #' Retrieve the value of the private `sites` field
                 getSites = function() {
                     private$sites
                 },
+
+                #' @description
+                #' Set the value of the private `sites` field
+                #' @param sites the list of sites
                 setSites = function(sites) {
                     private$sites  <- sites
                 },
+
+                #' @description
+                #' Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.
+                #' @param name of the site
+                #' @param url web url of the site; exactly one of `url` or `worker` should be specified
+                #' @param worker worker object for the site; exactly one of `url` or `worker` should be specified
                 addSite = function(name, url = NULL, worker = NULL) {
                     'Add a site identified by url with a name'
                     ## Only one of url/worker should be non-null
@@ -92,6 +131,10 @@ NCP <-
                     }
                     private$sites <- sites
                 },
+
+                #' @description
+                #' Clean up by destroying instance objects created in workspace.
+                #' @param token the token for the instance
                 cleanupInstance = function(token) {
                     if (!private$dry_run) {
                         if (debug) {
@@ -113,9 +156,13 @@ NCP <-
                             warning("run():  Some sites did not clean up successfully!")
                         }
                     }
-                    TRUE
+                    invisble(TRUE)
                 },
-                ## Run a computation
+
+                #' @description
+                #' Run the distributed homomorphic computation
+                #' @param token a unique token for the run, used to ensure that correct parts of cached results are returned appropriately
+                #' @return the result of the computation
                 run = function(token) {
                     ## The token is generated by the process that calls this NCP
                     ## This master is always in memory!!! So no need to worry about

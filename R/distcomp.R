@@ -549,31 +549,6 @@ executeHEMethod <- function(objectId, method, ...) {
        frac = as.character(result$frac))
 }
 
-
-#' Given the name of an object in the global environment, invoke a
-#' method on the object with arguments
-#' @description The function `executeMethodOnObject` executes an
-#'     arbitrary method on an object that has been instantiated in the
-#'     global environment.The result, which is dependent on the
-#'     computation that is executed, is returned. If the object needs
-#'     to save state between iterations on it, it is automatically
-#'     serialized back for the ensuing iterations
-#' @param objectName the identifier of the object that exists in the
-#'     global environment
-#' @param method the name of the method to invoke
-#' @param ... further arguments as appropriate for the method
-#' @return a result that depends on the computation being executed
-#' @export
-executeMethodOnObject  <- function(objectName, method, ...) {
-    object <- get(x = objectName, envir = .GlobalEnv)
-    call <- substitute(object$METHOD(...), list(METHOD = as.name(method)))
-    result <- eval(call)
-    if (object$getStateful()) {
-        saveRDS(object, file=filePath)
-    }
-    result
-}
-
 #' Deserialize the result of a http response
 #' @description .deSerialize will convert the JSON result of a http response as needed,
 #' else the raw content is returned.

@@ -15,7 +15,9 @@ Imports:
     R6 (>= 2.0),
     dplyr,
     rlang,
-    magrittr
+    magrittr,
+    homomorpheR,
+    gmp
 Suggests: 
     opencpu,
     knitr,
