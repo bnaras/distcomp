@@ -1,18 +1,24 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 
 r:
   - release
   - devel
 
-  addons:
+env:
+  - _R_CHECK_FORCE_SUGGESTS_=0
+  
+cache: packages
+
+r_packages:
+  - covr
+
+addons:
   apt:
     update: true
     packages:
       - libsodium-dev
       - libprotobuf-dev
       - protobuf-compiler
-
-cache: packages
 
