@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a master object to control <code>CoxWorker</code> worker objects — CoxMaster • distcomp</title>
+<title>R6 object to use as non-cooperating party in a distributed homomorphic computation — NCP • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,16 @@
 
 
 
-<meta property="og:title" content="Create a master object to control <code>CoxWorker</code> worker objects — CoxMaster" />
-<meta property="og:description" content="CoxMaster objects instantiate and run a distributed Cox model
-computation fit" />
+<meta property="og:title" content="R6 object to use as non-cooperating party in a distributed homomorphic computation — NCP" />
+<meta property="og:description" content="NCP objects are worker objects that separate a
+master process from communicating directly with the worker
+processes. Typically two such are needed for a distributed
+homomorphic computation. A master process can communicate with
+NCP objects and the NCP objects can communicate
+with worker processes. However, the two NCP objects,
+designated by numbers 1 and 2, are non-cooperating in the sense
+that they don't communicate with each other and are isolated
+from each other." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,75 +123,122 @@ computation fit" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a master object to control <code>CoxWorker</code> worker objects</h1>
+    <h1>R6 object to use as non-cooperating party in a distributed homomorphic computation</h1>
     
-    <div class="hidden name"><code>CoxMaster.Rd</code></div>
+    <div class="hidden name"><code>NCP.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>CoxMaster</code> objects instantiate and run a distributed Cox model
-computation fit</p>
+    <p><code>NCP</code> objects are worker objects that separate a
+master process from communicating directly with the worker
+processes. Typically two such are needed for a distributed
+homomorphic computation. A master process can communicate with
+<code>NCP</code> objects and the <code>NCP</code> objects can communicate
+with worker processes. However, the two <code>NCP</code> objects,
+designated by numbers 1 and 2, are non-cooperating in the sense
+that they don't communicate with each other and are isolated
+from each other.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <div class='dont-index'><p><code>CoxWorker</code> which generates objects matched to such a master object</p></div>
+    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
+<dt><code>pubkey</code></dt><dd><p>the master's public key visible to everyone</p></dd>
+
+<dt><code>pubkey_bits</code></dt><dd><p>the number of bits in the public key (used for reconstructing public key remotely by serializing to character)</p></dd>
+
+<dt><code>pubkey_n</code></dt><dd><p>the <code>n</code> for the public key used for reconstructing public key remotely</p></dd>
+
+<dt><code>den</code></dt><dd><p>the denominator for rational arithmetic</p></dd>
+
+<dt><code>den_bits</code></dt><dd><p>the number of bits in the denominator used for reconstructing denominator remotely</p></dd>
+
+</dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 <h3>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>CoxMaster$new()</code></a></p></li>
-<li><p><a href='#method-kosher'><code>CoxMaster$kosher()</code></a></p></li>
-<li><p><a href='#method-logLik'><code>CoxMaster$logLik()</code></a></p></li>
-<li><p><a href='#method-addSite'><code>CoxMaster$addSite()</code></a></p></li>
-<li><p><a href='#method-run'><code>CoxMaster$run()</code></a></p></li>
-<li><p><a href='#method-summary'><code>CoxMaster$summary()</code></a></p></li>
-<li><p><a href='#method-clone'><code>CoxMaster$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>NCP$new()</code></a></p></li>
+<li><p><a href='#method-getStateful'><code>NCP$getStateful()</code></a></p></li>
+<li><p><a href='#method-setParams'><code>NCP$setParams()</code></a></p></li>
+<li><p><a href='#method-getSites'><code>NCP$getSites()</code></a></p></li>
+<li><p><a href='#method-setSites'><code>NCP$setSites()</code></a></p></li>
+<li><p><a href='#method-addSite'><code>NCP$addSite()</code></a></p></li>
+<li><p><a href='#method-cleanupInstance'><code>NCP$cleanupInstance()</code></a></p></li>
+<li><p><a href='#method-run'><code>NCP$run()</code></a></p></li>
+<li><p><a href='#method-clone'><code>NCP$clone()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p><code>CoxMaster</code> objects instantiate and run a distributed Cox model
-computation fit</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$new(defn, debug = FALSE)</pre><p></div></p>
+<p>Create a new <code>NCP</code> object.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$new(
+  ncp_defn,
+  comp_defn,
+  sites = list(),
+  pubkey_bits = NULL,
+  pubkey_n = NULL,
+  den_bits = NULL
+)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>defn</code></dt><dd><p>a computation definition</p></dd>
+<dt><code>ncp_defn</code></dt><dd><p>the NCP definition; see example</p></dd>
 
-<dt><code>debug</code></dt><dd><p>a flag for debugging, default <code>FALSE</code></p></dd>
+<dt><code>comp_defn</code></dt><dd><p>the computation definition</p></dd>
+
+<dt><code>sites</code></dt><dd><p>list of sites</p></dd>
+
+<dt><code>pubkey_bits</code></dt><dd><p>the number of bits in public key</p></dd>
+
+<dt><code>pubkey_n</code></dt><dd><p>the <code>n</code> for the public key</p></dd>
+
+<dt><code>den_bits</code></dt><dd><p>the number of bits in the denominator (power of 2) used in rational approximations</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p>R6 <code>CoxMaster</code> object</p>
+<p>a new <code>NCP</code> object</p>
 <p><hr>
-<a id="method-kosher"></a></p><h3>Method <code>kosher()</code></h3>
-<p>Check if inputs and state of object are sane. For future use</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$kosher()</pre><p></div></p>
+<a id="method-getStateful"></a></p><h3>Method <code>getStateful()</code></h3>
+<p>Retrieve the value of the <code>stateful</code> field</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$getStateful()</pre><p></div></p>
 
-<h3>Returns</h3>
-<p><code>TRUE</code> or <code>FALSE</code></p>
 <p><hr>
-<a id="method-logLik"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/logLik.html'>logLik()</a></code></h3>
-<p>Return the partial log likelihood on all data for given <code>beta</code> parameter.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$logLik(beta)</pre><p></div></p>
+<a id="method-setParams"></a></p><h3>Method <code>setParams()</code></h3>
+<p>Set some parameters of the <code>NCP</code> object for homomorphic computations</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$setParams(pubkey_bits, pubkey_n, den_bits)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>beta</code></dt><dd><p>the parameter vector</p></dd>
+<dt><code>pubkey_bits</code></dt><dd><p>the number of bits in public key</p></dd>
+
+<dt><code>pubkey_n</code></dt><dd><p>the <code>n</code> for the public key</p></dd>
+
+<dt><code>den_bits</code></dt><dd><p>the number of bits in the denominator (power of 2) used in rational approximations</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
-<p>a named list with three components: <code>value</code> contains the value of the
-log likelihood, <code>gradient</code> contains the score vector, and <code>hessian</code> contains
-the estimated hessian matrix</p>
+<p><hr>
+<a id="method-getSites"></a></p><h3>Method <code>getSites()</code></h3>
+<p>Retrieve the value of the private <code>sites</code> field</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$getSites()</pre><p></div></p>
+
+<p><hr>
+<a id="method-setSites"></a></p><h3>Method <code>setSites()</code></h3>
+<p>Set the value of the private <code>sites</code> field</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$setSites(sites)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>sites</code></dt><dd><p>the list of sites</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-addSite"></a></p><h3>Method <code>addSite()</code></h3>
 <p>Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$addSite(name, url = NULL, worker = NULL)</pre><p></div></p>
+<p><div class="r"></p><pre>NCP$addSite(name, url = NULL, worker = NULL)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -196,33 +250,31 @@ the estimated hessian matrix</p>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-run"></a></p><h3>Method <code>run()</code></h3>
-<p>Run the distributed Cox model fit and return the estimates</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$run(control = coxph.control())</pre><p></div></p>
+<a id="method-cleanupInstance"></a></p><h3>Method <code>cleanupInstance()</code></h3>
+<p>Clean up by destroying instance objects created in workspace.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$cleanupInstance(token)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>control</code></dt><dd><p>parameters, same as <code><a href='https://rdrr.io/pkg/survival/man/coxph.control.html'>survival::coxph.control()</a></code></p></dd>
+<dt><code>token</code></dt><dd><p>the token for the instance</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-run"></a></p><h3>Method <code>run()</code></h3>
+<p>Run the distributed homomorphic computation</p><h3>Usage</h3>
+<p><div class="r"></p><pre>NCP$run(token)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>token</code></dt><dd><p>a unique token for the run, used to ensure that correct parts of cached results are returned appropriately</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p>a named list of <code>beta</code>, <code>var</code>, <code>gradient</code>, <code>iter</code>, and <code>returnCode</code>
-#' @description ' Return the summary of fit as a data frame</p>
-<p><hr>
-<a id="method-summary"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code></h3>
-
-<h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$summary()</pre><p></div></p>
-
-<h3>Returns</h3>
-<p>a summary data frame columns for <code>coef</code>,
-<code><a href='https://rdrr.io/r/base/Log.html'>exp(coef)</a></code>, ' standard error, z-score, and p-value for each
-parameter in the model following the same format as the
-<code>survival</code> package</p>
+<p>the result of the computation</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>CoxMaster$clone(deep = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre>NCP$clone(deep = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -236,7 +288,7 @@ parameter in the model following the same format as the
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#public-fields">Public fields</a></li>
       <li><a href="#methods">Methods</a></li>
     </ul>
 

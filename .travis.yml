@@ -1,7 +1,18 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
+
+r:
+  - release
+  - devel
+
+  addons:
+  apt:
+    update: true
+    packages:
+      - libsodium-dev
+      - libprotobuf-dev
+      - protobuf-compiler
+
 cache: packages
 
-before_install:
-  - sudo apt-get install -y libprotobuf-dev protobuf-compiler

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Setup a worker site — setupWorker • distcomp</title>
+<title>Given the definition identifier of an object, instantiate and store object in workspace — createWorkerInstance • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,11 @@
 
 
 
-<meta property="og:title" content="Setup a worker site — setupWorker" />
-<meta property="og:description" content="This function just calls runDistcompApp() with the
-parameter &quot;setupWorker&quot;" />
+<meta property="og:title" content="Given the definition identifier of an object, instantiate and store object in workspace — createWorkerInstance" />
+<meta property="og:description" content="The function createWorkerInstance uses a definition identified by
+defnId to create the appropriate object instance. The instantiated object is assigned
+the instanceId and saved under the dataFileName if the latter is specified.
+This instantiated object may change state between iterations when a computation executes" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,30 +118,71 @@ parameter &quot;setupWorker&quot;" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Setup a worker site</h1>
+    <h1>Given the definition identifier of an object, instantiate and store object in workspace</h1>
     
-    <div class="hidden name"><code>setupWorker.Rd</code></div>
+    <div class="hidden name"><code>createWorkerInstance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function just calls <code><a href='runDistcompApp.html'>runDistcompApp()</a></code> with the
-parameter "setupWorker"</p>
+    <p>The function <code>createWorkerInstance</code> uses a definition identified by
+defnId to create the appropriate object instance. The instantiated object is assigned
+the instanceId and saved under the dataFileName if the latter is specified.
+This instantiated object may change state between iterations when a computation executes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setupWorker</span>()</pre>
+    <pre class="usage"><span class='fu'>createWorkerInstance</span>(
+  <span class='no'>defnId</span>,
+  <span class='no'>instanceId</span>,
+  <span class='kw'>pubkey_bits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pubkey_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>den_bits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dataFileName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>defnId</th>
+      <td><p>the identifier of an already defined computation</p></td>
+    </tr>
+    <tr>
+      <th>instanceId</th>
+      <td><p>an indentifier to use for the created instance</p></td>
+    </tr>
+    <tr>
+      <th>pubkey_bits</th>
+      <td><p>number of bits for public key</p></td>
+    </tr>
+    <tr>
+      <th>pubkey_n</th>
+      <td><p>the <code>n</code> for public key</p></td>
+    </tr>
+    <tr>
+      <th>den_bits</th>
+      <td><p>the number of bits for the denominator</p></td>
+    </tr>
+    <tr>
+      <th>dataFileName</th>
+      <td><p>a file name to use for saving the data. Typically <code>NULL</code>, this
+is only needed when one is using a single opencpu server to behave like multiple
+sites in which case the data file name serves to distinguish the site-specific data files.
+When it is <code>NULL</code>, the data file name is taken from the configuration settings</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the results of running the web application</p>
+    <p>TRUE if everything goes well</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='runDistcompApp.html'>runDistcompApp()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='availableComputations.html'>availableComputations()</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>

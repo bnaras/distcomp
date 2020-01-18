@@ -74,7 +74,7 @@ are implemented, this list is augmented." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distcomp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -100,6 +100,9 @@ are implemented, this list is augmented." />
       <a href="../articles/prototyping.html">Prototyping Distributed Computations</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -160,10 +163,63 @@ a worker object for that computation given the definition and data</p></dd>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='getComputationInfo.html'>getComputationInfo</a></code></p></div>
+    <div class='dont-index'><p><code><a href='getComputationInfo.html'>getComputationInfo()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>availableComputations</span>()</div><div class='output co'>#&gt; $StratifiedCoxModel
+    <pre class="examples"><div class='input'><span class='fu'>availableComputations</span>()</div><div class='output co'>#&gt; $QueryCount
+#&gt; $QueryCount$desc
+#&gt; [1] "Distributed Query Count"
+#&gt; 
+#&gt; $QueryCount$definitionApp
+#&gt; [1] "defineNewQueryCountModel"
+#&gt; 
+#&gt; $QueryCount$setupWorkerApp
+#&gt; [1] "setupQueryCountWorker"
+#&gt; 
+#&gt; $QueryCount$setupMasterApp
+#&gt; [1] "setupQueryCountMaster"
+#&gt; 
+#&gt; $QueryCount$makeDefinition
+#&gt; function () 
+#&gt; {
+#&gt;     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
+#&gt;         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
+#&gt;         he = getComputationInfo("he"), filterCondition = getComputationInfo("filterCondition"), 
+#&gt;         stringsAsFactors = FALSE)
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa3672355e8&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
+#&gt; 
+#&gt; $QueryCount$makeMaster
+#&gt; function (defn, partyNumber, debug = FALSE) 
+#&gt; {
+#&gt;     if (!is.null(defn$he) &amp;&amp; defn$he) {
+#&gt;         HEQueryCountMaster$new(defn = defn, partyNumber = partyNumber, 
+#&gt;             debug = debug)
+#&gt;     }
+#&gt;     else {
+#&gt;         QueryCountMaster$new(defn = defn, debug = debug)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa367234d60&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
+#&gt; 
+#&gt; $QueryCount$makeWorker
+#&gt; function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) 
+#&gt; {
+#&gt;     if (defn$he) {
+#&gt;         HEQueryCountWorker$new(defn = defn, data = data, pubkey_bits = pubkey_bits, 
+#&gt;             pubkey_n = pubkey_n, den_bits = den_bits)
+#&gt;     }
+#&gt;     else {
+#&gt;         QueryCountWorker$new(defn = defn, data = data)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa3672341c8&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
+#&gt; 
+#&gt; 
+#&gt; $StratifiedCoxModel
 #&gt; $StratifiedCoxModel$desc
 #&gt; [1] "Stratified Cox Model"
 #&gt; 
@@ -181,22 +237,37 @@ a worker object for that computation given the definition and data</p></dd>
 #&gt; {
 #&gt;     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
 #&gt;         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
-#&gt;         formula = getComputationInfo("formula"), stringsAsFactors = FALSE)
+#&gt;         he = getComputationInfo("he"), formula = getComputationInfo("formula"), 
+#&gt;         stringsAsFactors = FALSE)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f9b1c20e080&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; &lt;bytecode: 0x7fa367237738&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; $StratifiedCoxModel$makeMaster
-#&gt; function (defn, debug = FALSE) 
-#&gt; CoxMaster$new(defn = defn, debug = debug)
-#&gt; &lt;bytecode: 0x7f9b1c20d948&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; function (defn, partyNumber, debug = FALSE) 
+#&gt; {
+#&gt;     if (!is.null(defn$he) &amp;&amp; defn$he) {
+#&gt;         stop("Not implemented")
+#&gt;     }
+#&gt;     else {
+#&gt;         CoxMaster$new(defn = defn, debug = debug)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa367236eb0&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; $StratifiedCoxModel$makeWorker
-#&gt; function (defn, data) 
-#&gt; CoxWorker$new(defn = defn, data = data)
-#&gt; &lt;bytecode: 0x7f9b1c20d5c8&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) 
+#&gt; {
+#&gt;     if (!is.null(defn$he) &amp;&amp; defn$he) {
+#&gt;         stop("Not implemented")
+#&gt;     }
+#&gt;     else {
+#&gt;         CoxWorker$new(defn = defn, data = data)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa367236580&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; 
 #&gt; $RankKSVD
@@ -217,23 +288,37 @@ a worker object for that computation given the definition and data</p></dd>
 #&gt; {
 #&gt;     data.frame(id = getComputationInfo("id"), compType = getComputationInfo("compType"), 
 #&gt;         projectName = getComputationInfo("projectName"), projectDesc = getComputationInfo("projectDesc"), 
-#&gt;         rank = getComputationInfo("rank"), ncol = getComputationInfo("ncol"), 
-#&gt;         stringsAsFactors = FALSE)
+#&gt;         he = getComputationInfo("he"), rank = getComputationInfo("rank"), 
+#&gt;         ncol = getComputationInfo("ncol"), stringsAsFactors = FALSE)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f9b1c2110b0&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; &lt;bytecode: 0x7fa367239c78&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; $RankKSVD$makeMaster
-#&gt; function (defn, debug = FALSE) 
-#&gt; SVDMaster$new(defn = defn, debug = debug)
-#&gt; &lt;bytecode: 0x7f9b1c2107f0&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; function (defn, partyNumber, debug = FALSE) 
+#&gt; {
+#&gt;     if (!is.null(defn$he) &amp;&amp; defn$he) {
+#&gt;         stop("Not implemented")
+#&gt;     }
+#&gt;     else {
+#&gt;         SVDMaster$new(defn = defn, debug = debug)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa3672392d8&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; $RankKSVD$makeWorker
-#&gt; function (defn, data) 
-#&gt; SVDWorker$new(defn = defn, data = data)
-#&gt; &lt;bytecode: 0x7f9b1c2104e0&gt;
-#&gt; &lt;environment: 0x7f9b1c2101d0&gt;
+#&gt; function (defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL) 
+#&gt; {
+#&gt;     if (!is.null(defn$he) &amp;&amp; defn$he) {
+#&gt;         stop("Not implemented")
+#&gt;     }
+#&gt;     else {
+#&gt;         SVDWorker$new(defn = defn, data = data)
+#&gt;     }
+#&gt; }
+#&gt; &lt;bytecode: 0x7fa3672389a8&gt;
+#&gt; &lt;environment: 0x7fa367238120&gt;
 #&gt; 
 #&gt; </div></pre>
   </div>

@@ -43,7 +43,7 @@ a new computation instance. This is typically done for every site that wants to 
 in a computation with its own local data. The function examines the computation definition
 and uses the identifier therein to uniquely refer to the computation instance at the site.
 This function is invoked (maybe remotely) on the opencpu server by
-uploadNewComputation when a worker site is being set up" />
+uploadNewComputation() when a worker site is being set up" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -76,7 +76,7 @@ uploadNewComputation when a worker site is being set up" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distcomp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -102,6 +102,9 @@ uploadNewComputation when a worker site is being set up" />
       <a href="../articles/prototyping.html">Prototyping Distributed Computations</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -131,7 +134,7 @@ a new computation instance. This is typically done for every site that wants to 
 in a computation with its own local data. The function examines the computation definition
 and uses the identifier therein to uniquely refer to the computation instance at the site.
 This function is invoked (maybe remotely) on the opencpu server by
-<code><a href='uploadNewComputation.html'>uploadNewComputation</a></code> when a worker site is being set up</p>
+<code><a href='uploadNewComputation.html'>uploadNewComputation()</a></code> when a worker site is being set up</p>
     </div>
 
     <pre class="usage"><span class='fu'>saveNewComputation</span>(<span class='no'>defn</span>, <span class='no'>data</span>, <span class='kw'>dataFileName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -141,7 +144,7 @@ This function is invoked (maybe remotely) on the opencpu server by
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>defn</th>
-      <td><p>the identifier of an already defined computation</p></td>
+      <td><p>an already defined computation</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -161,7 +164,7 @@ When it is <code>NULL</code>, the data file name is taken from the configuration
     <p>TRUE if everything goes well</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='uploadNewComputation.html'>uploadNewComputation</a></code></p></div>
+    <div class='dont-index'><p><code><a href='uploadNewComputation.html'>uploadNewComputation()</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

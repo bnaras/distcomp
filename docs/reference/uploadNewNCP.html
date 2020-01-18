@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Setup a worker site — setupWorker • distcomp</title>
+<title>Upload a new Non-Cooperating Party (NCP) information and sites to
+an opencpu server — uploadNewNCP • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +36,14 @@
 
 
 
-<meta property="og:title" content="Setup a worker site — setupWorker" />
-<meta property="og:description" content="This function just calls runDistcompApp() with the
-parameter &quot;setupWorker&quot;" />
+<meta property="og:title" content="Upload a new Non-Cooperating Party (NCP) information and sites to
+an opencpu server — uploadNewNCP" />
+<meta property="og:description" content="The function uploadNewNCP is really a remote version
+of saveNewNCP(), invoking that function on an opencpu server.
+This is typically done for the two NCPs participating in a
+computation with the list of sites. Note that sites are always
+a list of at least a unique name element (distinguishing the
+site from others) and a url element." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,30 +122,60 @@ parameter &quot;setupWorker&quot;" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Setup a worker site</h1>
+    <h1>Upload a new Non-Cooperating Party (NCP) information and sites to
+an opencpu server</h1>
     
-    <div class="hidden name"><code>setupWorker.Rd</code></div>
+    <div class="hidden name"><code>uploadNewNCP.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function just calls <code><a href='runDistcompApp.html'>runDistcompApp()</a></code> with the
-parameter "setupWorker"</p>
+    <p>The function <code>uploadNewNCP</code> is really a remote version
+of <code><a href='saveNewNCP.html'>saveNewNCP()</a></code>, invoking that function on an opencpu server.
+This is typically done for the two NCPs participating in a
+computation with the list of sites. Note that sites are always
+a list of at least a unique name element (distinguishing the
+site from others) and a url element.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setupWorker</span>()</pre>
+    <pre class="usage"><span class='fu'>uploadNewNCP</span>(<span class='no'>defn</span>, <span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worker</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>sites</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>defn</th>
+      <td><p>a definition for the NCP</p></td>
+    </tr>
+    <tr>
+      <th>url</th>
+      <td><p>the url for the NCP. Only one of url and worker can be
+non-null</p></td>
+    </tr>
+    <tr>
+      <th>worker</th>
+      <td><p>the worker for the NCP if local. Only one of url and
+worker can be non-null</p></td>
+    </tr>
+    <tr>
+      <th>sites</th>
+      <td><p>a list of lists, each containing two items, a unique
+<code>name</code> and a (not necessarily unique) <code>url</code>. This is the data
+for the NCP!</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the results of running the web application</p>
+    <p>TRUE if everything goes well</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='runDistcompApp.html'>runDistcompApp()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='saveNewNCP.html'>saveNewNCP()</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>

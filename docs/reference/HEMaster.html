@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Setup a worker site — setupWorker • distcomp</title>
+<title>Create a HEMaster process for use in a distributed homomorphic
+encrypted (HE) computation — HEMaster • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +36,13 @@
 
 
 
-<meta property="og:title" content="Setup a worker site — setupWorker" />
-<meta property="og:description" content="This function just calls runDistcompApp() with the
-parameter &quot;setupWorker&quot;" />
+<meta property="og:title" content="Create a HEMaster process for use in a distributed homomorphic
+encrypted (HE) computation — HEMaster" />
+<meta property="og:description" content="HEMaster objects run a distributed computation based
+upon a definition file that encapsulates all information
+necessary to perform a computation. A master makes use of two
+non-cooperating parties which communicate with sites that
+perform the actual computations using local data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,32 +121,118 @@ parameter &quot;setupWorker&quot;" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Setup a worker site</h1>
+    <h1>Create a HEMaster process for use in a distributed homomorphic
+encrypted (HE) computation</h1>
     
-    <div class="hidden name"><code>setupWorker.Rd</code></div>
+    <div class="hidden name"><code>HEMaster.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function just calls <code><a href='runDistcompApp.html'>runDistcompApp()</a></code> with the
-parameter "setupWorker"</p>
+    <p><code>HEMaster</code> objects run a distributed computation based
+upon a definition file that encapsulates all information
+necessary to perform a computation. A master makes use of two
+non-cooperating parties which communicate with sites that
+perform the actual computations using local data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setupWorker</span>()</pre>
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>the results of running the web application</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='runDistcompApp.html'>runDistcompApp()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='NCP.html'>NCP()</a></code></p></div>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
+<dt><code>den</code></dt><dd><p>denominator for rational arithmetic</p></dd>
+
+<dt><code>den_bits</code></dt><dd><p>number of bits for denominator for rational arithmetic</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>HEMaster$new()</code></a></p></li>
+<li><p><a href='#method-getNC_party'><code>HEMaster$getNC_party()</code></a></p></li>
+<li><p><a href='#method-getPubkey'><code>HEMaster$getPubkey()</code></a></p></li>
+<li><p><a href='#method-addNCP'><code>HEMaster$addNCP()</code></a></p></li>
+<li><p><a href='#method-run'><code>HEMaster$run()</code></a></p></li>
+<li><p><a href='#method-clone'><code>HEMaster$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<p>Create a <code>HEMaster</code> object to run homomorphic encrypted computation</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$new(defn)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>defn</code></dt><dd><p>the homomorphic computation definition</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>a <code>HEMaster</code> object</p>
+<p><hr>
+<a id="method-getNC_party"></a></p><h3>Method <code>getNC_party()</code></h3>
+<p>Return a list of noncooperating parties (NCPs)</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$getNC_party()</pre><p></div></p>
+
+<h3>Returns</h3>
+<p>a named list of length 2 of noncooperating party information</p>
+<p><hr>
+<a id="method-getPubkey"></a></p><h3>Method <code>getPubkey()</code></h3>
+<p>Return the public key from the public private key pair</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$getPubkey()</pre><p></div></p>
+
+<h3>Returns</h3>
+<p>an R6 <code>Pubkey</code> object</p>
+<p><hr>
+<a id="method-addNCP"></a></p><h3>Method <code>addNCP()</code></h3>
+<p>Add a noncooperating party to this master either using a url or an object in session for prototyping</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$addNCP(ncp_defn, url = NULL, ncpWorker = NULL)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>ncp_defn</code></dt><dd><p>the definition of the NCP</p></dd>
+
+<dt><code>url</code></dt><dd><p>the url for the NCP; only one of url and ncpWorker should be non-null</p></dd>
+
+<dt><code>ncpWorker</code></dt><dd><p>an instantiated worker object; only one of url and ncpWorker should be non-null</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-run"></a></p><h3>Method <code>run()</code></h3>
+<p>Run a distributed homomorphic encrypted computation and return the result</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$run(debug = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>debug</code></dt><dd><p>a flag for debugging, default <code>FALSE</code></p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>the result of the distributed homomorphic computation</p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>HEMaster$clone(deep = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#public-fields">Public fields</a></li>
+      <li><a href="#methods">Methods</a></li>
     </ul>
 
   </div>

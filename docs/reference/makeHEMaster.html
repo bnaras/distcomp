@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Setup a worker site — setupWorker • distcomp</title>
+<title>Instantiate a master process for HE operations — makeHEMaster • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="Setup a worker site — setupWorker" />
-<meta property="og:description" content="This function just calls runDistcompApp() with the
-parameter &quot;setupWorker&quot;" />
+<meta property="og:title" content="Instantiate a master process for HE operations — makeHEMaster" />
+<meta property="og:description" content="Instantiate a master process for HE operations" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,32 +115,36 @@ parameter &quot;setupWorker&quot;" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Setup a worker site</h1>
+    <h1>Instantiate a master process for HE operations</h1>
     
-    <div class="hidden name"><code>setupWorker.Rd</code></div>
+    <div class="hidden name"><code>makeHEMaster.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function just calls <code><a href='runDistcompApp.html'>runDistcompApp()</a></code> with the
-parameter "setupWorker"</p>
+    <p>Instantiate a master process for HE operations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setupWorker</span>()</pre>
+    <pre class="usage"><span class='fu'>makeHEMaster</span>(<span class='no'>defn</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>defn</th>
+      <td><p>the computation definition</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the results of running the web application</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='runDistcompApp.html'>runDistcompApp()</a></code></p></div>
+    <p>an master object for HE operations</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>

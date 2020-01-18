@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distcomp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -58,6 +58,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -75,7 +78,7 @@
       <h1>Prototyping Distributed Computations</h1>
                         <h4 class="author">Balasubramanian Narasimhan</h4>
             
-            <h4 class="date">2019-09-23</h4>
+            <h4 class="date">2020-01-17</h4>
       
       
       <div class="hidden name"><code>prototyping.Rmd</code></div>
@@ -97,10 +100,10 @@
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">available &lt;-<span class="st"> </span><span class="kw"><a href="../reference/availableComputations.html">availableComputations</a></span>()</a>
 <a class="sourceLine" id="cb1-2" title="2">( computationNames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(available) )</a></code></pre></div>
-<pre><code>## [1] "StratifiedCoxModel" "RankKSVD"</code></pre>
+<pre><code>## [1] "QueryCount"         "StratifiedCoxModel" "RankKSVD"</code></pre>
 <p>We will perform an SVD on a 1500 by 20 matrix where the matrix is distributed across three sites each having a 500 by 20 matrix. We will extract the first 10 components using this distributed algorithm.</p>
 <p>We first define the computation.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">svdDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">2</span>],</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">svdDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> <span class="st">"RankKSVD"</span>,</a>
 <a class="sourceLine" id="cb3-2" title="2">                     <span class="dt">rank =</span> 20L,</a>
 <a class="sourceLine" id="cb3-3" title="3">                     <span class="dt">ncol =</span> 20L,</a>
 <a class="sourceLine" id="cb3-4" title="4">                     <span class="dt">id =</span> <span class="st">"SVD"</span>,</a>
@@ -124,7 +127,7 @@
 <p>Finally, we are ready to run the decomposition, specifying a maximum number of iterations, so that things don’t go haywire. This takes less than 5 seconds on my laptop.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(result &lt;-<span class="st"> </span>master<span class="op">$</span><span class="kw">run</span>(<span class="dt">max.iter =</span> <span class="dv">10000</span>))</a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   5.849   3.447   8.037</code></pre>
+##   6.124   3.543   8.325</code></pre>
 <p>The result is a named list of two things, the <span class="math inline">\(d\)</span> diagonal values and the <span class="math inline">\(v\)</span> matrix.</p>
 <p>We can compare the results obtained here with the actual.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">full_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(rbind, siteData)</a>
@@ -228,7 +231,7 @@
 <h2 class="hasAnchor">
 <a href="#stratified-cox-model" class="anchor"></a>Stratified Cox Model</h2>
 <p>The approach for the stratified Cox model is similar. We start with a definition.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">coxDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> computationNames[<span class="dv">1</span>],</a>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">coxDef &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">compType =</span> <span class="st">"StratifiedCoxModel"</span>,</a>
 <a class="sourceLine" id="cb13-2" title="2">                     <span class="dt">formula =</span> <span class="st">"Surv(time, censor) ~ age + becktota + ndrugfp1 + ndrugfp2 + ivhx3 + race + treat"</span>,</a>
 <a class="sourceLine" id="cb13-3" title="3">                     <span class="dt">projectName =</span> <span class="st">"STCoxTest"</span>,</a>
 <a class="sourceLine" id="cb13-4" title="4">                     <span class="dt">projectDesc =</span> <span class="st">"STCox Project Desc"</span>,</a>
@@ -276,9 +279,9 @@
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info</h2>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</a></code></pre></div>
-<pre><code>## R version 3.6.1 (2019-07-05)
-## Platform: x86_64-apple-darwin18.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.6
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin19.2.0 (64-bit)
+## Running under: macOS Catalina 10.15.2
 ## 
 ## Matrix products: default
 ## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.7/lib/libopenblasp-r0.3.7.dylib
@@ -290,19 +293,21 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] distcomp_1.1      survival_2.44-1.1
+## [1] distcomp_1.3   survival_3.1-8
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.2       knitr_1.25       magrittr_1.5     splines_3.6.1   
-##  [5] MASS_7.3-51.4    xtable_1.8-4     lattice_0.20-38  R6_2.4.0        
-##  [9] rlang_0.4.0      highr_0.8        httr_1.4.1       stringr_1.4.0   
-## [13] tools_3.6.1      grid_3.6.1       xfun_0.9         htmltools_0.3.6 
-## [17] yaml_2.2.0       assertthat_0.2.1 digest_0.6.20    rprojroot_1.3-2 
-## [21] pkgdown_1.4.1    crayon_1.3.4     Matrix_1.2-17    shiny_1.3.2     
-## [25] later_0.8.0      promises_1.0.1   fs_1.3.1         mime_0.7        
-## [29] memoise_1.1.0    evaluate_0.14    rmarkdown_1.15   stringi_1.4.3   
-## [33] compiler_3.6.1   desc_1.2.0       backports_1.1.4  jsonlite_1.6    
-## [37] httpuv_1.5.2</code></pre>
+##  [1] gmp_0.5-13.5      Rcpp_1.0.3        highr_0.8         compiler_3.6.2   
+##  [5] pillar_1.4.3      later_1.0.0       tools_3.6.2       digest_0.6.23    
+##  [9] jsonlite_1.6      evaluate_0.14     memoise_1.1.0     tibble_2.1.3     
+## [13] lattice_0.20-38   pkgconfig_2.0.3   rlang_0.4.2       Matrix_1.2-18    
+## [17] shiny_1.4.0       yaml_2.2.0        pkgdown_1.4.1     xfun_0.11        
+## [21] fastmap_1.0.1     httr_1.4.1        stringr_1.4.0     dplyr_0.8.3      
+## [25] knitr_1.26        desc_1.2.0        fs_1.3.1          rprojroot_1.3-2  
+## [29] grid_3.6.2        tidyselect_0.2.5  glue_1.3.1        R6_2.4.1         
+## [33] rmarkdown_2.0     homomorpheR_0.2-4 purrr_0.3.3       magrittr_1.5     
+## [37] backports_1.1.5   promises_1.1.0    htmltools_0.4.0   MASS_7.3-51.5    
+## [41] splines_3.6.2     assertthat_0.2.1  mime_0.8          xtable_1.8-4     
+## [45] httpuv_1.5.2      stringi_1.4.3     sodium_1.1        crayon_1.3.4</code></pre>
 </div>
   </div>
 

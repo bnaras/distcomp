@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Setup a worker site — setupWorker • distcomp</title>
+<title>Given the id of a serialized object, invoke a method on the object
+with arguments using homomorphic encryption — executeHEMethod • distcomp</title>
 
 
 <!-- jquery -->
@@ -35,9 +36,12 @@
 
 
 
-<meta property="og:title" content="Setup a worker site — setupWorker" />
-<meta property="og:description" content="This function just calls runDistcompApp() with the
-parameter &quot;setupWorker&quot;" />
+<meta property="og:title" content="Given the id of a serialized object, invoke a method on the object
+with arguments using homomorphic encryption — executeHEMethod" />
+<meta property="og:description" content="The function executeHEMethod is a homomorphic
+encryption wrapper around executeMethod. It ensures any
+returned result is encrypted using the homomorphic encryption
+function." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,32 +120,49 @@ parameter &quot;setupWorker&quot;" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Setup a worker site</h1>
+    <h1>Given the id of a serialized object, invoke a method on the object
+with arguments using homomorphic encryption</h1>
     
-    <div class="hidden name"><code>setupWorker.Rd</code></div>
+    <div class="hidden name"><code>executeHEMethod.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function just calls <code><a href='runDistcompApp.html'>runDistcompApp()</a></code> with the
-parameter "setupWorker"</p>
+    <p>The function <code>executeHEMethod</code> is a homomorphic
+encryption wrapper around <code>executeMethod</code>. It ensures any
+returned result is encrypted using the homomorphic encryption
+function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setupWorker</span>()</pre>
+    <pre class="usage"><span class='fu'>executeHEMethod</span>(<span class='no'>objectId</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>objectId</th>
+      <td><p>the (instance) identifier of the object on which to
+invoke a method</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>the name of the method to invoke</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>further arguments as appropriate for the method</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the results of running the web application</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='runDistcompApp.html'>runDistcompApp()</a></code></p></div>
+    <p>a list containing an integer and a fractional result converted to characters</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>
