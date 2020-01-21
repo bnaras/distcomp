@@ -116,6 +116,8 @@ SVDWorker <- R6Class("SVDWorker",
 #'
 #' @seealso [SVDWorker()] which goes hand-in-hand with this object
 #' @importFrom R6 R6Class
+#' @importFrom httr POST add_headers
+#' @importFrom jsonlite toJSON
 #' @export
 SVDMaster <- R6Class("SVDMaster",
                      private = list(
@@ -132,11 +134,11 @@ SVDMaster <- R6Class("SVDMaster",
                              payload <- list(objectId = site$instanceId,
                                              method = method,
                                              arg = arg)
-                             q <- POST(.makeOpencpuURL(urlPrefix=site$url, fn="executeMethod"),
-                                       body = jsonlite::toJSON(payload),
-                                       add_headers("Content-Type" = "application/json"),
-                                       config = getConfig()$sslConfig
-                                       )
+                             q <- httr::POST(.makeOpencpuURL(urlPrefix=site$url, fn="executeMethod"),
+                                             body = jsonlite::toJSON(payload),
+                                             httr::add_headers("Content-Type" = "application/json"),
+                                             config = getConfig()$sslConfig
+                                             )
                              ## Should really examine result here.
                              .deSerialize(q)
                          },
@@ -303,11 +305,11 @@ SVDMaster <- R6Class("SVDMaster",
                                                                       list(defnId = defn$id, instanceId = x$instanceId,
                                                                            dataFileName = x$dataFileName)
                                                                   }
-                                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
-                                                                 body = jsonlite::toJSON(payload),
-                                                                 add_headers("Content-Type" = "application/json"),
-                                                                 config = getConfig()$sslConfig
-                                                                 )
+                                                       q <- httr::POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createWorkerInstance"),
+                                                                       body = jsonlite::toJSON(payload),
+                                                                       httr::add_headers("Content-Type" = "application/json"),
+                                                                       config = getConfig()$sslConfig
+                                                                       )
                                                        .deSerialize(q)
                                                    })
 
@@ -324,11 +326,11 @@ SVDMaster <- R6Class("SVDMaster",
                                  pVals <- sapply(sites,
                                                  function(x) {
                                                      payload <- list(objectId = x$instanceId, method = "getP")
-                                                     q <- POST(.makeOpencpuURL(urlPrefix=x$url, fn="executeMethod"),
-                                                               body = jsonlite::toJSON(payload),
-                                                               add_headers("Content-Type" = "application/json"),
-                                                               config=getConfig()$sslConfig
-                                                               )
+                                                     q <- httr::POST(.makeOpencpuURL(urlPrefix=x$url, fn="executeMethod"),
+                                                                     body = jsonlite::toJSON(payload),
+                                                                     httr::add_headers("Content-Type" = "application/json"),
+                                                                     config=getConfig()$sslConfig
+                                                                     )
                                                      .deSerialize(q)
                                                  })
                              }
@@ -366,11 +368,11 @@ SVDMaster <- R6Class("SVDMaster",
                                  sitesOK <- sapply(sites,
                                                    function(x) {
                                                        payload <- list(instanceId = x$instanceId)
-                                                       q <- POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
-                                                                 body = jsonlite::toJSON(payload),
-                                                                 add_headers("Content-Type" = "application/json"),
-                                                                 config=getConfig()$sslConfig
-                                                                 )
+                                                       q <- httr::POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="destroyInstanceObject"),
+                                                                       body = jsonlite::toJSON(payload),
+                                                                       httr::add_headers("Content-Type" = "application/json"),
+                                                                       config=getConfig()$sslConfig
+                                                                       )
                                                        .deSerialize(q)
                                                    })
                                  if (!all(sitesOK)) {
