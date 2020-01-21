@@ -36,7 +36,7 @@ SVDWorker <- R6Class("SVDWorker",
 
                          #' @description
                          #' Reset the computation state by initializing work matrix and set up starting values for iterating
-                         reset = function(){
+                         reset = function() {
                              private$workX <- private$x
                              private$u <- rep(1, nrow(private$x))
                          },
@@ -232,14 +232,24 @@ SVDMaster <- R6Class("SVDMaster",
                          #' Reset the computation state by initializing work matrix and set up starting values for iterating
                          reset = function() {
                              private$result <- list()
-                             arg = "THISISUNUSED"
                              sites <- private$sites
                              n <- length(sites)
                              if (private$dry_run) {
                                  lapply(sites, function(x) x$worker$reset())
                              } else {
-                                 Map(private$mapFn, sites, rep(list(arg), n), rep(list("reset"), n))
+                                 mapFn = function(site, method) {
+                                     payload <- list(objectId = site$instanceId,
+                                                     method = method)
+                                     q <- httr::POST(.makeOpencpuURL(urlPrefix=site$url, fn="executeMethod"),
+                                                     body = jsonlite::toJSON(payload),
+                                                     httr::add_headers("Content-Type" = "application/json"),
+                                                     config = getConfig()$sslConfig
+                                                     )
+                                 }
+                                 Map(mapFn, sites, rep(list("reset"), n))
                              }
+
+
                          },
 
                          #' @description
