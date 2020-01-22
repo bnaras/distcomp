@@ -424,9 +424,9 @@ availableComputations <- function() {
 createNCPInstance <- function (name, ncpId, instanceId, pubkey_bits, pubkey_n, den_bits, dataFileName = NULL) {
     config <- getConfig()
     defnPath <- paste(config$defnPath, ncpId, sep=.Platform$file.sep)
-    ncpDefnFileName <- paste(name, "defn.rds", sep = "-")
-    ncpDefn <- readRDS(paste(defnPath, ncpDefnFileName, sep=.Platform$file.sep))
-    ncp <- makeNCP(ncp_defn = ncpDefn, comp_defn = ncpDefn, pubkey_bits = pubkey_bits,
+    defnFileName <- paste(name, "defn.rds", sep = "-")
+    defn <- readRDS(paste(defnPath, ncpDefnFileName, sep=.Platform$file.sep))
+    ncp <- makeNCP(ncp_defn = defn$defn, comp_defn = defn$comp_defn, pubkey_bits = pubkey_bits,
                    pubkey_n = gmp::as.bigz(pubkey_n), den_bits = den_bits)
 
     ncpDataFileName  <- if (is.null(dataFileName)) {
@@ -769,6 +769,7 @@ uploadNewComputation <- function(site, defn, data) {
 #'     [uploadNewComputation()] when a worker site is being set up
 #' @seealso [uploadNewNCP()]
 #' @param defn a definition of the ncp
+#' @param comp_defn the computation definition
 #' @param data the list of sites with name and url to use
 #' @param dataFileName a file name to use for saving the
 #'     data. Typically `NULL`, this is only needed when one is using a
@@ -778,7 +779,7 @@ uploadNewComputation <- function(site, defn, data) {
 #'     from the definition settings
 #' @return TRUE if everything goes well
 #' @export
-saveNewNCP <- function(defn, data, dataFileName = NULL) {
+saveNewNCP <- function(defn, comp_defn, data, dataFileName = NULL) {
   config <- getConfig()
   defnId <- defn$id
   browser()
@@ -788,7 +789,8 @@ saveNewNCP <- function(defn, data, dataFileName = NULL) {
   if (!file.exists(thisDefnPath)) {
     dir.create(thisDefnPath)
   }
-  saveRDS(object = defn, file = paste(thisDefnPath, ncpDefnFileName, sep = .Platform$file.sep))
+  saveRDS(object = list(defn = defn, comp_defn = comp_defn),
+          file = paste(thisDefnPath, ncpDefnFileName, sep = .Platform$file.sep))
   ncpDataFileName  <- if (is.null(dataFileName)) {
                           paste(defn$name, config$dataFileName, sep = "-")
                       } else {
@@ -808,6 +810,7 @@ saveNewNCP <- function(defn, data, dataFileName = NULL) {
 #'     site from others) and a url element.
 #' @seealso [saveNewNCP()]
 #' @param defn a definition for the NCP
+#' @param comp_defn the computation definition
 #' @param url the url for the NCP. Only one of url and worker can be
 #'     non-null
 #' @param worker the worker for the NCP if local. Only one of url and
@@ -824,13 +827,13 @@ saveNewNCP <- function(defn, data, dataFileName = NULL) {
 #'
 #' @return TRUE if everything goes well
 #' @export
-uploadNewNCP <- function(defn, url = NULL, worker = NULL, sites) {
+uploadNewNCP <- function(defn, comp_defn, url = NULL, worker = NULL, sites) {
     if (is.null(worker)) {
         localhost <- (grepl("^http://localhost", url) || grepl("^http://127.0.0.1", url))
         payload <- if (localhost) {
-                       list(defn = defn, data = sites, dataFileName = paste0(defn$name, "-data.rds"))
+                       list(defn = defn, comp_defn = comp_defn, data = sites, dataFileName = paste0(defn$name, "-data.rds"))
                    } else {
-                       list(defn = defn, data = sites)
+                       list(defn = defn, comp_defn = comp_defn, data = sites)
                    }
         q <- POST(.makeOpencpuURL(urlPrefix = url, fn = "saveNewNCP"),
                   body = jsonlite::toJSON(payload),
@@ -841,6 +844,7 @@ uploadNewNCP <- function(defn, url = NULL, worker = NULL, sites) {
     } else {
 
     }
+    invisible(TRUE)
 }
 
 #' Generate an identifier for an object
