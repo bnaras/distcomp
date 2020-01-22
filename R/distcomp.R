@@ -426,8 +426,7 @@ createNCPInstance <- function (name, ncpId, instanceId, pubkey_bits, pubkey_n, d
     defnPath <- paste(config$defnPath, ncpId, sep=.Platform$file.sep)
     ncpDefnFileName <- paste(name, "defn.rds", sep = "-")
     ncpDefn <- readRDS(paste(defnPath, ncpDefnFileName, sep=.Platform$file.sep))
-    compDef <- readRDS(paste(defnPath, config$defnFileName, sep=.Platform$file.sep))
-    ncp <- makeNCP(ncp_defn = ncpDefn, comp_defn = compDef, pubkey_bits = pubkey_bits,
+    ncp <- makeNCP(ncp_defn = ncpDefn, comp_defn = ncpDefn, pubkey_bits = pubkey_bits,
                    pubkey_n = gmp::as.bigz(pubkey_n), den_bits = den_bits)
 
     ncpDataFileName  <- if (is.null(dataFileName)) {
