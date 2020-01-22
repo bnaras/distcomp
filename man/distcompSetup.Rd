@@ -4,11 +4,17 @@
 \alias{distcompSetup}
 \title{Setup a workspace and configuration for a distributed computation}
 \usage{
-distcompSetup(workspacePath = "", defnPath = paste(workspacePath,
-  "defn", sep = .Platform$file.sep), instancePath = paste(workspacePath,
-  "instances", sep = .Platform$file.sep), defnFileName = "defn.rds",
-  dataFileName = "data.rds", instanceFileName = "instance.rds",
-  ssl_verifyhost = 1L, ssl_verifypeer = 1L)
+distcompSetup(
+  workspacePath = "",
+  defnPath = paste(workspacePath, "defn", sep = .Platform$file.sep),
+  instancePath = paste(workspacePath, "instances", sep = .Platform$file.sep),
+  defnFileName = "defn.rds",
+  dataFileName = "data.rds",
+  instanceFileName = "instance.rds",
+  resultsCacheFileName = "results_cache.rds",
+  ssl_verifyhost = 1L,
+  ssl_verifypeer = 1L
+)
 }
 \arguments{
 \item{workspacePath}{a folder specifying the workspace path. This
@@ -27,6 +33,8 @@ organized by computation identifiers}
 \item{dataFileName}{the name for the data files}
 
 \item{instanceFileName}{the name for the instance files}
+
+\item{resultsCacheFileName}{the name for the instance results cache files for HE computations}
 
 \item{ssl_verifyhost}{integer value, usually \code{1L}, but for
 testing with snake-oil certs, one might set this to \code{0L}}

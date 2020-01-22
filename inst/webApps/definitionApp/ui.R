@@ -29,6 +29,11 @@ shinyUI(fluidPage(
 
                         textOutput('desc'),
 
+                        selectInput("he",
+                                    label = h5("Homomorphic Computation"),
+                                    choices = list("No", "Yes"),
+                                    selected = "No"),
+                        br(),
                         selectInput("compType",
                                     label = h5("Type of computation"),
                                     choices = lapply(availableComputations(),

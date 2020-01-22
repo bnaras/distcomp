@@ -8,7 +8,7 @@ possibly a data file name to use}
 saveNewComputation(defn, data, dataFileName = NULL)
 }
 \arguments{
-\item{defn}{the identifier of an already defined computation}
+\item{defn}{an already defined computation}
 
 \item{data}{the (local) data to use}
 

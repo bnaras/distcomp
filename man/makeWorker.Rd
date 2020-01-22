@@ -4,21 +4,31 @@
 \alias{makeWorker}
 \title{Make a worker object given a definition and data}
 \usage{
-makeWorker(defn, data)
+makeWorker(defn, data, pubkey_bits = NULL, pubkey_n = NULL, den_bits = NULL)
 }
 \arguments{
 \item{defn}{the computation definition}
 
 \item{data}{the data for the computation}
+
+\item{pubkey_bits}{the number of bits for the public key (used only
+if \code{he} is \code{TRUE} in computation definition)}
+
+\item{pubkey_n}{the \code{n} for public key (used only if \code{he} is \code{TRUE}
+in computation definition)}
+
+\item{den_bits}{the number of bits for the denominator (used only
+if \code{he} is \code{TRUE} in computation definition)}
 }
 \value{
-a worker object of the appropriate class based on the definition
+a worker object of the appropriate class based on the
+definition
 }
 \description{
 The function \code{makeWorker} returns an object of the
-appropriate type based on a computation definition and sets the data for
-the object. The types of objects that can be created depend upon the
-available computations
+appropriate type based on a computation definition and sets the
+data for the object. The types of objects that can be created
+depend upon the available computations
 }
 \seealso{
 \code{\link[=availableComputations]{availableComputations()}}

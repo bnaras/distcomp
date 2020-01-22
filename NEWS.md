@@ -1,3 +1,10 @@
+# distcomp 1.3
+
+- Complete implementation of secure multi-party computation for query
+  count using homomorphic encryption
+- Better documentation using newer features of `roxygen` for R6
+  classes 
+  
 # distcomp 1.2
 
 - Added a Query count example

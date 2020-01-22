@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Setup a workspace and configuration for a distributed computation — distcompSetup" />
-<meta property="og:description" content="The function discompsetup sets up a distributed computation
+<meta property="og:description" content="The function distcompSetup sets up a distributed computation
 and configures some global parameters such as definition file names,
 data file names, instance object file names, and ssl configuration parameters. The
 function creates some of necessary subdirectories if not already present and throws
@@ -73,7 +73,7 @@ an error if the workspace areas are not writeable" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distcomp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -100,6 +100,9 @@ an error if the workspace areas are not writeable" />
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -122,18 +125,24 @@ an error if the workspace areas are not writeable" />
     </div>
 
     <div class="ref-description">
-    <p>The function <code>discompsetup</code> sets up a distributed computation
+    <p>The function <code>distcompSetup</code> sets up a distributed computation
 and configures some global parameters such as definition file names,
 data file names, instance object file names, and ssl configuration parameters. The
 function creates some of necessary subdirectories if not already present and throws
 an error if the workspace areas are not writeable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>distcompSetup</span>(<span class='kw'>workspacePath</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>defnPath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>workspacePath</span>,
-  <span class='st'>"defn"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>file.sep</span>), <span class='kw'>instancePath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>workspacePath</span>,
-  <span class='st'>"instances"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>file.sep</span>), <span class='kw'>defnFileName</span> <span class='kw'>=</span> <span class='st'>"defn.rds"</span>,
-  <span class='kw'>dataFileName</span> <span class='kw'>=</span> <span class='st'>"data.rds"</span>, <span class='kw'>instanceFileName</span> <span class='kw'>=</span> <span class='st'>"instance.rds"</span>,
-  <span class='kw'>ssl_verifyhost</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ssl_verifypeer</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+    <pre class="usage"><span class='fu'>distcompSetup</span>(
+  <span class='kw'>workspacePath</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>defnPath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>workspacePath</span>, <span class='st'>"defn"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>file.sep</span>),
+  <span class='kw'>instancePath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>workspacePath</span>, <span class='st'>"instances"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>file.sep</span>),
+  <span class='kw'>defnFileName</span> <span class='kw'>=</span> <span class='st'>"defn.rds"</span>,
+  <span class='kw'>dataFileName</span> <span class='kw'>=</span> <span class='st'>"data.rds"</span>,
+  <span class='kw'>instanceFileName</span> <span class='kw'>=</span> <span class='st'>"instance.rds"</span>,
+  <span class='kw'>resultsCacheFileName</span> <span class='kw'>=</span> <span class='st'>"results_cache.rds"</span>,
+  <span class='kw'>ssl_verifyhost</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>ssl_verifypeer</span> <span class='kw'>=</span> <span class='fl'>1L</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +177,10 @@ organized by computation identifiers</p></td>
       <td><p>the name for the instance files</p></td>
     </tr>
     <tr>
+      <th>resultsCacheFileName</th>
+      <td><p>the name for the instance results cache files for HE computations</p></td>
+    </tr>
+    <tr>
       <th>ssl_verifyhost</th>
       <td><p>integer value, usually <code>1L</code>, but for
 testing with snake-oil certs, one might set this to <code>0L</code></p></td>
@@ -184,7 +197,7 @@ testing with snake-oil certs, one might set this to <code>0L</code></p></td>
     <p>TRUE if all is well</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>getConfig</code></p></div>
+    <div class='dont-index'><p><code><a href='getConfig.html'>getConfig()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

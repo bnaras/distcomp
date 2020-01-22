@@ -1,6 +1,12 @@
-# Distributed Statistical Modeling
-
-author: BN, DLR, SMG, MB, PWL, Stanford University
+---
+title: "Distributed Statistical Modeling"
+author: "Balasubramanian Narasimhan, Daniel L. Rubin, Sam M. Gross, Marina Bendersky, Philip W. Lavori"
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
 
 ## Introduction
 
@@ -30,38 +36,6 @@ of parameters. This may pose a security concern that we ignore for
 now. However, it leads to some further interesting questions regarding
 what may be learned such computation.
 
-We focus specifically on Cox regression models in this exercise.
-
-> [Setup](#setup)
-
-> [A simple example](#simple-example)
-
->> [A Cox fit on the aggregated data](#simple-example-agg)
-
->> [The model definition](#simple-model)
-
->> [The data for each site](#simple-data)
-
->> [Setting up the sites](#simple-site-setup)
-
->> [Reproducing original aggregated analysis in a distributed fashion](#reproduce)
-
-> [A larger example](#larger-example)
-
->> [The aggregated fit] (#larger-example-full)
-
->> [The distributed fit] (#larger-example-distributed)
-
-> [Bone Marrow Transplant Example](#bmt)
-
->> [The aggregated fit] (#bmt-full)
-
->> [The distributed fit] (#bmt-distributed)
-
-> [Byar and Greene Prostate Cancer Data Example (4 strata)](#prostate)
-
-
-<a id="setup"></a>
 
 ### Setup
 
@@ -91,12 +65,18 @@ is being knitted via `library(opencpu)`. This is merely a
 convenience that allows us to refer to the `opencpu` server URL
 programmatically via `opencpu$url()`; otherwise, alternative means
 would have to be found to refer to the `opencpu` URL in a permanent
-manner. For example, if `opencpu` is started in another terminal using
-`library(opencpu)`, one could note down the URL that it displays after
-starting, and define
+manner. For example, if `opencpu` is started in another terminal thus:
 
-```{r, eval=FALSE}
-opencpu <- list(url = function() "your opencpu URL here")
+```{r, eval = FALSE}
+library(opencpu)
+ocpu_server_start()
+```
+
+one could note down the URL that it displays after starting, and
+use it in the following function definition, as we have done.
+
+```{r}
+opencpu <- list(url = function() "http://localhost:5656/ocpu")
 ```
 
 to ensure that the expression `opencpu$url()` returns the
@@ -106,8 +86,6 @@ To summarize: assuming that an `opencpu` server has been started via
 `library(opencpu)` with a proper R profile and the expression
 `opencpu$url()` has been set up appropriately, one can proceed to knit
 this document in that R session.
-
-<a id="simple-example"></a>
 
 ## A simple example
 
@@ -121,8 +99,6 @@ data(ovarian)
 str(ovarian)
 kable(ovarian)
 ```
-
-<a id="simple-example-agg"></a>
 
 ### A Cox fit on the aggregated data
 
@@ -142,8 +118,6 @@ For our setting, we can pretend that this data set is actually from
 two sites, one containing the control or placebo group (`rx = 1`)and
 the other containing the drug group (`rx = 2`).
 
-<a id="simple-model"></a>
-
 ### The model definition
 
 We first need to define the computation. The available computations
@@ -155,12 +129,11 @@ print(availableComputations())
 So, we can define the ovarian data computation as follows.
 
 ```{r}
-ovarianDef <- data.frame(compType = names(availableComputations())[1],
+ovarianDef <- data.frame(compType = names(availableComputations())[2],
                          formula = "Surv(futime, fustat) ~ age",
+                         he = FALSE,
                          id = "Ovarian", stringsAsFactors=FALSE)
 ```
-
-<a id="simple-data"></a>
 
 ### The data for each site
 
@@ -169,8 +142,6 @@ We split the `ovarian` data into two sites as indicated earlier.
 ```{r}
 siteData <- with(ovarian, split(x = ovarian, f = rx))
 ```
-
-<a id="simple-site-setup"></a>
 
 ### Setting up the sites
 
@@ -204,15 +175,13 @@ ok <- Map(uploadNewComputation, sites,
 stopifnot(all(as.logical(ok)))
 ```
 
-<a id="reproduce"></a>
-
 ### Reproducing original aggregated analysis in a distributed fashion
 
 We are now ready to reproduce the original aggregated analysis. We
 first create a master object using the same definition.
 
 ```{r}
-master <- CoxMaster$new(defnId = ovarianDef$id, formula = ovarianDef$formula)
+master <- CoxMaster$new(defn = ovarianDef)
 ```
 We then add the worker sites specifying a name and a URL for each.
 names.
@@ -238,14 +207,12 @@ As we can see, the results we get from the distributed analysis are
 the same as we got for the original aggregated analysis. We print them
 separately here for comparison.
 
-<a id="larger-example"></a>
 
 ## A larger example
 
 We turn to a larger the example from Therneau and Grambsch using the
 `pbc` data where the stratifying variable is `ascites`.
 
-<a id="larger-example-full"></a>
 
 ### The aggregated fit
 
@@ -258,14 +225,13 @@ print(pbcCox)
 
 ```
 
-<a id="larger-example-distributed"></a>
-
 ### The distributed fit
 
 We split the data using `ascites` and proceed the usual way as shown above
 
 ```{r}
-pbcDef <- data.frame(compType = names(availableComputations())[1],
+pbcDef <- data.frame(compType = names(availableComputations())[2],
+                     he = FALSE,
                      formula = paste("Surv(time, status==2) ~ age + edema +",
                        "log(bili) + log(protime) + log(albumin)"),
                      id = "pbc", stringsAsFactors = FALSE)
@@ -277,7 +243,7 @@ ok <- Map(uploadNewComputation, sites,
           lapply(seq.int(nSites), function(i) pbcDef),
           siteData)
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = pbcDef$id, formula = pbcDef$formula)
+master <- CoxMaster$new(defn = pbcDef)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -294,8 +260,6 @@ kable(master$summary())
 ```
 
 The results should be comparable to the aggregated fit above.
-
-<a id="bmt"></a>
 
 ## Bone Marrow Transplant Example
 
@@ -336,8 +300,6 @@ bmt$aged.c <- bmt$aged - 28
 bmt$imtx <- factor(bmt$imtx)
 ```
 
-<a id="bmt-full"></a>
-
 ### The aggregated fit
 
 ```{r}
@@ -347,14 +309,13 @@ bmt.cph <- coxph(formula = Surv(tnodis, inodis) ~ fab + agep.c * aged.c +
 print(bmt.cph)
 ```
 
-<a id="bmt-distributed"></a>
-
 ### The distributed fit
 
 We'll use `imtx` for splitting data into sites.
 
 ```{r}
-bmtDef <- data.frame(compType = names(availableComputations())[1],
+bmtDef <- data.frame(compType = names(availableComputations())[2],
+                     he = FALSE,
                      formula = paste("Surv(tnodis, inodis) ~ fab +",
                        "agep.c * aged.c + factor(group)"),
                      id = "bmt", stringsAsFactors = FALSE)
@@ -367,7 +328,7 @@ ok <- Map(uploadNewComputation, sites,
           siteData)
 
 stopifnot(all(as.logical(ok)))
-master <- CoxMaster$new(defnId = bmtDef$id, formula = bmtDef$formula)
+master <- CoxMaster$new(defn = bmtDef)
 for (site in sites) {
     master$addSite(site$name, site$url)
 }
@@ -383,8 +344,6 @@ We then print the summary.
 kable(master$summary())
 ```
 
-<a id="prostate"></a>
-
 ## Byar and Greene Prostate Cancer Data Example
 
 This example is the largest of them all and also has four strata
@@ -394,8 +353,6 @@ rather than 2.
 prostate <- readRDS("prostate.RDS")
 ```
 
-<a id="prostate-full"></a>
-
 ### The aggregated fit
 
 ```{r}
@@ -403,7 +360,6 @@ pcph <- coxph(Surv(dtime, status) ~ stage + strata(rx) + age + wt + pf + hx +
                   sbp + dbp + ekg + hg + sz + sg + ap + bm, data = prostate)
 print(pcph)
 ```
-<a id="prostate-distributed"></a>
 
 ### The distributed fit
 
@@ -421,8 +377,6 @@ However, in order to demonstrate that the distributed fit really
 works, we show below an alternative implementation that yields the
 same result as the aggregated one.
 
-
-<a id="site-object"></a>
 
 #### An object representing the sites
 
@@ -479,8 +433,6 @@ ensuring all named variables are available at the site.
 
 The method `dimP` merely returns the number of columns of the model
 matrix.
-
-<a id="site-loglik"></a>
 
 ### The (partial) log likelihood function for each site
 
@@ -554,6 +506,7 @@ kable(d)
 ```
 
 ## Session Information
+
 ```{r}
 sessionInfo()
 ```

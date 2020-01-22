@@ -3,7 +3,6 @@
 \docType{package}
 \name{distcomp}
 \alias{distcomp}
-\alias{distcomp-package}
 \title{Distributed Computing with R}
 \description{
 \code{distcomp} is a collection of methods to fit models to data that may be
