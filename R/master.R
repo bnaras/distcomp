@@ -132,8 +132,10 @@ HEMaster  <- R6::R6Class(
                                      payload <- list(name = ncp_defn$name, ncpId = ncp_defn$id,
                                                      instanceId = ncp$instanceId,
                                                      pubkey_bits = pubkey_bits, pubkey_n = as.character(pubkey_n),
-                                                     den_bits = den_bits,
-                                                     dataFileName = ncp$dataFileName)
+                                                     den_bits = den_bits)
+                                     if (!is.null(ncp$dataFileName)) {
+                                         payload$dataFileName  <-  ncp$dataFileName
+                                     }
                                      q <- httr::POST(url = .makeOpencpuURL(urlPrefix=ncp$url, fn="createNCPInstance"),
                                                      body = jsonlite::toJSON(payload),
                                                      httr::add_headers("Content-Type" = "application/json"),
