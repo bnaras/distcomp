@@ -530,7 +530,8 @@ HEQueryCountMaster <- R6Class(
                                       ### FIXED NOW. BUG HERE. This payload of pubkey stuff needs to made character!!
                                       payload <- if (is.null(x$dataFileName)) {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
-                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
+                                                          pubkey_bits = self$pubkey_bits, den_bits = self$den_bits)
+##                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
                                                  } else {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
                                                           dataFileName = x$dataFileName,
@@ -541,7 +542,7 @@ HEQueryCountMaster <- R6Class(
                                       cat("payload\n")
                                       print(payload)
                                       cat("JSON payload\n")
-                                      print(jsonlite::toJSON(payload))
+                                      print(jsonlite::toJSON(payload, auto_unbox = TRUE))
                                       q <- httr::POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createHEWorkerInstance"),
                                                       body = jsonlite::toJSON(payload, auto_unbox = TRUE),
                                                       httr::add_headers("Content-Type" = "application/json"),
