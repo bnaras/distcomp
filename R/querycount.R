@@ -542,6 +542,8 @@ HEQueryCountMaster <- R6Class(
                                       print(payload)
                                       cat("JSON payload\n")
                                       print(jsonlite::toJSON(payload, auto_unbox = TRUE))
+                                      cat("POST url\n")
+                                      print(.makeOpencpuURL(urlPrefix=x$url, fn="createHEWorkerInstance"))
                                       q <- httr::POST(url = .makeOpencpuURL(urlPrefix=x$url, fn="createHEWorkerInstance"),
                                                       body = jsonlite::toJSON(payload, auto_unbox = TRUE),
                                                       httr::add_headers("Content-Type" = "application/json"),
