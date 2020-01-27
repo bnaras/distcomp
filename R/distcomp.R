@@ -534,18 +534,32 @@ executeMethod <- function(objectId, method, ...) {
 #' @return a list containing an integer and a fractional result converted to characters
 #' @export
 executeHEMethod <- function(objectId, method, ...) {
+  cat("In executeHEMethod\n")
   config <- getConfig()
+  print(config)
   filePath <- paste(config$instancePath, objectId, config$instanceFileName, sep=.Platform$file.sep)
+  cat("File path is \n")
+  print(filePath)
   object <- readRDS(file=filePath)
+  cat("Read object\n")
   call <- substitute(object$METHOD(...), list(METHOD = as.name(method)))
+  cat("created call\n")
+  print(call)
   result <- eval(call)
+  cat("Result is \n")
+  print(result)
+  cat("Saving object back\n")
   if (object$getStateful()) {
     saveRDS(object, file=filePath)
   }
+  cat("Saved object back \n")
   ## For an HE method, return results as strings since we need to serialize things over
   ## the wire!
-  list(int = as.character(result$int),
-       frac = as.character(result$frac))
+  result  <- list(int = as.character(result$int),
+                  frac = as.character(result$frac))
+  cat("Result is\n")
+  print(result)
+  result
 }
 
 #' Deserialize the result of a http response
