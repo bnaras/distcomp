@@ -433,6 +433,7 @@ HEQueryCountMaster <- R6Class(
         #' @importFrom gmp as.bigz
         queryCount = function(token) {
             'Compute the query count from all sites'
+            cat("In actual worker method\n")
             sites <- private$sites
             if (private$dry_run) {
                 mapFn <- function(site, token) site$worker$queryCount(private$partyNumber, token)
@@ -440,7 +441,10 @@ HEQueryCountMaster <- R6Class(
                 mapFn <- private$mapFn
             }
             ##browser()
+            cat("Mapping function to remote sites!\n")
             results <- Map(mapFn, sites, rep(token, length(sites)))
+            cat("Done Mapping; now aggregating!\n")
+
             pubkey  <- self$pubkey
             zero  <- pubkey$encrypt(0)
             ## The results could arrive as strings over the wire, so convert
@@ -451,8 +455,12 @@ HEQueryCountMaster <- R6Class(
             ## intSum  <- pubkey$add(intSum, intResults[[3L]])
             ## fracSum  <- pubkey$add(intResults[[1L]], intResults[[2L]])
             ## fracSum  <- pubkey$add(fracSum, intResults[[3L]])
+            cat("Now summing pieces!\n")
             intSum  <- Reduce(f = pubkey$add, x = intResults, init = zero)
             fracSum  <- Reduce(f = pubkey$add, x = fracResults, init = zero)
+            cat("Results\n")
+            print(list(int = intSum, frac = fracSum))
+            cat("Returning results\n")
             list(int = intSum, frac = fracSum)
         },
 
@@ -491,6 +499,7 @@ HEQueryCountMaster <- R6Class(
         #' @importFrom jsonlite toJSON
         run = function(token) {
             'Run Computation'
+            cat("In HEQueryCountMaster run method\n")
             dry_run <- private$dry_run
             debug  <- private$debug
             defn <- private$defn
@@ -515,6 +524,7 @@ HEQueryCountMaster <- R6Class(
                                                                   localhost = x$localhost,
                                                                   dataFileName = x$dataFileName,
                                                                   instanceId = if (x$localhost) x$name else instanceId))
+                cat("creating site instances\n")
                 sitesOK <- sapply(sites,
                                   function(x) {
                                       ### FIXED NOW. BUG HERE. This payload of pubkey stuff needs to made character!!
@@ -533,13 +543,16 @@ HEQueryCountMaster <- R6Class(
                                                       )
                                       .deSerialize(q)
                                   })
+                cat("done creating site instances\n")
 
                 ## Stop on error
                 if (!all(sitesOK)) {
                     stop("run():  Some sites did not respond successfully!")
                     sites <- sites[which(sitesOK)]  ## Only use sites that created objects successfully.
                 }
+                cat("No error creating site instances\n")
             }
+            cat("calling the actual working code\n")
             self$queryCount(token)
         }
     )
