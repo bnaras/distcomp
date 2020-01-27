@@ -530,8 +530,7 @@ HEQueryCountMaster <- R6Class(
                                       ### FIXED NOW. BUG HERE. This payload of pubkey stuff needs to made character!!
                                       payload <- if (is.null(x$dataFileName)) {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
-                                                          pubkey_bits = self$pubkey_bits, den_bits = self$den_bits)
-##                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
+                                                          pubkey_bits = self$pubkey_bits, pubkey_n = as.character(self$pubkey_n), den_bits = self$den_bits)
                                                  } else {
                                                      list(defnId = defn$id, instanceId = x$instanceId,
                                                           dataFileName = x$dataFileName,
