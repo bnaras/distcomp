@@ -5,10 +5,12 @@
 \title{Save an NCP instance, given the sites as associated data and
 possibly a data file name to use}
 \usage{
-saveNewNCP(defn, data, dataFileName = NULL)
+saveNewNCP(defn, comp_defn, data, dataFileName = NULL)
 }
 \arguments{
 \item{defn}{a definition of the ncp}
+
+\item{comp_defn}{the computation definition}
 
 \item{data}{the list of sites with name and url to use}
 

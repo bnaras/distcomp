@@ -5,10 +5,12 @@
 \title{Upload a new Non-Cooperating Party (NCP) information and sites to
 an opencpu server}
 \usage{
-uploadNewNCP(defn, url = NULL, worker = NULL, sites)
+uploadNewNCP(defn, comp_defn, url = NULL, worker = NULL, sites)
 }
 \arguments{
 \item{defn}{a definition for the NCP}
+
+\item{comp_defn}{the computation definition}
 
 \item{url}{the url for the NCP. Only one of url and worker can be
 non-null}
