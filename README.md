@@ -3,10 +3,12 @@
 distcomp
 ========
 
-[![Travis build
-status](https://travis-ci.org/bnaras/distcomp.svg?branch=master)](https://travis-ci.org/bnaras/distcomp)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/distcomp)](https://cran.r-project.org/package=distcomp)
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/bnaras/distcomp/workflows/R-CMD-check/badge.svg)](https://github.com/bnaras/distcomp/actions)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/distcomp)](https://cran.r-project.org/package=distcomp)
 [![](https://cranlogs.r-pkg.org/badges/distcomp)](https://cran.r-project.org/package=distcomp)
+<!-- badges: end -->
 
 This package is described in detail in the paper [*Software for
 Distributed Computation on Medical Databases: A Demonstration
