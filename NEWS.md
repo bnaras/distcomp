@@ -1,3 +1,7 @@
+# distcomp 1.3-1
+
+- Add `rmarkdown` to suggests
+
 # distcomp 1.3
 
 - Complete implementation of secure multi-party computation for query
