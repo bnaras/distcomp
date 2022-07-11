@@ -18,13 +18,13 @@
 #include "Rinternals.h"
 #include <R_ext/Utils.h>  
 #ifdef USING_R
-   /* typedef int Sint; */
+
 #define S_EVALUATOR    /* Turn this into a "blank line" in R */
 #else
 /*
 ** Splus definitions, to use R type calls
 */
-typedef long Sint;
+
 /* 
 **  At this point in time (Splus 8.0.1) I need to add a little
 **   to the Insightful definitions.  (They are in the process

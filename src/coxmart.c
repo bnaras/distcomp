@@ -21,8 +21,8 @@
 #include "survS.h"
 #include "survproto.h"
 
-void coxmart(Sint   *sn,     Sint   *method,    double *time, 
-	     Sint   *status, Sint   * strata,   double *score, 
+void coxmart(int   *sn,     int   *method,    double *time, 
+	     int   *status, int   * strata,   double *score, 
 	     double *wt,     double *expect)
     {
     register int i,j;
