@@ -25,22 +25,23 @@ a distributed query count model computation using homomorphic encryption
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{HEQueryCountWorker$new()}}
-\item \href{#method-setParams}{\code{HEQueryCountWorker$setParams()}}
-\item \href{#method-queryCount}{\code{HEQueryCountWorker$queryCount()}}
-\item \href{#method-clone}{\code{HEQueryCountWorker$clone()}}
+\item \href{#method-HEQueryCountWorker-new}{\code{HEQueryCountWorker$new()}}
+\item \href{#method-HEQueryCountWorker-setParams}{\code{HEQueryCountWorker$setParams()}}
+\item \href{#method-HEQueryCountWorker-queryCount}{\code{HEQueryCountWorker$queryCount()}}
+\item \href{#method-HEQueryCountWorker-clone}{\code{HEQueryCountWorker$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountWorker" data-id="getStateful">}\href{../../distcomp/html/QueryCountWorker.html#method-getStateful}{\code{distcomp::QueryCountWorker$getStateful()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountWorker" data-id="kosher">}\href{../../distcomp/html/QueryCountWorker.html#method-kosher}{\code{distcomp::QueryCountWorker$kosher()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountWorker" data-id="getStateful"><a href='../../distcomp/html/QueryCountWorker.html#method-QueryCountWorker-getStateful'><code>distcomp::QueryCountWorker$getStateful()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountWorker" data-id="kosher"><a href='../../distcomp/html/QueryCountWorker.html#method-QueryCountWorker-kosher'><code>distcomp::QueryCountWorker$kosher()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountWorker-new"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountWorker-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{HEQueryMaster} object.
 \subsection{Usage}{
@@ -73,7 +74,8 @@ a new \code{HEQueryMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParams"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountWorker-setParams"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountWorker-setParams}{}}}
 \subsection{Method \code{setParams()}}{
 Set some parameters for homomorphic computations
 \subsection{Usage}{
@@ -93,7 +95,8 @@ Set some parameters for homomorphic computations
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-queryCount"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountWorker-queryCount"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountWorker-queryCount}{}}}
 \subsection{Method \code{queryCount()}}{
 Run the query count on local data and return the appropriate encrypted result to the party
 \subsection{Usage}{
@@ -114,7 +117,8 @@ the count as a list of encrypted items with components \code{int} and \code{frac
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountWorker-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountWorker-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -2,7 +2,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-.Rprofile
+\.Rprofile
+\.Rhistory
 ^\.httr-oauth$
 ^cran-comments\.md$
 ^README\.Rmd$

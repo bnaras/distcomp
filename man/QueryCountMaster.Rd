@@ -13,17 +13,18 @@
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{QueryCountMaster$new()}}
-\item \href{#method-kosher}{\code{QueryCountMaster$kosher()}}
-\item \href{#method-queryCount}{\code{QueryCountMaster$queryCount()}}
-\item \href{#method-getSites}{\code{QueryCountMaster$getSites()}}
-\item \href{#method-addSite}{\code{QueryCountMaster$addSite()}}
-\item \href{#method-run}{\code{QueryCountMaster$run()}}
-\item \href{#method-clone}{\code{QueryCountMaster$clone()}}
+\item \href{#method-QueryCountMaster-new}{\code{QueryCountMaster$new()}}
+\item \href{#method-QueryCountMaster-kosher}{\code{QueryCountMaster$kosher()}}
+\item \href{#method-QueryCountMaster-queryCount}{\code{QueryCountMaster$queryCount()}}
+\item \href{#method-QueryCountMaster-getSites}{\code{QueryCountMaster$getSites()}}
+\item \href{#method-QueryCountMaster-addSite}{\code{QueryCountMaster$addSite()}}
+\item \href{#method-QueryCountMaster-run}{\code{QueryCountMaster$run()}}
+\item \href{#method-QueryCountMaster-clone}{\code{QueryCountMaster$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-new"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{QueryCountMaster} object.
 \subsection{Usage}{
@@ -44,7 +45,8 @@ a new \code{QueryCountMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -56,7 +58,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-queryCount"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-queryCount"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-queryCount}{}}}
 \subsection{Method \code{queryCount()}}{
 Run the distributed query count and return the result
 \subsection{Usage}{
@@ -68,7 +71,8 @@ the count
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getSites"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-getSites"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-getSites}{}}}
 \subsection{Method \code{getSites()}}{
 Retrieve the value of the private \code{sites} field
 \subsection{Usage}{
@@ -77,7 +81,8 @@ Retrieve the value of the private \code{sites} field
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSite"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-addSite"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-addSite}{}}}
 \subsection{Method \code{addSite()}}{
 Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.
 \subsection{Usage}{
@@ -97,7 +102,8 @@ Add a url or worker object for a site for participating in the distributed compu
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-run"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-run}{}}}
 \subsection{Method \code{run()}}{
 Run the distributed query count
 \subsection{Usage}{
@@ -109,7 +115,8 @@ the count
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-QueryCountMaster-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountMaster-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

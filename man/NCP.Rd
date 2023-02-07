@@ -32,19 +32,20 @@ from each other.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{NCP$new()}}
-\item \href{#method-getStateful}{\code{NCP$getStateful()}}
-\item \href{#method-setParams}{\code{NCP$setParams()}}
-\item \href{#method-getSites}{\code{NCP$getSites()}}
-\item \href{#method-setSites}{\code{NCP$setSites()}}
-\item \href{#method-addSite}{\code{NCP$addSite()}}
-\item \href{#method-cleanupInstance}{\code{NCP$cleanupInstance()}}
-\item \href{#method-run}{\code{NCP$run()}}
-\item \href{#method-clone}{\code{NCP$clone()}}
+\item \href{#method-NCP-new}{\code{NCP$new()}}
+\item \href{#method-NCP-getStateful}{\code{NCP$getStateful()}}
+\item \href{#method-NCP-setParams}{\code{NCP$setParams()}}
+\item \href{#method-NCP-getSites}{\code{NCP$getSites()}}
+\item \href{#method-NCP-setSites}{\code{NCP$setSites()}}
+\item \href{#method-NCP-addSite}{\code{NCP$addSite()}}
+\item \href{#method-NCP-cleanupInstance}{\code{NCP$cleanupInstance()}}
+\item \href{#method-NCP-run}{\code{NCP$run()}}
+\item \href{#method-NCP-clone}{\code{NCP$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-NCP-new"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{NCP} object.
 \subsection{Usage}{
@@ -80,7 +81,8 @@ a new \code{NCP} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getStateful"></a>}}
+\if{html}{\out{<a id="method-NCP-getStateful"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-getStateful}{}}}
 \subsection{Method \code{getStateful()}}{
 Retrieve the value of the \code{stateful} field
 \subsection{Usage}{
@@ -89,7 +91,8 @@ Retrieve the value of the \code{stateful} field
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParams"></a>}}
+\if{html}{\out{<a id="method-NCP-setParams"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-setParams}{}}}
 \subsection{Method \code{setParams()}}{
 Set some parameters of the \code{NCP} object for homomorphic computations
 \subsection{Usage}{
@@ -109,7 +112,8 @@ Set some parameters of the \code{NCP} object for homomorphic computations
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getSites"></a>}}
+\if{html}{\out{<a id="method-NCP-getSites"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-getSites}{}}}
 \subsection{Method \code{getSites()}}{
 Retrieve the value of the private \code{sites} field
 \subsection{Usage}{
@@ -118,7 +122,8 @@ Retrieve the value of the private \code{sites} field
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setSites"></a>}}
+\if{html}{\out{<a id="method-NCP-setSites"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-setSites}{}}}
 \subsection{Method \code{setSites()}}{
 Set the value of the private \code{sites} field
 \subsection{Usage}{
@@ -134,7 +139,8 @@ Set the value of the private \code{sites} field
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSite"></a>}}
+\if{html}{\out{<a id="method-NCP-addSite"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-addSite}{}}}
 \subsection{Method \code{addSite()}}{
 Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.
 \subsection{Usage}{
@@ -154,7 +160,8 @@ Add a url or worker object for a site for participating in the distributed compu
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cleanupInstance"></a>}}
+\if{html}{\out{<a id="method-NCP-cleanupInstance"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-cleanupInstance}{}}}
 \subsection{Method \code{cleanupInstance()}}{
 Clean up by destroying instance objects created in workspace.
 \subsection{Usage}{
@@ -170,7 +177,8 @@ Clean up by destroying instance objects created in workspace.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-NCP-run"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-run}{}}}
 \subsection{Method \code{run()}}{
 Run the distributed homomorphic computation
 \subsection{Usage}{
@@ -189,7 +197,8 @@ the result of the computation
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-NCP-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-NCP-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

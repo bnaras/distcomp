@@ -13,15 +13,16 @@ a distributed QueryCount model computation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{QueryCountWorker$new()}}
-\item \href{#method-getStateful}{\code{QueryCountWorker$getStateful()}}
-\item \href{#method-kosher}{\code{QueryCountWorker$kosher()}}
-\item \href{#method-queryCount}{\code{QueryCountWorker$queryCount()}}
-\item \href{#method-clone}{\code{QueryCountWorker$clone()}}
+\item \href{#method-QueryCountWorker-new}{\code{QueryCountWorker$new()}}
+\item \href{#method-QueryCountWorker-getStateful}{\code{QueryCountWorker$getStateful()}}
+\item \href{#method-QueryCountWorker-kosher}{\code{QueryCountWorker$kosher()}}
+\item \href{#method-QueryCountWorker-queryCount}{\code{QueryCountWorker$queryCount()}}
+\item \href{#method-QueryCountWorker-clone}{\code{QueryCountWorker$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-QueryCountWorker-new"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountWorker-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{QueryCountWorker} object.
 \subsection{Usage}{
@@ -44,7 +45,8 @@ a new \code{QueryCountWorker} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getStateful"></a>}}
+\if{html}{\out{<a id="method-QueryCountWorker-getStateful"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountWorker-getStateful}{}}}
 \subsection{Method \code{getStateful()}}{
 Retrieve the value of the \code{stateful} field
 \subsection{Usage}{
@@ -53,7 +55,8 @@ Retrieve the value of the \code{stateful} field
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-QueryCountWorker-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountWorker-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -65,7 +68,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-queryCount"></a>}}
+\if{html}{\out{<a id="method-QueryCountWorker-queryCount"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountWorker-queryCount}{}}}
 \subsection{Method \code{queryCount()}}{
 Return the query count on the local data
 \subsection{Usage}{
@@ -74,7 +78,8 @@ Return the query count on the local data
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-QueryCountWorker-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-QueryCountWorker-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

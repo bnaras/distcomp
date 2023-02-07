@@ -13,17 +13,18 @@ a distributed Cox model computation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CoxWorker$new()}}
-\item \href{#method-getP}{\code{CoxWorker$getP()}}
-\item \href{#method-getStateful}{\code{CoxWorker$getStateful()}}
-\item \href{#method-logLik}{\code{CoxWorker$logLik()}}
-\item \href{#method-var}{\code{CoxWorker$var()}}
-\item \href{#method-kosher}{\code{CoxWorker$kosher()}}
-\item \href{#method-clone}{\code{CoxWorker$clone()}}
+\item \href{#method-CoxWorker-new}{\code{CoxWorker$new()}}
+\item \href{#method-CoxWorker-getP}{\code{CoxWorker$getP()}}
+\item \href{#method-CoxWorker-getStateful}{\code{CoxWorker$getStateful()}}
+\item \href{#method-CoxWorker-logLik}{\code{CoxWorker$logLik()}}
+\item \href{#method-CoxWorker-var}{\code{CoxWorker$var()}}
+\item \href{#method-CoxWorker-kosher}{\code{CoxWorker$kosher()}}
+\item \href{#method-CoxWorker-clone}{\code{CoxWorker$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{CoxWorker} object.
 \subsection{Usage}{
@@ -46,7 +47,8 @@ a new \code{CoxWorker} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getP"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-getP"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-getP}{}}}
 \subsection{Method \code{getP()}}{
 Return the dimension of the parameter vector.
 \subsection{Usage}{
@@ -65,7 +67,8 @@ the dimension of the parameter vector
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getStateful"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-getStateful"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-getStateful}{}}}
 \subsection{Method \code{getStateful()}}{
 Return the stateful status of the object.
 \subsection{Usage}{
@@ -77,7 +80,8 @@ the stateful flag, \code{TRUE} or \code{FALSE}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-logLik"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-logLik"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-logLik}{}}}
 \subsection{Method \code{logLik()}}{
 Return the partial log likelihood on local data for given \code{beta} parameter.
 \subsection{Usage}{
@@ -100,7 +104,8 @@ the estimated hessian matrix
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-var"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-var"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-var}{}}}
 \subsection{Method \code{var()}}{
 Return the variance of estimate for given \code{beta} parameter on local data.
 \subsection{Usage}{
@@ -121,7 +126,8 @@ variance vector
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -133,7 +139,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-CoxWorker-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxWorker-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

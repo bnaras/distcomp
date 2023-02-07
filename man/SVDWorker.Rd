@@ -12,22 +12,23 @@
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SVDWorker$new()}}
-\item \href{#method-reset}{\code{SVDWorker$reset()}}
-\item \href{#method-dimX}{\code{SVDWorker$dimX()}}
-\item \href{#method-updateV}{\code{SVDWorker$updateV()}}
-\item \href{#method-updateU}{\code{SVDWorker$updateU()}}
-\item \href{#method-normU}{\code{SVDWorker$normU()}}
-\item \href{#method-fixU}{\code{SVDWorker$fixU()}}
-\item \href{#method-getN}{\code{SVDWorker$getN()}}
-\item \href{#method-getP}{\code{SVDWorker$getP()}}
-\item \href{#method-getStateful}{\code{SVDWorker$getStateful()}}
-\item \href{#method-kosher}{\code{SVDWorker$kosher()}}
-\item \href{#method-clone}{\code{SVDWorker$clone()}}
+\item \href{#method-SVDWorker-new}{\code{SVDWorker$new()}}
+\item \href{#method-SVDWorker-reset}{\code{SVDWorker$reset()}}
+\item \href{#method-SVDWorker-dimX}{\code{SVDWorker$dimX()}}
+\item \href{#method-SVDWorker-updateV}{\code{SVDWorker$updateV()}}
+\item \href{#method-SVDWorker-updateU}{\code{SVDWorker$updateU()}}
+\item \href{#method-SVDWorker-normU}{\code{SVDWorker$normU()}}
+\item \href{#method-SVDWorker-fixU}{\code{SVDWorker$fixU()}}
+\item \href{#method-SVDWorker-getN}{\code{SVDWorker$getN()}}
+\item \href{#method-SVDWorker-getP}{\code{SVDWorker$getP()}}
+\item \href{#method-SVDWorker-getStateful}{\code{SVDWorker$getStateful()}}
+\item \href{#method-SVDWorker-kosher}{\code{SVDWorker$kosher()}}
+\item \href{#method-SVDWorker-clone}{\code{SVDWorker$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{SVDWorker} object.
 \subsection{Usage}{
@@ -50,7 +51,8 @@ a new \code{SVDWorker} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-reset}{}}}
 \subsection{Method \code{reset()}}{
 Reset the computation state by initializing work matrix and set up starting values for iterating
 \subsection{Usage}{
@@ -59,7 +61,8 @@ Reset the computation state by initializing work matrix and set up starting valu
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dimX"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-dimX"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-dimX}{}}}
 \subsection{Method \code{dimX()}}{
 Return the dimensions of the matrix
 \subsection{Usage}{
@@ -78,7 +81,8 @@ the dimension of the matrix
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updateV"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-updateV"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-updateV}{}}}
 \subsection{Method \code{updateV()}}{
 Return an updated value for the \code{V} vector, normalized by \code{arg}
 \subsection{Usage}{
@@ -99,7 +103,8 @@ updated \code{V}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updateU"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-updateU"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-updateU}{}}}
 \subsection{Method \code{updateU()}}{
 Update \code{U} and return the updated norm of \code{U}
 \subsection{Usage}{
@@ -120,7 +125,8 @@ updated norm of \code{U}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-normU"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-normU"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-normU}{}}}
 \subsection{Method \code{normU()}}{
 Normalize \code{U} vector
 \subsection{Usage}{
@@ -141,7 +147,8 @@ Normalize \code{U} vector
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fixU"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-fixU"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-fixU}{}}}
 \subsection{Method \code{fixU()}}{
 Construct residual matrix using \code{arg}
 \subsection{Usage}{
@@ -159,7 +166,8 @@ Construct residual matrix using \code{arg}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getN"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-getN"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-getN}{}}}
 \subsection{Method \code{getN()}}{
 Getthe number of rows of \code{x} matrix
 \subsection{Usage}{
@@ -171,7 +179,8 @@ the number of rows of \code{x} matrix
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getP"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-getP"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-getP}{}}}
 \subsection{Method \code{getP()}}{
 Getthe number of columnsof \code{x} matrix
 \subsection{Usage}{
@@ -183,7 +192,8 @@ the number of columns of \code{x} matrix
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getStateful"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-getStateful"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-getStateful}{}}}
 \subsection{Method \code{getStateful()}}{
 Return the stateful status of the object.
 \subsection{Usage}{
@@ -195,7 +205,8 @@ the stateful flag, \code{TRUE} or \code{FALSE}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -207,7 +218,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-SVDWorker-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDWorker-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

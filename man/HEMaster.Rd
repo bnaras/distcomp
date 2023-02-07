@@ -26,16 +26,17 @@ perform the actual computations using local data.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{HEMaster$new()}}
-\item \href{#method-getNC_party}{\code{HEMaster$getNC_party()}}
-\item \href{#method-getPubkey}{\code{HEMaster$getPubkey()}}
-\item \href{#method-addNCP}{\code{HEMaster$addNCP()}}
-\item \href{#method-run}{\code{HEMaster$run()}}
-\item \href{#method-clone}{\code{HEMaster$clone()}}
+\item \href{#method-HEMaster-new}{\code{HEMaster$new()}}
+\item \href{#method-HEMaster-getNC_party}{\code{HEMaster$getNC_party()}}
+\item \href{#method-HEMaster-getPubkey}{\code{HEMaster$getPubkey()}}
+\item \href{#method-HEMaster-addNCP}{\code{HEMaster$addNCP()}}
+\item \href{#method-HEMaster-run}{\code{HEMaster$run()}}
+\item \href{#method-HEMaster-clone}{\code{HEMaster$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-HEMaster-new"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \code{HEMaster} object to run homomorphic encrypted computation
 \subsection{Usage}{
@@ -54,7 +55,8 @@ a \code{HEMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getNC_party"></a>}}
+\if{html}{\out{<a id="method-HEMaster-getNC_party"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-getNC_party}{}}}
 \subsection{Method \code{getNC_party()}}{
 Return a list of noncooperating parties (NCPs)
 \subsection{Usage}{
@@ -66,7 +68,8 @@ a named list of length 2 of noncooperating party information
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getPubkey"></a>}}
+\if{html}{\out{<a id="method-HEMaster-getPubkey"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-getPubkey}{}}}
 \subsection{Method \code{getPubkey()}}{
 Return the public key from the public private key pair
 \subsection{Usage}{
@@ -78,7 +81,8 @@ an R6 \code{Pubkey} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addNCP"></a>}}
+\if{html}{\out{<a id="method-HEMaster-addNCP"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-addNCP}{}}}
 \subsection{Method \code{addNCP()}}{
 Add a noncooperating party to this master either using a url or an object in session for prototyping
 \subsection{Usage}{
@@ -98,7 +102,8 @@ Add a noncooperating party to this master either using a url or an object in ses
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-HEMaster-run"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-run}{}}}
 \subsection{Method \code{run()}}{
 Run a distributed homomorphic encrypted computation and return the result
 \subsection{Usage}{
@@ -117,7 +122,8 @@ the result of the distributed homomorphic computation
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-HEMaster-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-HEMaster-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -30,25 +30,26 @@
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{HEQueryCountMaster$new()}}
-\item \href{#method-setParams}{\code{HEQueryCountMaster$setParams()}}
-\item \href{#method-kosher}{\code{HEQueryCountMaster$kosher()}}
-\item \href{#method-queryCount}{\code{HEQueryCountMaster$queryCount()}}
-\item \href{#method-cleanup}{\code{HEQueryCountMaster$cleanup()}}
-\item \href{#method-run}{\code{HEQueryCountMaster$run()}}
-\item \href{#method-clone}{\code{HEQueryCountMaster$clone()}}
+\item \href{#method-HEQueryCountMaster-new}{\code{HEQueryCountMaster$new()}}
+\item \href{#method-HEQueryCountMaster-setParams}{\code{HEQueryCountMaster$setParams()}}
+\item \href{#method-HEQueryCountMaster-kosher}{\code{HEQueryCountMaster$kosher()}}
+\item \href{#method-HEQueryCountMaster-queryCount}{\code{HEQueryCountMaster$queryCount()}}
+\item \href{#method-HEQueryCountMaster-cleanup}{\code{HEQueryCountMaster$cleanup()}}
+\item \href{#method-HEQueryCountMaster-run}{\code{HEQueryCountMaster$run()}}
+\item \href{#method-HEQueryCountMaster-clone}{\code{HEQueryCountMaster$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountMaster" data-id="addSite">}\href{../../distcomp/html/QueryCountMaster.html#method-addSite}{\code{distcomp::QueryCountMaster$addSite()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountMaster" data-id="getSites">}\href{../../distcomp/html/QueryCountMaster.html#method-getSites}{\code{distcomp::QueryCountMaster$getSites()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountMaster" data-id="addSite"><a href='../../distcomp/html/QueryCountMaster.html#method-QueryCountMaster-addSite'><code>distcomp::QueryCountMaster$addSite()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distcomp" data-topic="QueryCountMaster" data-id="getSites"><a href='../../distcomp/html/QueryCountMaster.html#method-QueryCountMaster-getSites'><code>distcomp::QueryCountMaster$getSites()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-new"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{HEQueryCountMaster} object.
 \subsection{Usage}{
@@ -71,7 +72,8 @@ a new \code{HEQueryCountMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParams"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-setParams"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-setParams}{}}}
 \subsection{Method \code{setParams()}}{
 Set some parameters of the \code{HEQueryCountMaster} object for homomorphic computations
 \subsection{Usage}{
@@ -91,7 +93,8 @@ Set some parameters of the \code{HEQueryCountMaster} object for homomorphic comp
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -103,7 +106,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-queryCount"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-queryCount"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-queryCount}{}}}
 \subsection{Method \code{queryCount()}}{
 Run the distributed query count, associate it with a token, and return the result
 \subsection{Usage}{
@@ -122,7 +126,8 @@ the partial result as a list of encrypted items with components \code{int} and \
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cleanup"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-cleanup"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-cleanup}{}}}
 \subsection{Method \code{cleanup()}}{
 Cleanup the instance objects
 \subsection{Usage}{
@@ -131,7 +136,8 @@ Cleanup the instance objects
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-run"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-run}{}}}
 \subsection{Method \code{run()}}{
 Run the homomorphic encrypted distributed query count computation
 \subsection{Usage}{
@@ -150,7 +156,8 @@ the partial result as a list of encrypted items with components \code{int} and \
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-HEQueryCountMaster-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-HEQueryCountMaster-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

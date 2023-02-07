@@ -12,20 +12,21 @@
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SVDMaster$new()}}
-\item \href{#method-kosher}{\code{SVDMaster$kosher()}}
-\item \href{#method-updateV}{\code{SVDMaster$updateV()}}
-\item \href{#method-updateU}{\code{SVDMaster$updateU()}}
-\item \href{#method-fixFit}{\code{SVDMaster$fixFit()}}
-\item \href{#method-reset}{\code{SVDMaster$reset()}}
-\item \href{#method-addSite}{\code{SVDMaster$addSite()}}
-\item \href{#method-run}{\code{SVDMaster$run()}}
-\item \href{#method-summary}{\code{SVDMaster$summary()}}
-\item \href{#method-clone}{\code{SVDMaster$clone()}}
+\item \href{#method-SVDMaster-new}{\code{SVDMaster$new()}}
+\item \href{#method-SVDMaster-kosher}{\code{SVDMaster$kosher()}}
+\item \href{#method-SVDMaster-updateV}{\code{SVDMaster$updateV()}}
+\item \href{#method-SVDMaster-updateU}{\code{SVDMaster$updateU()}}
+\item \href{#method-SVDMaster-fixFit}{\code{SVDMaster$fixFit()}}
+\item \href{#method-SVDMaster-reset}{\code{SVDMaster$reset()}}
+\item \href{#method-SVDMaster-addSite}{\code{SVDMaster$addSite()}}
+\item \href{#method-SVDMaster-run}{\code{SVDMaster$run()}}
+\item \href{#method-SVDMaster-summary}{\code{SVDMaster$summary()}}
+\item \href{#method-SVDMaster-clone}{\code{SVDMaster$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-new}{}}}
 \subsection{Method \code{new()}}{
 \code{SVDMaster} objects instantiate and run a distributed SVD computation
 \subsection{Usage}{
@@ -46,7 +47,8 @@ R6 \code{SVDMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -58,7 +60,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updateV"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-updateV"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-updateV}{}}}
 \subsection{Method \code{updateV()}}{
 Return an updated value for the \code{V} vector, normalized by \code{arg}
 \subsection{Usage}{
@@ -79,7 +82,8 @@ updated \code{V}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updateU"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-updateU"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-updateU}{}}}
 \subsection{Method \code{updateU()}}{
 Update \code{U} and return the updated norm of \code{U}
 \subsection{Usage}{
@@ -100,7 +104,8 @@ updated norm of \code{U}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fixFit"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-fixFit"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-fixFit}{}}}
 \subsection{Method \code{fixFit()}}{
 Construct the residual matrix using given the \code{V} vector and \code{d} so far
 \subsection{Usage}{
@@ -121,7 +126,8 @@ result
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-reset}{}}}
 \subsection{Method \code{reset()}}{
 Reset the computation state by initializing work matrix and set up starting values for iterating
 \subsection{Usage}{
@@ -130,7 +136,8 @@ Reset the computation state by initializing work matrix and set up starting valu
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSite"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-addSite"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-addSite}{}}}
 \subsection{Method \code{addSite()}}{
 Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.
 \subsection{Usage}{
@@ -150,7 +157,8 @@ Add a url or worker object for a site for participating in the distributed compu
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-run"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-run}{}}}
 \subsection{Method \code{run()}}{
 Run the distributed Cox model fit and return the estimates
 \subsection{Usage}{
@@ -171,7 +179,8 @@ a named list of \code{V}, \code{d}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-summary"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-summary}{}}}
 \subsection{Method \code{summary()}}{
 Return the summary result
 \subsection{Usage}{
@@ -183,7 +192,8 @@ a named list of \code{V}, \code{d}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-SVDMaster-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-SVDMaster-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -13,17 +13,18 @@ computation fit
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CoxMaster$new()}}
-\item \href{#method-kosher}{\code{CoxMaster$kosher()}}
-\item \href{#method-logLik}{\code{CoxMaster$logLik()}}
-\item \href{#method-addSite}{\code{CoxMaster$addSite()}}
-\item \href{#method-run}{\code{CoxMaster$run()}}
-\item \href{#method-summary}{\code{CoxMaster$summary()}}
-\item \href{#method-clone}{\code{CoxMaster$clone()}}
+\item \href{#method-CoxMaster-new}{\code{CoxMaster$new()}}
+\item \href{#method-CoxMaster-kosher}{\code{CoxMaster$kosher()}}
+\item \href{#method-CoxMaster-logLik}{\code{CoxMaster$logLik()}}
+\item \href{#method-CoxMaster-addSite}{\code{CoxMaster$addSite()}}
+\item \href{#method-CoxMaster-run}{\code{CoxMaster$run()}}
+\item \href{#method-CoxMaster-summary}{\code{CoxMaster$summary()}}
+\item \href{#method-CoxMaster-clone}{\code{CoxMaster$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-new}{}}}
 \subsection{Method \code{new()}}{
 \code{CoxMaster} objects instantiate and run a distributed Cox model
 computation fit
@@ -45,7 +46,8 @@ R6 \code{CoxMaster} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kosher"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-kosher"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-kosher}{}}}
 \subsection{Method \code{kosher()}}{
 Check if inputs and state of object are sane. For future use
 \subsection{Usage}{
@@ -57,7 +59,8 @@ Check if inputs and state of object are sane. For future use
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-logLik"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-logLik"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-logLik}{}}}
 \subsection{Method \code{logLik()}}{
 Return the partial log likelihood on all data for given \code{beta} parameter.
 \subsection{Usage}{
@@ -78,7 +81,8 @@ the estimated hessian matrix
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSite"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-addSite"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-addSite}{}}}
 \subsection{Method \code{addSite()}}{
 Add a url or worker object for a site for participating in the distributed computation. The worker object can be used to avoid complications in debugging remote calls during prototyping.
 \subsection{Usage}{
@@ -98,7 +102,8 @@ Add a url or worker object for a site for participating in the distributed compu
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-run"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-run}{}}}
 \subsection{Method \code{run()}}{
 Run the distributed Cox model fit and return the estimates
 \subsection{Usage}{
@@ -118,7 +123,8 @@ a named list of \code{beta}, \code{var}, \code{gradient}, \code{iter}, and \code
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-summary"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-summary}{}}}
 \subsection{Method \code{summary()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CoxMaster$summary()}\if{html}{\out{</div>}}
@@ -132,7 +138,8 @@ parameter in the model following the same format as the
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
+\if{html}{\out{<a id="method-CoxMaster-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CoxMaster-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
