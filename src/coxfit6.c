@@ -1,4 +1,4 @@
-s/*
+/*
 ** Cox regression fit, replacement for coxfit2 in order
 **   to be more frugal about memory: specificly that we
 **   don't make copies of the input data.
