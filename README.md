@@ -5,9 +5,9 @@ distcomp
 
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/bnaras/distcomp/workflows/R-CMD-check/badge.svg)](https://github.com/bnaras/distcomp/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/distcomp)](https://cran.r-project.org/package=distcomp)
 [![](https://cranlogs.r-pkg.org/badges/distcomp)](https://cran.r-project.org/package=distcomp)
+[![R-CMD-check](https://github.com/bnaras/distcomp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bnaras/distcomp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 This package is described in detail in the paper [*Software for
