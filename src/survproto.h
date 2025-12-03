@@ -2,79 +2,94 @@
 ** Prototypes of all the survival functions
 **  Including this in each routine helps prevent mismatched argument errors
 */
-SEXP agfit4(SEXP surv2,      SEXP covar2,    SEXP strata2,
+
+SEXP agfit4(SEXP n2,
+	    SEXP surv2,      SEXP covar2,    SEXP strata2,
             SEXP weights2,   SEXP offset2,   SEXP ibeta2,
             SEXP sort12,     SEXP sort22,    SEXP method2,
-            SEXP maxiter2,   SEXP  eps2,     SEXP tolerance2);
+            SEXP maxiter2,   SEXP  eps2,     SEXP tolerance2,
+	    SEXP doscale2);
 
 
-void agfit5a(int *nusedx,     int *nvarx,     double *yy, 
-	      double *covar2,   double *offset2, double *weights2, 
-	      int   *strata,    int   *sort,    double *means,   
-              double *beta,     double *u,       double *loglik, 
-	      int *methodx,    int *ptype2,    int *pdiag2,
-	      int *nfrail,     int *frail2,
-              void *fexpr1,     void *fexpr2,    void *rho) ;
+void agfit5a(int  *nusedx,     int  *nvarx,     double *yy, 
+	     double *covar2,   double *offset2, double *weights2, 
+	     int   *strata,    int    *sort,    double *means,   
+	     double *beta,     double *u,       double *loglik, 
+	     int  *methodx,    int  *ptype2,    int  *pdiag2,
+	     int  *nfrail,     int  *frail2,
+	     void *fexpr1,     void *fexpr2,    void *rho,
+	     int *docenter) ;
 
-void agfit5b( int *maxiter,   int *nusedx,    int *nvarx, 
-	       int *strata,    double *beta,    double *u,
+void agfit5b( int  *maxiter,   int  *nusedx,    int  *nvarx, 
+	       int  *strata,    double *beta,    double *u,
 	       double *imat2,   double *jmat2,   double *loglik, 
-	       int *flag,      double *eps,     double *tolerch, 
-	       int *methodx,   int *nfrail,     double *fbeta, 
+	       int  *flag,      double *eps,     double *tolerch, 
+	       int  *methodx,   int  *nfrail,     double *fbeta, 
 	       double *fdiag,
                void *fexpr1,    void *fexpr2,     void *rho);
 
-void agfit5c(int *nusedx,   int *nvar,    int *strata,
-	      int *methodx,  double *expect) ;
- 
-void agexact(int *maxiter,  int *nusedx,   int *nvarx,   double *start, 
-	     double *stop,   int *event,    double *covar2,double *offset, 
-	     int   *strata, double *means,  double *beta,  double *u, 
-	     double *imat2,  double loglik[2], int *flag,  double *work, 
-	     int   *work2,  double *eps,    double *tol_chol, double *sctest);
+void agfit5c( int *nvar);
 
-void agmart(int   *n,     int   *method,  double *start,   double *stop, 
-	    int   *event, double *score,   double *wt,      int   *strata, 
+SEXP agmart3(SEXP nused2,  SEXP surv2,  SEXP score2, SEXP weight2, 
+	     SEXP strata2, SEXP sort12, SEXP sort22, SEXP method2);
+
+void agexact(int  *maxiter,  int  *nusedx,   int  *nvarx,   double *start, 
+	     double *stop,   int  *event,    double *covar2,double *offset, 
+	     int    *strata, double *means,  double *beta,  double *u, 
+	     double *imat2,  double loglik[2], int  *flag,  double *work, 
+	     int    *work2,  double *eps,    double *tol_chol, double *sctest,
+	     int    *nocenter);
+
+void agmart(int    *n,     int    *method,  double *start,   double *stop, 
+	    int    *event, double *score,   double *wt,      int    *strata, 
 	    double *resid);
 
-void agmart2(int   *n,     int   *method,  double *start,   double *stop, 
-	     int   *event,  int   *nstrat,  int *strata,    int *sort1,
-	     int   *sort2,  double *score,   double *wt,      
-	     double *resid,  double *haz);
-void agscore(int   *nx,       int   *nvarx,      double *y,
-	     double *covar2,   int   *strata,     double *score,
-	     double *weights,  int   *method,     double *resid2, double *a);
+SEXP agscore2(SEXP y2,       SEXP covar2,   SEXP strata2, 
+	      SEXP score2,   SEXP weights2, SEXP method2);
+SEXP agscore3(SEXP y2,       SEXP covar2,   SEXP strata2, 
+	      SEXP score2,   SEXP weights2, SEXP method2, SEXP sort12);
 
-void agsurv3(int   *sn,    int   *snvar,    int   *sncurve, 
-	     int   *snpt,  int   *sse,      double *score, 
-	     double *sy,    int   *grpx,     double *r,        double *coef, 
-	     double *var,   double *xmean,    int   *scn, 
-	     double *cy,    double *cx,       double *ssurv,
-	     double *varh,  double *sused,    int   *smethod);
+void agsurv4(int    *ndeath,   double *risk,    double *wt,
+             int    *sn,        double *denom,   double *km);
 
-void agsurv4(int   *ndeath,   double *risk,    double *wt,
-             int   *sn,        double *denom,   double *km);
-
-void agsurv5(int *n2,     int *nvar2,  int *dd, double *x1,  
+void agsurv5(int  *n2,     int  *nvar2,  int  *dd, double *x1,  
              double *x2,   double *xsum, double *xsum2, 
              double *sum1, double *sum2, double *xbar) ;
+SEXP cdecomp(SEXP R2, SEXP time2);
 
 void chinv2  (double **matrix, int n);
 int cholesky2(double **matrix, int n, double toler);
 void chsolve2(double **matrix, int n, double *y);
 void chinv3(double **matrix , int n, int m, double *fdiag);
+void chinv5(double **matrix , int n, int flag);
 int cholesky3(double **matrix, int n, int m, double *diag, double toler);
+int cholesky5(double **matrix, int n, double toler);
 void chsolve3(double **matrix, int n, int m, double *diag, double *y);
+void chsolve5(double **matrix, int n, double *y, int flag);	
 
+SEXP collapse(SEXP y2,  SEXP x2, SEXP istate2, SEXP id2, SEXP wt2, 
+	      SEXP order2) ;
 SEXP concordance1(SEXP y, SEXP wt2,  SEXP indx2, SEXP ntree2);
  
 SEXP concordance2(SEXP y,     SEXP wt2,  SEXP indx2, SEXP ntree2,
                   SEXP sortstop, SEXP sortstart) ;
+SEXP concordance3(SEXP y,        SEXP x2, SEXP wt2, SEXP timewt2, 
+                  SEXP sortstop, SEXP doresid2);
+SEXP concordance4(SEXP y, SEXP x2, SEXP wt2, SEXP timewt2, 
+                  SEXP sortstart, SEXP sortstop, SEXP doresid2); 
+SEXP concordance5(SEXP y,        SEXP x2, SEXP wt2, SEXP timewt2, 
+                  SEXP sortstop);
+SEXP concordance6(SEXP y, SEXP x2, SEXP wt2, SEXP timewt2, 
+                  SEXP sortstart, SEXP sortstop); 
+
+void cox_callback(int which, double *coef, double *first, double *second,
+		  double *penalty, int *flag, int p, SEXP fexpr, SEXP rho);
 
 SEXP coxcount1(SEXP y2, SEXP strat2) ;
 SEXP coxcount2(SEXP y2, SEXP isort1, SEXP isort2, SEXP strat2) ;
 
-void coxdetail(int   *nusedx,   int   *nvarx,    int   *ndeadx, 
+void coxdetail(int   *nusedx,    int   *nvarx,     int   *ndeadx, 
+	       double *center,
 	       double *y,        double *covar2,   int   *strata,  
 	       double *score,    double *weights,  double *means2, 
 	       double *u2,       double *var,      int   *rmat,
@@ -84,21 +99,22 @@ SEXP coxexact(SEXP maxiter2,  SEXP y2,
               SEXP covar2,    SEXP offset2, SEXP strata2,
               SEXP ibeta,     SEXP eps2,    SEXP toler2) ;
  
-void coxfit5_a(int *nusedx,     int *nvarx,     double *yy, 
- 	       double *covar2,   double *offset2, double *weights2, 
-	       int   *strata,    int   *sort,    double *means,   
-               double *beta,     double *u,       double *loglik, 
-	       int *methodx,    int *ptype2,    int *pdiag2,
+void coxfit5_a(int *nusedx,     int *nvarx,      double *yy, 
+ 	       double *covar2,  double *offset2, double *weights2, 
+	       int   *strata,   int   *sort,     double *means,   
+               double *beta,    double *u,       double *loglik, 
+	       int *methodx,    int *ptype2,     int *pdiag2,
 	       int *nfrail,     int *frail2,
-               void *fexpr1,     void *fexpr2,    void *rho) ;
+               void *fexpr1,    void *fexpr2,    void *rho,
+	       int  *docenter) ;
 
-void coxfit5_b( int *maxiter,   int *nusedx,    int *nvarx, 
+void coxfit5_b( int *maxiter,   int *nusedx,     int *nvarx, 
 	        int *strata,    double *beta,    double *u,
-	        double *imat2,   double *jmat2,   double *loglik, 
+	        double *imat2,  double *jmat2,   double *loglik, 
 	        int *flag,      double *eps,     double *tolerch, 
 	        int *methodx,   int *nfrail,     double *fbeta, 
 	        double *fdiag,
-                void *fexpr1,    void *fexpr2,     void *rho);
+                void *fexpr1,   void *fexpr2,    void *rho);
 
 void coxfit5_c(int *nusedx,   int *nvar,    int *strata,
 	       int *methodx,  double *expect) ;
@@ -110,7 +126,7 @@ SEXP coxfit6(SEXP maxiter2,  SEXP time2,   SEXP status2,
 
 void coxmart(int   *sn,     int   *method,    double *time, 
 	     int   *status, int   * strata,   double *score, 
-	     double *wt,     double *expect);
+	     double *wt,    double *expect);
 
 void coxmart2(int   *sn,     double *time, 
 	     int   *status, int   * strata,   double *score, 
@@ -123,16 +139,45 @@ void coxscho(int   *nusedx,    int   *nvarx,    double *y,
 	     double *covar2,    double *score,    int   *strata,  
 	     int   *method2,   double *work);
 
-void coxscore(int   *nx,      int   *nvarx,    double *y, 
-	      double *covar2,  int   *strata,   double *score, 
-	      double *weights, int   *method,   double *resid2,
-	      double *scratch);
+SEXP coxscore2(SEXP y2,       SEXP covar2,   SEXP strata2,
+	       SEXP score2,   SEXP weights2, SEXP method2);
 
 double coxsafe(double x);
-double **dmatrix(double *array, int ncol, int nrow);
+
+SEXP coxsurv1(SEXP otime,   SEXP y2,     SEXP weight2, SEXP sort22, 
+              SEXP strata2, SEXP xmat2,  SEXP risk2);
+
+SEXP coxsurv2(SEXP otime2, SEXP y2, SEXP weight2,  SEXP sort12, SEXP sort22, 
+              SEXP position2,  SEXP strata2, SEXP xmat2, SEXP risk2);
+
+SEXP coxsurv3(SEXP y2, SEXP xmat2,  SEXP strata2, 
+              SEXP risk2, SEXP weight2, SEXP sort22,
+	      SEXP efron2);
+
+SEXP coxsurv4(SEXP y2, SEXP weight2,  SEXP sort12, SEXP sort22, 
+              SEXP position2,   SEXP strata2, SEXP xmat2, SEXP risk2);
+
+double **dmatrix(double *array, int nrow, int ncol);
+int    **imatrix(int *array, int nrow, int ncol);
+
+SEXP fastkm1(SEXP y2, SEXP wt2, SEXP sort2);
+SEXP fastkm2(SEXP y2, SEXP wt2, SEXP sort12, SEXP sort22);
+
+SEXP finegray(SEXP tstart2, SEXP tstop2,   SEXP ctime2,   SEXP cprob2, 
+	      SEXP extend2, SEXP keep2);
+
+SEXP gchol(SEXP matrix2, SEXP toler2);
+SEXP gchol_solve(SEXP x2, SEXP y2, SEXP flag2);
+SEXP gchol_inv(SEXP matrix, SEXP flag2);
 
 void init_doloop(int min, int max);
 int doloop      (int nloops, int *index);
+
+SEXP multicheck(SEXP time12,  SEXP time22, SEXP status2, SEXP id2, 
+		SEXP istate2, SEXP sort2);
+
+int *norisk(int n, double *time1, double *time2, double *status, 
+	    int *sort1, int *sort2, int *strata);
 
 void pyears1(int   *sn,      int   *sny,      int   *sdoevent, 
 	     double *sy,      double *wt,       
@@ -159,6 +204,14 @@ double pystep(int nc,        int  *index,  int  *index2,   double *wt,
 	      double *data,  int *fac,    int *dims,     double **cuts, 
 	      double step,   int  edge);
 
+SEXP residcsum(SEXP y2, SEXP strata2);
+
+typedef struct snode {
+    int value;
+    int depth;  /* number of forward links */
+    struct snode *forward[1];  /* the set of forward links*/
+} snode;
+
 void survdiff2(int   *nn,     int   *nngroup,    int   *nstrat, 
 	       double *rho,    double *time,       int   *status, 
 	       int   *group,  int   *strata,	   double *obs, 
@@ -167,10 +220,19 @@ void survdiff2(int   *nn,     int   *nngroup,    int   *nstrat,
 
 void survfit4(int *n,	int *dd,  double *x1,  double *x2) ;
 
- SEXP survfitci(SEXP ftime2,  SEXP sort12,  SEXP sort22, SEXP ntime2,
-                    SEXP status2, SEXP cstate2, SEXP wt2,  SEXP id2,
-                    SEXP p2,  SEXP sefit2) ;
-  
+SEXP survfitaj(SEXP y2,       SEXP sort12,  SEXP sort22, SEXP utime2,
+               SEXP cstate2,  SEXP wt2,     SEXP grp2,   SEXP ngrp2,
+	       SEXP p02,      SEXP i02,     SEXP sefit2, SEXP entry2,
+	       SEXP position2,SEXP hindx2,  SEXP trmat2, SEXP t0);  
+     
+SEXP survfitkm(SEXP y2,     SEXP weight2,  SEXP sort12, SEXP sort22, 
+               SEXP type2,  SEXP id2,      SEXP nid2,   SEXP position2, 
+               SEXP influence2,  SEXP reverse2,  SEXP entry2) ;
+
+SEXP survfitresid(SEXP Y2,      SEXP sort12,  SEXP sort22,  SEXP cstate2, 
+		  SEXP wt2,     SEXP p02,     SEXP i02,     SEXP otime2,  
+		  SEXP lefttime2, SEXP doauc2);  
+ 
 SEXP survreg6(SEXP maxiter2,   SEXP nvarx,  SEXP y,
 	      SEXP ny2,        SEXP covar2, SEXP wtx,
 	      SEXP offset2,    SEXP beta2,  SEXP nstratx,
@@ -205,3 +267,20 @@ void survpenal(int whichcase, int nfrail,    int  nvar2,    double **hmat,
 	       int ptype,     int pdiag,     SEXP pexpr1,   double *cptr1, 
 	       SEXP pexpr2,   double *cptr2, SEXP rho);
 
+SEXP survsplit(SEXP tstart2,  SEXP tstop2,  SEXP cut2);
+
+SEXP tmerge (SEXP id2,  SEXP time1x, SEXP newx2,
+	     SEXP nid2, SEXP ntime2, SEXP x2,  SEXP indx2); 
+SEXP tmerge2(SEXP id2,  SEXP time1x, SEXP nid2, SEXP ntime2);
+SEXP tmerge3(SEXP id2, SEXP miss2);
+SEXP twoclust(SEXP id2, SEXP cluster2, SEXP idord2);
+void walkup(double *nwt, double* twt, int index, double sums[3], int ntree);
+void addin(double *nwt, double *twt, int index, double wt);
+
+SEXP zph1(SEXP gt2,    SEXP y2, 
+	  SEXP covar2, SEXP eta2,  SEXP weights2,
+	  SEXP strata2,SEXP method2, SEXP sort2);
+
+SEXP zph2(SEXP gt2,    SEXP y2, 
+	  SEXP covar2, SEXP eta2,  SEXP weights2,
+	  SEXP strata2,SEXP method2, SEXP sort12, SEXP sort22);

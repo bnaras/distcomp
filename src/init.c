@@ -6,6 +6,7 @@
 */
 #include "survS.h"
 #include "R_ext/Rdynload.h"
+#include "Rversion.h"
 #include "survproto.h"
 
 static const R_CMethodDef Centries[] = {

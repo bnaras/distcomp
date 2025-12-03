@@ -41,14 +41,14 @@
 #' examples and the reference.
 #' @seealso The examples in `system.file("doc", "examples.html", package="distcomp")`
 #' @seealso The source for the examples: `system.file("doc_src", "examples.Rmd", package="distcomp")`.
-#' @docType package
 #' @references Software for Distributed Computation on Medical Databases:
 #' A Demonstration Project. Journal of Statistical Software, 77(13), 1-22.
 #' doi:10.18637/jss.v077.i13
 #' @references Appendix E of Modeling Survival Data: Extending the Cox Model by
 #' Terry M. Therneau and Patricia Grambsch. Springer Verlag, 2000.
-#' @name distcomp
-NULL
+#' @name distcomp-package
+#' @aliases distcomp-package distcomp
+"_PACKAGE"
 
 #' Make an appropriate opencpu URL for a specified function and url prefix for the
 #' distcomp package

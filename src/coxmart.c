@@ -1,4 +1,3 @@
-/* $Id: coxmart.c 11166 2008-11-24 22:10:34Z therneau $ */
 /*
 ** Compute the martingale residual for a Cox model
 **
@@ -23,9 +22,9 @@
 
 void coxmart(int   *sn,     int   *method,    double *time, 
 	     int   *status, int   * strata,   double *score, 
-	     double *wt,     double *expect)
+	     double *wt,    double *expect)
     {
-    register int i,j;
+    int i,j;
     int lastone;
     int n;
     double deaths, denom=0, e_denom=0;
