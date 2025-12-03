@@ -1,3 +1,15 @@
+# distcomp 1.3-4
+
+- CRAN fixes (use of non-API `NAMED`)
+
+# distcomp 1.3-3
+
+- CRAN fixes
+
+# distcomp 1.3-2
+
+- CRAN fixes
+
 # distcomp 1.3-1
 
 - Add `rmarkdown` to suggests
